@@ -1,0 +1,15 @@
+{
+    "name": "githubevents_tampermonkey",
+    "version": "1.0.0",
+    "description": "Let github shows users and repos activity events",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey.git"
+    },
+    "author": "Aoi-hosizora",
+    "license": "MIT"
+}
