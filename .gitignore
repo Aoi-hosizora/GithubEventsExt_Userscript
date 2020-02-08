@@ -1,4 +1,7 @@
 .vscode/
 .ionide/
 
-_ref/
+node_modules/
+dist/
+
+.token

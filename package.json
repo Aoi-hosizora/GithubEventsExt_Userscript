@@ -1,0 +1,27 @@
+{
+    "name": "githubevents_tampermonkey",
+    "version": "1.0.0",
+    "description": "Let github shows users and repos activity events",
+    "main": "index.js",
+    "scripts": {
+        "watch": "rm dist -rf && webpack -w",
+        "build": "rm dist -rf && webpack"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey.git"
+    },
+    "author": "Aoi-hosizora",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/issues"
+    },
+    "homepage": "https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey#readme",
+    "devDependencies": {
+        "@types/jquery": "^3.3.32",
+        "ts-loader": "^6.2.1",
+        "typescript": "^3.7.5",
+        "webpack": "^4.0.0"
+    },
+    "dependencies": {}
+}
