@@ -4,6 +4,5 @@ import { onLoaded } from './app';
 // http://localhost:5000/dist/github-events.user.js
 
 $(() => {
-    console.log('Hello world');
     onLoaded();
 });

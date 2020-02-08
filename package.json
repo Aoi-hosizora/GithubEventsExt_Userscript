@@ -18,10 +18,21 @@
     },
     "homepage": "https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey#readme",
     "devDependencies": {
-        "@types/jquery": "^3.3.32",
+        "@types/greasemonkey": "^4.0.0",
+        "@types/jquery": "^3.3.0",
+        "@types/jqueryui": "^1.12.10",
+        "@types/lodash": "^4.14.149",
+        "text-loader": "0.0.1",
         "ts-loader": "^6.2.1",
         "typescript": "^3.7.5",
-        "webpack": "^4.0.0"
+        "webpack": "^4.1.1"
     },
-    "dependencies": {}
+    "dependencies": {
+        "axios": "^0.19.2",
+        "greasemonkey": "^1.0.3",
+        "jquery": "^3.3.1",
+        "jquery-ui-dist": "^1.12.1",
+        "lodash": "^4.17.15",
+        "rxjs": "^6.5.4"
+    }
 }
