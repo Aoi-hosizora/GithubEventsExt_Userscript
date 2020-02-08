@@ -7,3 +7,5 @@
 
 + [Tampermonkey中文文档（部分）](https://blog.csdn.net/abc45628/article/details/53919135)
 + [GM_addStyle equivalent in TamperMonkey](https://stackoverflow.com/questions/23683439/gm-addstyle-equivalent-in-tampermonkey)
++ [Tampermonkey documentation](https://www.tampermonkey.net/documentation.php)
++ [tobyqin/tampermonkey_vue](https://github.com/tobyqin/tampermonkey_vue)
