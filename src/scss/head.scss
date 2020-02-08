@@ -1,0 +1,73 @@
+#ahid-head {
+    $head-height: 64px !global;
+    height: $head-height;
+    background: #373E43;
+    padding: 10px 12px;
+    color: white;
+
+    a:-webkit-any-link {
+        color: white;
+    }
+}
+
+// title
+
+.ah-head-title div {
+    display: block;
+    text-align: right;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    svg {
+        margin-right: 1px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+}
+
+#ahid-title {
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+#ahid-subtitle {
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+// command
+
+.ah-head-command a {
+    position: absolute;
+    top: 42px;
+    font-size: 12px;
+
+    svg {
+        fill: #999999;
+    }
+
+    svg:hover {
+        fill: white;
+    }
+
+    &.ah-pined svg {
+        fill: white;
+        transform-origin: center;
+        transform: rotate(45deg);
+    }
+}
+
+#ahid-pin {
+    left: 12px;
+}
+
+#ahid-feedback {
+    left: 28px;
+}
+
+#ahid-refresh {
+    left: 44px;
+    margin-top: -1px;
+}

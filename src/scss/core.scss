@@ -1,0 +1,106 @@
+@import "head.scss";
+@import "body.scss";
+@import "foot.scss";
+
+.ah-anime {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+// shadow
+
+.ah-shadow {
+    box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;
+}
+
+.ah-shadow-toggle {
+    box-shadow: rgba(118, 118, 118, 0.11) 2px 0px 5px 0px;
+}
+
+// toggle pin
+
+#ahid-nav {
+    $min-width: 165px;
+    $max-width: 500px;
+
+    right: -$min-width;
+    width: $min-width;
+    height: 100%;
+    top: 0;
+    z-index: 90;
+
+    min-width: $min-width;
+    max-width: $max-width;
+
+    &.ah-open {
+        right: 0px;
+    }
+}
+
+#ahid-toggle {
+    left: calc(100% - 27px);
+    width: 30px;
+    height: 80px;
+    top: calc(50% - 45px);
+    z-index: 91;
+
+    &.ah-hide {
+        left: calc(100%);
+    }
+}
+
+// display
+
+#ahid-nav {
+    box-sizing: border-box;
+    position: fixed;
+    display: block;
+    overflow: visible;
+    background: #FAFBFC;
+
+    font-style: normal;
+    font-family: sans-serif;
+    font-size: 13px;
+}
+
+#ahid-toggle {
+    position: fixed;
+    text-align: center;
+
+    cursor: pointer;
+    line-height: 1;
+    padding: 6px;
+    background-color: #F2F5F7;
+    border: 1px solid #E0E4E7;
+    border-right: none;
+    border-radius: 5px;
+
+    svg,
+    span {
+        display: inline-block;
+        position: relative;
+    }
+
+    svg {
+        top: 5px;
+        left: -3px;
+    }
+
+    span {
+        top: 22px;
+        left: -12px;
+        font-size: 13px;
+        transform: rotate(90deg);
+    }
+}
+
+// resize
+
+.ui-resizable-handle {
+    width: 8px;
+    bottom: 0;
+    top: 0;
+    position: absolute;
+    cursor: col-resize;
+}

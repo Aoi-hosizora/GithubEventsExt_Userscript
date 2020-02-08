@@ -3,6 +3,12 @@
 + Let github shows users and repos activity events
 + TemperMonkey version of [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt)
 
+### Install
+
++ Install `TamperMonkey` / `GreaseMonkey` plugin in your browser
++ Visit https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/assert/github-events.user.js and install
+> + For more information: please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt)
+
 ### References
 
 + [Tampermonkey中文文档（部分）](https://blog.csdn.net/abc45628/article/details/53919135)

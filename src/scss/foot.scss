@@ -1,0 +1,30 @@
+#ahid-foot {
+    $foot-height: 30px !global;
+    height: $foot-height;
+    margin-bottom: -1px;
+    padding: 6px 0 4px 0;
+
+    background: #F1F8FF;
+    border: 1px solid #C8E1FF;
+
+    a {
+        display: block;
+        text-align: center;
+    }
+}
+
+// #ahid-foot a & #ahid-body div
+.ah-hint-hide {
+    display: none !important;
+}
+
+.ah-a-disabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
+}

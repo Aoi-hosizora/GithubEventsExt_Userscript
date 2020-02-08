@@ -1,0 +1,147 @@
+@import "head";
+@import "foot";
+
+#ahid-body {
+    // $other-height: $head-height + $foot-height + 1px;
+    $other-height: $head-height + 1px;
+    height: calc(100% - #{$other-height});
+    border-left: 1px solid #DFE2E5;
+
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: auto;
+
+    #ahid-ul,
+    #ahid-message {
+        min-height: calc(100% - 30px);
+        padding: 10px 10px 7px 10px;
+    }
+}
+
+#ahid-ul {
+    list-style-type: none;
+
+    li {
+        word-break: break-all;
+    }
+}
+
+#ahid-message {
+    word-break: break-word;
+}
+
+.ah-hr {
+    margin: 7px 0;
+}
+
+// content header
+
+.ah-content-header {
+    $g: &;
+    margin-bottom: 5px;
+
+    &-user {
+        #{$g}-icon {
+            align-items: center;
+            vertical-align: middle;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        #{$g}-avatar {
+            display: inline-block;
+            height: 24px;
+        }
+
+        #{$g}-link {
+            margin-left: 3px;
+        }
+
+        #{$g}-event {
+            display: flex;
+            float: right;
+            background: #E1E4E8;
+            height: 26px;
+            width: 26px;
+            margin: -2px -2px 0 0;
+        }
+    }
+
+    &-info {
+        font-size: 10.5px;
+        margin: 5px 0px -4px 0px;
+        color: gray;
+
+        #{$g}-time {
+            display: inline;
+            text-align: left;
+        }
+
+        #{$g}-private {
+            display: flex;
+            float: right;
+            padding: 2px 3px;
+            margin-left: 2px;
+
+            background: transparent;
+            border: 1px solid rgba(27, 31, 35, .15);
+            border-radius: 2px;
+            line-height: 1;
+        }
+    }
+}
+
+// content body
+
+.ah-content-body {
+    margin-top: 2px;
+
+    &-title {
+        font-size: 13px;
+    }
+
+    &-sub {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        -webkit-line-clamp: 1;
+        font-size: 11px;
+        color: gray;
+    }
+
+    &-subtitle {
+        padding-left: 5px;
+        margin: 2px 0px 2px 1px;
+        border-left: 2px solid rgb(197, 197, 197);
+    }
+
+    &-subcontent {
+        -webkit-line-clamp: 2 !important;
+    }
+
+    &-commit-wiki {
+        margin-left: 1px;
+    }
+}
+
+
+// scrollbar
+
+#ahid-body::-webkit-scrollbar {
+    width: 8px;
+
+    &-track {
+        border-radius: 4px;
+    }
+
+    &-thumb {
+        background-color: rgb(168, 168, 168);
+        border-radius: 4px;
+
+        &:hover {
+            background-color: gray;
+        }
+    }
+}

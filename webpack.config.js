@@ -31,10 +31,18 @@ module.exports = {
                 test: /\.html$/,
                 use: 'text-loader',
             },
+            {
+                test: /\.s[ac]ss$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js', '.css', '.sass', '.scss']
     },
     plugins: [
         new webpack.BannerPlugin({

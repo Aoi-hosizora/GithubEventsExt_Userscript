@@ -1,5 +1,7 @@
+import { GMApi } from 'greasemonkey';
 import $ from 'jquery';
 import template from '../html/template.html';
+import style from '../scss/core.scss';
 import './extension';
 import { handleGithubEvent } from './github_event';
 import { Global, readStorage } from './global';
@@ -16,6 +18,7 @@ export function onLoaded() {
     Global.info = info;
 
     mainInject(info);
+    injectCss();
     readStorage(() => {
         registerEvent();
         handleGithubEvent(info, Global.page);
@@ -81,4 +84,8 @@ function mainInject(info: UrlInfo) {
     }
 
     $('body').append(renderedTemplate);
+}
+
+function injectCss() {
+    GMApi.GM_addStyle(style);
 }

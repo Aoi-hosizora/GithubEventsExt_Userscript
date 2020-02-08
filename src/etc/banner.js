@@ -8,7 +8,7 @@
 // @copyright    2020+, Aoi-hosizora
 
 // @downloadURL  https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/assert/github-events.user.js
-// @updateURL    https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/assert/github-events.user.js
+// @updateURL    https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/src/etc/banner.js
 // @icon         https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/public/image/icon16.png
 // @icon64       https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/public/image/icon32.png
 
@@ -17,9 +17,4 @@
 // @grant        GM_getValue
 // @grant        GM_deleteValue
 // @grant        GM_addStyle
-// @require      http://code.jquery.com/jquery-3.4.1.min.js
-// @require      http://code.jquery.com/ui/1.12.1/jquery-ui.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.5.4/rxjs.umd.min.js
-// @require      https://unpkg.com/axios/dist/axios.min.js
 // ==/UserScript==
