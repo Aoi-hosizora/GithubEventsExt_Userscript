@@ -6,7 +6,7 @@
 ### Install
 
 + Install `TamperMonkey` / `GreaseMonkey` plugin in your browser
-+ Visit https://raw.githubusercontent.com/Aoi-hosizora/GithubEvents_TamperMonkey/master/assert/github-events.user.js and install
++ Visit https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/raw/master/dist/github-events.user.js and install
 > + For more information: please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt)
 
 ### References
