@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
+import { onBrowserActionClicked } from './background';
 import { handleGithubEvent, nextGithubEvent } from './github_event';
 import { Global, setStorage, StorageFlag } from './global';
 
@@ -95,6 +96,8 @@ function _regClick() {
         Global.page = 1;
         handleGithubEvent(Global.info);
     });
+
+    $('#ahid-setting').click(onBrowserActionClicked);
 }
 
 function navStatus(flag: boolean) {

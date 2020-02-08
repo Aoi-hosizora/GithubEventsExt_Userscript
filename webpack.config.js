@@ -14,7 +14,7 @@ module.exports = {
     mode: process.env.NODE_ENV || 'development',
     devtool: 'inline-source-map',
     entry: {
-        main: p('./src/ts/main.ts')
+        main: p('./src/main.ts')
     },
     output: {
         path: p('./dist'),

@@ -19,10 +19,9 @@ export enum StorageFlag {
 }
 
 export function setStorage(flag: StorageFlag, value: any, callback?: () => void) {
-    if (GMApi.GM_setValue(flag.toString(), value)) {
-        if (callback) {
-            callback();
-        }
+    GMApi.GM_setValue(flag.toString(), value);
+    if (callback) {
+        callback();
     }
 }
 
