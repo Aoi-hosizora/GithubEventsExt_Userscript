@@ -1,5 +1,6 @@
 .vscode/
 .ionide/
+.history/
 
 node_modules/
 # dist/

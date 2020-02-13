@@ -46,16 +46,23 @@
 
     svg {
         fill: #999999;
+
+        &:hover {
+            fill: white;
+        }
     }
 
-    svg:hover {
-        fill: white;
-    }
+    &#ahid-pin {
 
-    &.ah-pined svg {
-        fill: white;
-        transform-origin: center;
-        transform: rotate(45deg);
+        &.ah-pined svg {
+            fill: white;
+            transform: rotate(0);
+        }
+
+        svg {
+            transform-origin: center;
+            transform: rotate(45deg);
+        }
     }
 }
 
