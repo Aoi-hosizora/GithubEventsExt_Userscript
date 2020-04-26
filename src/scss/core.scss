@@ -11,11 +11,11 @@
 // shadow
 
 .ah-shadow {
-    box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;
+    box-shadow: rgba(118, 118, 118, 0.11) 0 0 3px 2px;
 }
 
 .ah-shadow-toggle {
-    box-shadow: rgba(118, 118, 118, 0.11) 2px 0px 5px 0px;
+    box-shadow: rgba(118, 118, 118, 0.11) 2px 0 5px 0;
 }
 
 // toggle pin
@@ -34,7 +34,7 @@
     max-width: $max-width;
 
     &.ah-open {
-        right: 0px;
+        right: 0;
     }
 }
 

@@ -1,5 +1,5 @@
 #ahid-head {
-    $head-height: 64px !global;
+    $head-height: 53px !global;
     height: $head-height;
     background: #373E43;
     padding: 10px 12px;
@@ -28,21 +28,24 @@
 }
 
 #ahid-title {
-    font-size: 11px;
-    margin-top: 6px;
+    font-size: 8px;
+    margin-top: 1px;
 }
 
 #ahid-subtitle {
-    font-size: 10px;
-    margin-top: 4px;
+    margin-top: 2px;
+    span {
+        font-size: 4px;
+        color: #CACACA;
+    }
 }
 
 // command
 
 .ah-head-command a {
     position: absolute;
-    top: 42px;
-    font-size: 12px;
+    top: 33px;
+    font-size: 8px;
 
     svg {
         fill: #999999;

@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Github events
-// @version      1.0.2
+// @version      1.0.3
 // @author       Aoi-hosizora
-// @description  let github shows users and repos activity events
+// @description  let github shows users, organizations and repositories activity events
 // @namespace    https://github.com/
 // @match        http*://github.com/*
 // @copyright    2020+, Aoi-hosizora
