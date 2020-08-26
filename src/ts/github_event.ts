@@ -129,6 +129,10 @@ function wrapGithubLi(data: GithubInfo): string {
                 } at ${repoA}`)
                 + subTitle(pl.pullRequest.title)
                 + subContent(pl.pullRequest.body);
+        case 'PullRequestReviewEvent':
+            return title(`${pl.action} a pull request review in pull request ${
+                a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, Hovercard.Pull, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)
+                } at ${repoA}`);
         case 'PullRequestReviewCommentEvent':
             return title(`${pl.action} pull request review ${a('comment', pl.comment.htmlUrl)} in pull request ${
                 a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, Hovercard.Pull, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)
