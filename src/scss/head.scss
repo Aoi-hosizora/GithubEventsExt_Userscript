@@ -28,11 +28,11 @@
 }
 
 #ahid-title {
-    font-size: 14px;
-    margin-top: 1px;
+    font-size: 12px;
+    margin-top: 2px;
 
     span {
-        margin-right: -5px;
+        margin-right: -3px;
     }
 
     svg {
@@ -42,7 +42,7 @@
 
 #ahid-subtitle {
     font-size: 8px;
-    margin-top: 5px;
+    margin-top: 4px;
 
     span svg {
         fill: #ACACAC;
@@ -91,5 +91,10 @@
 
 #ahid-refresh {
     left: 44px;
+    margin-top: -1px;
+}
+
+#ahid-setting {
+    left: 60px;
     margin-top: -1px;
 }
