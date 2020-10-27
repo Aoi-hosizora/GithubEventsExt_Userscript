@@ -1,10 +1,14 @@
 import { AxiosResponse } from 'axios';
 import $ from 'jquery';
+import moment from 'moment';
 import { Global } from './global';
 import { GithubInfo, Hovercard, UrlInfo } from './model';
 import { getSvgTag, showMessage } from './ui_event';
 import { fetchGithubEvents } from './util';
 
+/**
+ * !!! github events handler
+ */
 export function handleGithubEvent(info: UrlInfo, page: number = 1) {
     showMessage(false, 'Loading...');
     fetchGithubEvents(info, page).subscribe({
@@ -40,6 +44,9 @@ export function nextGithubEvent(info: UrlInfo) {
     handleGithubEvent(info, ++Global.page);
 }
 
+/**
+ * Generate html li string from GithubInfo.
+ */
 function catAppend(item: GithubInfo): string {
     function userHovercard(id: number): string {
         return `
@@ -47,6 +54,8 @@ function catAppend(item: GithubInfo): string {
             data-hovercard-url="/hovercards?user_id=${id}"
         `;
     }
+
+    const createAtStr = moment(new Date(item.createdAt)).format('YYYY/MM/DD HH:mm:ss');
     return `
         <li>
             <div class="ah-content-header">
@@ -60,11 +69,14 @@ function catAppend(item: GithubInfo): string {
                     <span class="ah-content-header-icon ah-content-header-event" title="${item.type}">${getSvgTag(item.type)}</span>
                 </div>
                 <div class="ah-content-header-info">
-                    <span class="ah-content-header-time">${new Date(item.createdAt).toLocaleString()}</span>
+                    <span class="ah-content-header-time">${createAtStr}</span>
                     ${item.public ? '' : '<span class="ah-content-header-private" title="This is a private event">Private</span>'}
                 </div>
             </div>
-            <div class="ah-content-body">${wrapGithubLi(item)}</div>
+    
+            <div class="ah-content-body">
+                ${wrapGithubLi(item)}
+            </div>
         </li>
     `;
 }

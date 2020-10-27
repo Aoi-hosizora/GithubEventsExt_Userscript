@@ -9,19 +9,29 @@ import { UrlInfo, UrlType } from './model';
 import { registerEvent } from './ui_event';
 import { checkUrl } from './util';
 
+/**
+ * main function
+ */
 export function onLoaded() {
+    // adjust github ui first
     adjustGithubUI();
     
+    // check url
     const info = checkUrl();
     if (info === null) {
         return;
     }
     Global.info = info;
 
+    // inject template and css into github
     mainInject(info);
     injectCss();
+
     readStorage(() => {
+        // register events
         registerEvent();
+
+        // inject events to html
         handleGithubEvent(info, Global.page);
     });
 }
