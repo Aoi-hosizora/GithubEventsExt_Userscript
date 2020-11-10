@@ -44,30 +44,46 @@ function adjustGithubUI() {
     }
 
     // inject menu
-    const ghYourGistTag = $('details-menu a[data-ga-click$="your gists"]');
-    const ghUsernameTag = $('details-menu a[data-ga-click$="Signed in as"] strong');
-    const username = ghUsernameTag.text();
-    $('<a>', {
-        role: 'menuitem',
-        class: 'dropdown-item',
-        href: `/${username}?tab=followers`,
-        text: 'Your followers',
-        'data-ga-click': 'Header, go to followers, text:your followers'
-    }).insertBefore(ghYourGistTag);
-    $('<a>', {
-        role: 'menuitem',
-        class: 'dropdown-item',
-        href: `/${username}?tab=following`,
-        text: 'Your following',
-        'data-ga-click': 'Header, go to followings, text:your following'
-    }).insertBefore(ghYourGistTag);
-    $('<a>', {
-        role: 'menuitem',
-        class: 'dropdown-item',
-        href: '/',
-        text: 'Github Homepage',
-        'data-ga-click': 'Header, go to homepage, text:homepage'
-    }).insertAfter(ghYourGistTag);
+    const ghAvatarMenuTag = $('summary.Header-link[data-ga-click="Header, show menu, icon:avatar"]');
+    const hoverHdr = () => {
+        ghAvatarMenuTag.off('mouseenter', hoverHdr);
+        const intervalHdr = setInterval(() => {
+            if ($('details-menu a[data-ga-click$="your followers"]').length !== 0) {
+                return;
+            }
+
+            const ghYourGistTag = $('details-menu a[data-ga-click$="your gists"]');
+            const ghUsernameTag = $('details-menu a[data-ga-click$="Signed in as"] strong');
+            const username = ghUsernameTag!!.text();
+            if (username === '') {
+                return;
+            }
+            clearInterval(intervalHdr);
+
+            $('<a>', {
+                role: 'menuitem',
+                class: 'dropdown-item',
+                href: `/${username}?tab=followers`,
+                text: 'Your followers',
+                'data-ga-click': 'Header, go to followers, text:your followers'
+            }).insertBefore(ghYourGistTag);
+            $('<a>', {
+                role: 'menuitem',
+                class: 'dropdown-item',
+                href: `/${username}?tab=following`,
+                text: 'Your following',
+                'data-ga-click': 'Header, go to followings, text:your following'
+            }).insertBefore(ghYourGistTag);
+            $('<a>', {
+                role: 'menuitem',
+                class: 'dropdown-item',
+                href: '/',
+                text: 'Github Homepage',
+                'data-ga-click': 'Header, go to homepage, text:homepage'
+            }).insertAfter(ghYourGistTag);
+        }, 1000);
+    };
+    ghAvatarMenuTag.on('mouseenter', hoverHdr);
 }
 
 function mainInject(info: UrlInfo) {
