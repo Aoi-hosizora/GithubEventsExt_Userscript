@@ -17,7 +17,10 @@ export function checkUrl(): UrlInfo | null {
     if (!result) {
         return null;
     }
-    const urlContent = result[2].replaceAll(/#(.*)/, '').replaceAll(/\?(.*)/, '');
+    var urlContent = result[2].replaceAll(/#(.*)/, '').replaceAll(/\?(.*)/, '');
+    if (urlContent[urlContent.length - 1] == '/') {
+        urlContent = urlContent.substring(0, urlContent.length - 1);
+    }
     const endpoint = urlContent.split('/');
     if (endpoint.length === 0 || preserveKeywords.indexOf(endpoint[0]) !== -1) {
         return null;
