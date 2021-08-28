@@ -8,7 +8,7 @@ import { GithubInfo, UrlInfo, UrlType } from './model';
 export function checkUrl(): UrlInfo | null {
     const preserveKeywords = [
         '', 'pulls', 'issues', 'marketplace', 'explore', 'notifications',
-        'new', 'login', 'organizations', 'settings', 'dashboard',
+        'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
         'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
     ];
 
@@ -22,17 +22,17 @@ export function checkUrl(): UrlInfo | null {
         urlContent = urlContent.substring(0, urlContent.length - 1);
     }
     const endpoint = urlContent.split('/');
+
     if (endpoint.length === 0 || preserveKeywords.indexOf(endpoint[0]) !== -1) {
         return null;
-    } else if (endpoint.length === 1) {
+    }
+    if (endpoint.length === 1) {
         if ($('.org-header-wrapper').length > 0) {
             return new UrlInfo(UrlType.Org, endpoint[0]);
-        } else {
-            return new UrlInfo(UrlType.User, endpoint[0]);
         }
-    } else {
-        return new UrlInfo(UrlType.Repo, endpoint[0], endpoint[1]);
+        return new UrlInfo(UrlType.User, endpoint[0]);
     }
+    return new UrlInfo(UrlType.Repo, endpoint[0], endpoint[1]);
 }
 
 export function fetchGithubEvents(info: UrlInfo, page: number = 1): Observable<AxiosResponse<GithubInfo[]>> {

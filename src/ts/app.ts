@@ -44,22 +44,20 @@ function adjustGithubUI() {
     }
 
     // inject menu
-    const ghAvatarMenuTag = $('summary.Header-link[data-ga-click="Header, show menu, icon:avatar"]');
+    const ghAvatarMenuTag = $('summary.Header-link[aria-label="View profile and more"]');
     const hoverHdr = () => {
         ghAvatarMenuTag.off('mouseenter', hoverHdr);
         const intervalHdr = setInterval(() => {
             if ($('details-menu a[data-ga-click$="your followers"]').length !== 0) {
+                clearInterval(intervalHdr);
+                return;
+            }
+            const username = $('details-menu a[data-ga-click$="Signed in as"] strong')!!.text();
+            if (username === '') {
                 return;
             }
 
             const ghYourGistTag = $('details-menu a[data-ga-click$="your gists"]');
-            const ghUsernameTag = $('details-menu a[data-ga-click$="Signed in as"] strong');
-            const username = ghUsernameTag!!.text();
-            if (username === '') {
-                return;
-            }
-            clearInterval(intervalHdr);
-
             $('<a>', {
                 role: 'menuitem',
                 class: 'dropdown-item',
