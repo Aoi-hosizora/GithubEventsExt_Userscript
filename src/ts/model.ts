@@ -37,10 +37,24 @@ export class UrlInfo {
     }
 }
 
-/**
- * github api parse result
- */
-export interface GithubInfo {
+// =======================
+// github api parse result
+// =======================
+
+export interface UserInfo {
+    login: string;
+    name: string;
+    publicRepos: number;
+    totalPrivateRepos: number;
+    ownedPrivateRepos: number;
+    publicGists: number;
+    privateGists: number;
+    followers: number;
+    following: number;
+    createdAt: Date;
+}
+
+export interface RepoInfo {
     type: string;
     actor: Actor;
     repo: Repo;

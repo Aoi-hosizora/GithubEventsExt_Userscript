@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Github events
-// @version      1.0.5
+// @version      1.0.6
 // @author       Aoi-hosizora
-// @description  let github shows users, organizations and repositories activity events
+// @description  A userscript extension that let browser show GitHub activity events.
 // @namespace    https://github.com/
 // @match        http*://github.com/*
 // @copyright    2020+, Aoi-hosizora

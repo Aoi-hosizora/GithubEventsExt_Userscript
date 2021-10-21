@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
 import { from, Observable } from 'rxjs';
 import { Global } from './global';
-import { GithubInfo, UrlInfo, UrlType } from './model';
+import { RepoInfo, UrlInfo, UrlType, UserInfo } from './model';
 
 export function checkUrl(): UrlInfo | null {
     const preserveKeywords = [
@@ -13,14 +13,12 @@ export function checkUrl(): UrlInfo | null {
     ];
 
     // http://xxx.github.com/xxx#xxx?xxx
-    const result = /(http|https):\/\/github\.com\/(.*)/.exec(document.URL);
+    const result = /https?:\/\/github\.com\/(.*)/.exec(document.URL);
     if (!result) {
         return null;
     }
-    var urlContent = result[2].replaceAll(/#(.*)/, '').replaceAll(/\?(.*)/, '');
-    if (urlContent[urlContent.length - 1] == '/') {
-        urlContent = urlContent.substring(0, urlContent.length - 1);
-    }
+    var urlContent = result[result.length - 1].replaceAll(/#.*/, '').replaceAll(/\?.*/, '').replaceAll(/\/$/, '');
+    // xxx/yyy or xxx
     const endpoint = urlContent.split('/');
 
     if (endpoint.length === 0 || preserveKeywords.indexOf(endpoint[0]) !== -1) {
@@ -35,15 +33,45 @@ export function checkUrl(): UrlInfo | null {
     return new UrlInfo(UrlType.Repo, endpoint[0], endpoint[1]);
 }
 
-export function fetchGithubEvents(info: UrlInfo, page: number = 1): Observable<AxiosResponse<GithubInfo[]>> {
+export function fetchGithubEvents(info: UrlInfo, page: number = 1): Observable<AxiosResponse<RepoInfo[]>> {
     const url = `${info.apiUrl}?page=${page}`;
     const headers: any = Global.token ? { 'Authorization': `Token ${Global.token}` } : {};
-    const promise = myAxios().request<GithubInfo[]>({
+    const promise = myAxios().request<RepoInfo[]>({
         method: 'get',
         url,
         headers
     });
     return from(promise);
+}
+
+export function fetchUserInfoCb(user: string, callback: (info: UserInfo) => any) {
+    const url = `https://api.github.com/users/${user}`;
+    const promise = myAxios().request<UserInfo>({
+        method: 'get',
+        url,
+    });
+    from(promise).subscribe({
+        next(resp: AxiosResponse<UserInfo>) {
+            callback(resp.data);
+        },
+        error(_) { }
+    });
+}
+
+export function fetchAuthorizedUserInfoCb(user: string, callback: (info: UserInfo) => any) {
+    const url = `https://api.github.com/users/${user}`;
+    const headers: any = Global.token ? { 'Authorization': `Token ${Global.token}` } : {};
+    const promise = myAxios().request<UserInfo>({
+        method: 'get',
+        url,
+        headers
+    });
+    from(promise).subscribe({
+        next(resp: AxiosResponse<UserInfo>) {
+            callback(resp.data);
+        },
+        error(_) { }
+    });
 }
 
 function myAxios(): AxiosInstance {

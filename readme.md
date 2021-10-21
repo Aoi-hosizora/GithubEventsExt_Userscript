@@ -3,6 +3,13 @@
 + A userscript extension that let browser show GitHub activity events.
 + For chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
 
+### Functions
+
++ [x] Show repo, user and org events in human readable format.
++ [x] Support for private repo events.
++ [x] Add some menu items to profile menu.
++ [x] Change some details on profile page.
+
 ### Install
 
 + Install `TamperMonkey` / `GreaseMonkey` extension for your browser.

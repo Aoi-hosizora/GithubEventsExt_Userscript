@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import $ from 'jquery';
 import moment from 'moment';
 import { Global } from './global';
-import { GithubInfo, Hovercard, UrlInfo } from './model';
+import { RepoInfo, Hovercard, UrlInfo } from './model';
 import { getSvgTag, showMessage } from './ui_event';
 import { fetchGithubEvents } from './util';
 
@@ -12,7 +12,7 @@ import { fetchGithubEvents } from './util';
 export function handleGithubEvent(info: UrlInfo, page: number = 1) {
     showMessage(false, 'Loading...');
     fetchGithubEvents(info, page).subscribe({
-        next(resp: AxiosResponse<GithubInfo[]>) {
+        next(resp: AxiosResponse<RepoInfo[]>) {
             showMessage(false, '');
             // console.log(resp);
             const ul = $('#ahid-ul');
@@ -47,7 +47,7 @@ export function nextGithubEvent(info: UrlInfo) {
 /**
  * Generate html li string from GithubInfo.
  */
-function catAppend(item: GithubInfo): string {
+function catAppend(item: RepoInfo): string {
     function userHovercard(id: number): string {
         return `
             data-hovercard-type="user"
@@ -81,7 +81,7 @@ function catAppend(item: GithubInfo): string {
     `;
 }
 
-function wrapGithubLi(data: GithubInfo): string {
+function wrapGithubLi(data: RepoInfo): string {
     const pl = data.payload;
     const repoUrl = `http://github.com/${data.repo.name}`;
     const repoA = a(data.repo.name, repoUrl, Hovercard.Repo, `/${data.repo.name}/hovercard`);
@@ -199,6 +199,9 @@ function a(content: string, href: string, hover?: Hovercard, hoverUrl?: string):
 }
 
 function escape(str: string): string {
+    if (!str) {
+        return ""
+    }
     return str.replaceAll('<', '').replaceAll('>', '');
 }
 
