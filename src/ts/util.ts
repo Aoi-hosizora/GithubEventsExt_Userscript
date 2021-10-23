@@ -25,7 +25,7 @@ export function checkUrl(): UrlInfo | null {
         return null;
     }
     if (endpoint.length === 1) {
-        if ($('.org-header-wrapper').length > 0) {
+        if ($('div[itemtype="http://schema.org/Organization"]').length > 0) {
             return new UrlInfo(UrlType.Org, endpoint[0]);
         }
         return new UrlInfo(UrlType.User, endpoint[0]);

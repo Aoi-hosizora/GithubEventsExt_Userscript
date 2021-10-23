@@ -26,7 +26,7 @@ export function onLoaded() {
 
     // adjust github ui after url check
     readStorage(() => {
-        adjustGithubUIAfterCheck();
+        adjustGithubUIAfterCheck(true);
     });
 
     // inject template and css into github
@@ -93,7 +93,7 @@ function adjustGithubUI() {
     ghAvatarMenuTag.on('mouseenter', hoverHdr);
 }
 
-function adjustGithubUIAfterCheck() {
+function adjustGithubUIAfterCheck(observe: boolean = false) {
     // 3. Update profile page counter and time
     if (Global.info.type == UrlType.User) {
         const isMe = $('div.js-profile-editable-area button').length;
@@ -121,6 +121,20 @@ function adjustGithubUIAfterCheck() {
                 }
             });
         }
+    }
+
+    // 4. Add github route change observer
+    if (observe) {
+        const progressSpan = $("span.progress-pjax-loader")[0];
+        const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
+            if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
+                const el = mut.target as Element;
+                if (!el.classList.contains("is-loading")) {
+                    adjustGithubUIAfterCheck();
+                }
+            }
+        }));
+        observer.observe(progressSpan, { attributes: true });
     }
 }
 

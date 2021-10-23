@@ -297,6 +297,10 @@ export function getSvgTag(type: string, rate: number = 1) {
 }
 
 export function insertJoinTime(time: string) {
+    const joinTimeLi = $('ul.vcard-details li[itemprop="join time"]');
+    if (joinTimeLi.length) {
+        return;
+    }
     $('ul.vcard-details').append(
         `<li class="vcard-detail pt-1" itemprop="join time">
             <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
