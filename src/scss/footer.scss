@@ -1,11 +1,9 @@
-#ahid-foot {
-    $foot-height: 30px !global;
-    height: $foot-height;
+#ahid-footer {
     margin-bottom: -1px;
     padding: 6px 0 4px 0;
 
-    background: #F1F8FF;
-    border: 1px solid #C8E1FF;
+    background: #f1f8ff;
+    border: 1px solid #c8e1ff;
 
     a {
         display: block;
@@ -13,12 +11,7 @@
     }
 }
 
-// #ahid-foot a & #ahid-body div
-.ah-hint-hide {
-    display: none !important;
-}
-
-.ah-a-disabled {
+#ahid-loading {
     color: currentColor;
     cursor: not-allowed;
     opacity: 0.5;

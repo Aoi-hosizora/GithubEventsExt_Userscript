@@ -15,19 +15,19 @@ $(() => {
  * Main function.
  */
 async function onLoaded() {
-    // check url first
+    // 1. check url first
     const info = checkURL();
     if (!info) {
         return;
     }
     Global.urlInfo = info;
 
-    // load settings from chrome storage
+    // 2. load settings from chrome storage
     await readStorageToGlobal();
 
-    // adjust github ui
+    // 3. adjust github ui
     adjustGithubUI();
 
-    // add sidebar to github 
+    // 4. add sidebar to github 
     injectSidebar();
 }

@@ -1,4 +1,4 @@
-<div class="ah-shadow-toggle ah-hide ah-anime" id="ahid-toggle">
+<div class="ah-shadow ah-animated ah-toggle-hide" id="ahid-toggle">
     <svg width=10 height=14 viewBox="0 0 320 512">
         <path fill="#999999"
             d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z">
@@ -7,10 +7,50 @@
     <span>Events</span>
 </div>
 
-<nav class="ah-shadow ah-open ah-anime" id="ahid-nav">
+<nav class="ah-shadow ah-animated ah-nav-open" id="ahid-nav">
 
-    <header id="ahid-head">
-        <div class="ah-head-command">
+    <header id="ahid-header">
+        <!-- Header Title -->
+        <div id="ahid-title">
+            ${if isAuthor}
+            <!-- ////// author start ////// -->
+            <span>
+                <svg width=16 height=12 viewBox="0 0 16 12">
+                    <path fill="#fff"
+                        d="M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z">
+                    </path>
+                </svg>
+            </span>
+            <a target="_blank" href="${info.authorUrl}" title="${info.author}">${info.author}</a>
+            <!-- ////// author end ////// -->
+            ${endif}
+
+            ${if isRepo}
+            <!-- ////// repo start ////// -->
+            <span>
+                <svg width=16 height=12 viewBox="0 0 16 12">
+                    <path fill="#fff"
+                        d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z">
+                    </path>
+                </svg>
+            </span>
+            <a target="_blank" href="${info.authorUrl}" title="${info.author}">${info.author}</a> /
+            <a target="_blank" href="${info.repoUrl}" title="${info.repo}">${info.repo}</a>
+            <!-- ////// repo end ////// -->
+            ${endif}
+        </div>
+        <!-- Header Subtitle -->
+        <div id="ahid-subtitle">
+            <span>
+                <svg width=12 height=12 viewBox="0 0 16 16">
+                    <path d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z">
+                    </path>
+                </svg>
+            </span>
+            <a href="${apiUrl}" target="_blank" title="Open event API page"><span>${urlType} events</span></a>
+        </div>
+        <!-- Header Commands -->
+        <div id="ahid-commands">
             <a id="ahid-pin" href="javascript:void(0)" title="Pin">
                 <svg width=9 height=14 viewBox="0 0 384 512">
                     <path
@@ -32,7 +72,7 @@
                     </path>
                 </svg>
             </a>
-            <a id="ahid-setting" href="javascript:void(0)" title="Token setting">
+            <a id="ahid-setting" href="javascript:void(0)" title="Setup token">
                 <svg width=12 height=12 viewBox="0 0 512 512">
                     <path
                         d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z">
@@ -40,52 +80,22 @@
                 </svg>
             </a>
         </div>
-        <div class="ah-head-title">
-            <div id="ahid-title">
-                ${if isAuthor}
-                <span>
-                    <svg width=16 height=12 viewBox="0 0 16 12">
-                        <path fill="#fff"
-                            d="M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z">
-                        </path>
-                    </svg>
-                </span>
-                <a target="_blank" href="${info.authorUrl}" title="${info.author}">${info.author}</a>
-                ${endif}
-
-                ${if isRepo}
-                <span>
-                    <svg width=16 height=12 viewBox="0 0 16 12">
-                        <path fill="#fff"
-                            d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z">
-                        </path>
-                    </svg>
-                </span>
-                <a target="_blank" href="${info.authorUrl}" title="${info.author}">${info.author}</a> /
-                <a target="_blank" href="${info.repoUrl}" title="${info.repo}">${info.repo}</a>
-                ${endif}
-            </div>
-            <div id="ahid-subtitle">
-                <span>
-                    <svg width=12 height=12 viewBox="0 0 16 16">
-                        <path d="M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z">
-                        </path>
-                    </svg>
-                </span>
-                <a href="${apiUrl}" target="_blank" title="Open api page"><span>${urlType} events</span></a>
-            </div>
-        </div>
     </header>
 
+    <!-- Body -->
     <main id="ahid-body">
-        <div id="ahid-message" class="ah-hint-hide"></div>
-        <ul id="ahid-ul" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled
-            data-commit-hovercards-enabled>
-        </ul>
+        <div id="ahid-message" class="ah-body-hide"></div>
 
-        <footer id="ahid-foot">
+        <!-- ////// main list start ////// -->
+        <ul id="ahid-list" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>
+        </ul>
+        <!-- ////// main list end ////// -->
+
+        <!-- Footer -->
+        <footer id="ahid-footer">
             <a id="ahid-more" href="javascript:void(0)">More...</a>
-            <a id="ahid-retry" class="ah-hint-hide" href="javascript:void(0)">Retry...</a>
+            <a id="ahid-loading" class="ah-body-hide">Loading...</a>
+            <a id="ahid-retry" class="ah-body-hide" href="javascript:void(0)">Retry...</a>
         </footer>
     </main>
 

@@ -1,24 +1,46 @@
-@import "header";
-@import "footer";
+// ================
+// display for body
+// ================
 
 #ahid-body {
-    // $other-height: $head-height + $foot-height + 1px;
-    $other-height: $head-height + 1px;
-    height: calc(100% - #{$other-height});
-    border-left: 1px solid #DFE2E5;
+    padding: 0;
+    background: #fafbfc;
+    color: black;
+    border-left: 1px solid #dfe2e0;
+    overflow: auto;
 
-    overflow: hidden;
-    overflow-y: auto;
-    overflow-x: auto;
+    &::-webkit-scrollbar {
+        width: 8px;
 
-    #ahid-ul,
-    #ahid-message {
-        min-height: calc(100% - 30px);
-        padding: 10px 10px 7px 10px;
+        &-track {
+            border-radius: 4px;
+        }
+
+        &-thumb {
+            background-color: #a8a8a8;
+            border-radius: 4px;
+
+            &:hover {
+                background-color: gray;
+            }
+        }
     }
 }
 
-#ahid-ul {
+// ===================================
+// display for message and list and hr
+// ===================================
+
+#ahid-message,
+#ahid-list {
+    padding: 10px 10px 7px 10px;
+}
+
+#ahid-message {
+    word-break: break-word;
+}
+
+#ahid-list {
     list-style-type: none;
 
     li {
@@ -26,21 +48,26 @@
     }
 }
 
-#ahid-message {
-    word-break: break-word;
-}
-
-.ah-hr {
+hr.ah-hr {
     margin: 7px 0;
 }
 
-// content header
+.ah-body-hide {
+    display: none !important;
+}
+
+// ==========================
+// display for content header
+// ==========================
 
 .ah-content-header {
     $g: &;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 
     &-user {
+        font-size: 13px;
+        color: black;
+
         #{$g}-icon {
             align-items: center;
             vertical-align: middle;
@@ -60,7 +87,7 @@
         #{$g}-event {
             display: flex;
             float: right;
-            background: #E1E4E8;
+            background: #e1e4e8;
             height: 26px;
             width: 26px;
             margin: -2px -2px 0 0;
@@ -84,18 +111,18 @@
             margin-left: 2px;
 
             background: transparent;
-            border: 1px solid rgba(27, 31, 35, .15);
+            border: 1px solid rgba(27, 31, 35, 0.15);
             border-radius: 2px;
             line-height: 1;
         }
     }
 }
 
-// content body
+// ========================
+// display for content body
+// ========================
 
 .ah-content-body {
-    margin-top: 2px;
-
     &-title {
         font-size: 13px;
     }
@@ -123,25 +150,5 @@
 
     &-commit-wiki {
         margin-left: 1px;
-    }
-}
-
-
-// scrollbar
-
-#ahid-body::-webkit-scrollbar {
-    width: 8px;
-
-    &-track {
-        border-radius: 4px;
-    }
-
-    &-thumb {
-        background-color: rgb(168, 168, 168);
-        border-radius: 4px;
-
-        &:hover {
-            background-color: gray;
-        }
     }
 }
