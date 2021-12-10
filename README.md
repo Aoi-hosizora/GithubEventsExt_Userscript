@@ -7,8 +7,7 @@
 
 + [x] Show repo, user and org events in human readable format.
 + [x] Support for private repo events.
-+ [x] Add some menu items to profile menu.
-+ [x] Change some details on profile page.
++ [x] Improve github profile page.
 
 ### Install
 

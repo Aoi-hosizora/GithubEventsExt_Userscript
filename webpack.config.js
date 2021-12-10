@@ -12,7 +12,7 @@ function f(f) {
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
-    devtool: 'inline-source-map',
+    devtool: 'cheap-module-source-map',
     entry: {
         main: p('./src/main.ts')
     },
