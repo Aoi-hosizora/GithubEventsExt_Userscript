@@ -44,11 +44,11 @@ export class URLInfo {
  * Github hovercard type, the string value will be used in "data-hovercard-type".
  */
 export enum HoverCardType {
-    User = 'user',
-    Repo = 'repository',
-    Commit = 'commit',
-    Issue = 'issue',
-    Pull = 'pull_request'
+    USER = 'user',
+    REPO = 'repository',
+    COMMIT = 'commit',
+    ISSUE = 'issue',
+    PULL = 'pull_request'
 }
 
 // ==================
@@ -76,87 +76,74 @@ export interface UserInfo {
  */
 export interface EventInfo {
     type: string;
-    actor: Actor;
-    repo: Repo;
+    actor: {
+        id: number;
+        login: string;
+        avatarUrl: string;
+    };
+    repo: {
+        id: number;
+        name: string;
+    };
     public: boolean;
     createdAt: string;
     payload: Payload;
 }
 
-export interface Actor {
-    id: number;
-    login: string;
-    avatarUrl: string;
-}
-
-export interface Repo {
-    id: number;
-    name: string;
-}
-
+/**
+ * Payload dto returned in EventInfo.
+ */
 export interface Payload {
     size: number;
-    commits: Commit[];
+    commits: {
+        sha: string;
+        message: string;
+    }[];
     ref: string;
     refType: string;
     description: string;
     action: string;
-    member: User;
-    issue: Issue;
-    comment: Comment;
-    forkee: Forkee;
-    pullRequest: PullRequest;
-    release: Release;
-    pages: Page[];
-}
-
-export interface Commit {
-    sha: string;
-    message: string;
-}
-
-export interface User {
-    id: number;
-    login: string;
-    htmlUrl: string;
-}
-
-export interface Issue {
-    number: number;
-    title: string;
-    body: string;
-    htmlUrl: string;
-}
-
-export interface Comment {
-    body: string;
-    commitId: string;
-    htmlUrl: string;
-}
-
-export interface Forkee {
-    fullName: string;
-    owner: User;
-    htmlUrl: string;
-}
-
-export interface PullRequest {
-    number: number;
-    title: string;
-    body: string;
-    htmlUrl: string;
-}
-
-export interface Release {
-    tagName: string;
-    name: string;
-    body: string;
-    htmlUrl: string;
-}
-
-export interface Page {
-    action: string;
-    sha: string;
-    title: string;
-    htmlUrl: string;
+    member: {
+        id: number;
+        login: string;
+        htmlUrl: string;
+    };
+    issue: {
+        number: number;
+        title: string;
+        body: string;
+        htmlUrl: string;
+    };
+    comment: {
+        body: string;
+        commitId: string;
+        htmlUrl: string;
+    };
+    forkee: {
+        fullName: string;
+        owner: {
+            id: number;
+            login: string;
+            htmlUrl: string;
+        };
+        htmlUrl: string;
+    };
+    pullRequest: {
+        number: number;
+        title: string;
+        body: string;
+        htmlUrl: string;
+    };
+    release: {
+        tagName: string;
+        name: string;
+        body: string;
+        htmlUrl: string;
+    };
+    pages: {
+        action: string;
+        sha: string;
+        title: string;
+        htmlUrl: string;
+    }[];
 }

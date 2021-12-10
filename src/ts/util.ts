@@ -1,7 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import $ from 'jquery';
 import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
 import { EventInfo, URLInfo, URLType, UserInfo } from './model';
+
 /**
  * Check the document.URL, return null if current page is not a github page.
  */

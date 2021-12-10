@@ -161,7 +161,7 @@ export function injectSidebar() {
             .replaceAll('${info.author}', info.author);
     }
     $('body').append(renderedTemplate);
-    GMApi.GM_addStyle(style);
+    GMApi.GM_addStyle(style); // <<< inject css
 
     // 2. register sidebar's UI events
     registerUIEvents();
@@ -169,4 +169,3 @@ export function injectSidebar() {
     // 3. start loading github events
     loadGithubEvents();
 }
-
