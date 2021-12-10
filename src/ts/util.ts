@@ -1,91 +1,53 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import $ from 'jquery';
 import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
-import { from, Observable } from 'rxjs';
-import { Global } from './global';
-import { RepoInfo, UrlInfo, UrlType, UserInfo } from './model';
-
-export function checkUrl(): UrlInfo | null {
-    const preserveKeywords = [
-        '', 'pulls', 'issues', 'marketplace', 'explore', 'notifications',
+import { EventInfo, URLInfo, URLType, UserInfo } from './model';
+/**
+ * Check the document.URL, return null if current page is not a github page.
+ */
+export function checkURL(): URLInfo | null {
+    const preservedEndpoint = [
+        'pulls', 'issues', 'marketplace', 'explore', 'notifications',
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
         'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
     ];
 
-    // http://xxx.github.com/xxx#xxx?xxx
+    // https://github.com/xxx#xxx?xxx
     const result = /https?:\/\/github\.com\/(.*)/.exec(document.URL);
     if (!result) {
         return null;
     }
-    var urlContent = result[result.length - 1].replaceAll(/#.*/, '').replaceAll(/\?.*/, '').replaceAll(/\/$/, '');
-    // xxx/yyy or xxx
-    const endpoint = urlContent.split('/');
+    var endpoint = result[result.length - 1].replaceAll(/(#.*|\?.*|\/$)/, '');
+    const endpoints = endpoint.split('/'); // xxx/yyy or xxx
 
-    if (endpoint.length === 0 || preserveKeywords.indexOf(endpoint[0]) !== -1) {
-        return null;
+    if (endpoints.length === 0 || preservedEndpoint.indexOf(endpoints[0]) !== -1) {
+        return new URLInfo(URLType.OTHER);
     }
-    if (endpoint.length === 1) {
+    if (endpoints.length === 1) {
         if ($('div[itemtype="http://schema.org/Organization"]').length > 0) {
-            return new UrlInfo(UrlType.Org, endpoint[0]);
+            return new URLInfo(URLType.ORG, endpoints[0]);
+        } else {
+            return new URLInfo(URLType.USER, endpoints[0]);
         }
-        return new UrlInfo(UrlType.User, endpoint[0]);
+    } else {
+        return new URLInfo(URLType.REPO, endpoints[0], endpoints[1]);
     }
-    return new UrlInfo(UrlType.Repo, endpoint[0], endpoint[1]);
 }
 
-export function fetchGithubEvents(info: UrlInfo, page: number = 1): Observable<AxiosResponse<RepoInfo[]>> {
-    const url = `${info.apiUrl}?page=${page}`;
-    const headers: any = Global.token ? { 'Authorization': `Token ${Global.token}` } : {};
-    const promise = myAxios().request<RepoInfo[]>({
-        method: 'get',
-        url,
-        headers
-    });
-    return from(promise);
-}
-
-export function fetchUserInfoCb(user: string, callback: (info: UserInfo) => any) {
-    const url = `https://api.github.com/users/${user}`;
-    const promise = myAxios().request<UserInfo>({
-        method: 'get',
-        url,
-    });
-    from(promise).subscribe({
-        next(resp: AxiosResponse<UserInfo>) {
-            callback(resp.data);
-        },
-        error(_) { }
-    });
-}
-
-export function fetchAuthorizedUserInfoCb(user: string, callback: (info: UserInfo) => any) {
-    const url = `https://api.github.com/users/${user}`;
-    const headers: any = Global.token ? { 'Authorization': `Token ${Global.token}` } : {};
-    const promise = myAxios().request<UserInfo>({
-        method: 'get',
-        url,
-        headers
-    });
-    from(promise).subscribe({
-        next(resp: AxiosResponse<UserInfo>) {
-            callback(resp.data);
-        },
-        error(_) { }
-    });
-}
-
+/**
+ * Get an AxiosInstance with camelCase data parser.
+ */
 function myAxios(): AxiosInstance {
     const mapDeep = (data: any, callback: (v: any, k: string) => string): any => {
         if (isArray(data)) {
             return data.map(innerData => mapDeep(innerData, callback));
-        } else if (isObject(data)) {
-            return mapValues(mapKeys(data, callback), val => mapDeep(val, callback));
-        } else {
-            return data;
         }
+        if (isObject(data)) {
+            return mapValues(mapKeys(data, callback), val => mapDeep(val, callback));
+        }
+        return data;
     };
-    const mapKeysCamelCase = (data: any): any =>
-        mapDeep(data, (_value: any, key: string): string => camelCase(key));
+    const mapKeysCamelCase = (data: any): any => mapDeep(data, (_value: any, key: string): string => camelCase(key));
 
     const client = axios.create();
     client.interceptors.response.use(
@@ -95,4 +57,28 @@ function myAxios(): AxiosInstance {
         }
     );
     return client;
+}
+
+/**
+ * HTTP Get user/org/repo events information.
+ */
+export async function requestGithubEvents(info: URLInfo, page: number, token: string = ''): Promise<EventInfo[]> {
+    const url = `${info.eventAPI}?page=${page}`;
+    const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
+    const resp = await myAxios().request<EventInfo[]>({
+        method: 'get', url, headers
+    });
+    return resp.data;
+}
+
+/**
+ * HTTP Get user information.
+ */
+export async function requestUserInfo(user: string, token: string = ''): Promise<UserInfo> {
+    const url = `https://api.github.com/users/${user}`;
+    const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
+    const resp = await myAxios().request<UserInfo>({
+        method: 'get', url, headers
+    });
+    return resp.data;
 }

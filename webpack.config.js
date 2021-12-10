@@ -14,7 +14,7 @@ module.exports = {
     mode: process.env.NODE_ENV || 'development',
     devtool: 'cheap-module-source-map',
     entry: {
-        main: p('./src/main.ts')
+        main: p('./src/content_script.ts')
     },
     output: {
         path: p('./dist'),

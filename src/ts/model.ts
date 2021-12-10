@@ -1,10 +1,49 @@
-export enum UrlType {
-    User = 'user',
-    Org = 'org',
-    Repo = 'repo'
+/**
+ * GitHub page's url type.
+ */
+export enum URLType {
+    USER = 'user',
+    ORG = 'org',
+    REPO = 'repo',
+    OTHER = 'other',
 }
 
-export enum Hovercard {
+/**
+ * The information of current github page's url.
+ */
+export class URLInfo {
+    public readonly authorURL: string = '';
+    public readonly repoURL: string = '';
+    public readonly eventAPI: string = '';
+    constructor(
+        public readonly type: URLType,
+        public readonly author: string = '',
+        public readonly repo: string = '',
+    ) {
+        switch (type) {
+            case URLType.OTHER:
+                return;
+            case URLType.USER:
+                this.authorURL = `https://github.com/${author}`;
+                this.eventAPI = `https://api.github.com/users/${author}/events`;
+                return;
+            case URLType.ORG:
+                this.authorURL = `https://github.com/${author}`;
+                this.eventAPI = `https://api.github.com/orgs/${author}/events`;
+                return;
+            case URLType.REPO:
+                this.authorURL = `https://github.com/${author}`;
+                this.repoURL = `https://github.com/${author}/${repo}`;
+                this.eventAPI = `https://api.github.com/repos/${author}/${repo}/events`;
+                return;
+        }
+    }
+}
+
+/**
+ * Github hovercard type, the string value will be used in "data-hovercard-type".
+ */
+export enum HoverCardType {
     User = 'user',
     Repo = 'repository',
     Commit = 'commit',
@@ -12,35 +51,13 @@ export enum Hovercard {
     Pull = 'pull_request'
 }
 
+// ==================
+// github api related
+// ==================
+
 /**
- * document.URL parse result
+ * Dto returned from https://api.github.com/users/xxx.
  */
-export class UrlInfo {
-    public authorUrl: string;
-    public repoUrl: string;
-    public apiUrl: string;
-    constructor(
-        public type: UrlType,
-        public author: string,
-        public repo: string = ''
-    ) {
-        this.authorUrl = `https://github.com/${author}`;
-        this.repoUrl = `https://github.com/${author}/${repo}/${name}`;
-
-        let endpoint: string;
-        if (this.type === UrlType.Repo) {
-            endpoint = `${author}/${repo}`;
-        } else {
-            endpoint = author;
-        }
-        this.apiUrl = `https://api.github.com/${this.type.toString()}s/${endpoint}/events`;
-    }
-}
-
-// =======================
-// github api parse result
-// =======================
-
 export interface UserInfo {
     login: string;
     name: string;
@@ -51,10 +68,13 @@ export interface UserInfo {
     privateGists: number;
     followers: number;
     following: number;
-    createdAt: Date;
+    createdAt: string;
 }
 
-export interface RepoInfo {
+/**
+ * Dto returned from https://api.github.com/[users|repos|orgs]/xxx/events.
+ */
+export interface EventInfo {
     type: string;
     actor: Actor;
     repo: Repo;

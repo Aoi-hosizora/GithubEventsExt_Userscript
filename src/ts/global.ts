@@ -1,44 +1,53 @@
 import { GMApi } from 'greasemonkey';
-import { UrlInfo } from './model';
+import { URLInfo } from './model';
 
 export class Global {
+    // Settings from storage
     public static token: string = '';
-    public static isPin: boolean = false;
+    public static pinned: boolean = false;
     public static width: number;
-    public static isHovering: boolean = false;
-    public static feedbackUrl: string = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
 
+    // Some global runtime variables
+    public static urlInfo: URLInfo;
     public static page: number = 1;
-    public static info: UrlInfo;
+    public static isHovering: boolean = false;
+
+    // Constants
+    public static readonly FEEDBACK_URL: string = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
 }
 
 export enum StorageFlag {
-    Token = 'ah-token',
-    Pin = 'ah-is-pin',
-    Width = 'ah-width'
+    TOKEN = 'ah-token',
+    PINNED = 'ah-pinned',
+    WIDTH = 'ah-width'
 }
 
-export function setStorage(flag: StorageFlag, value: any, callback?: () => void) {
-    GMApi.GM_setValue(flag.toString(), value);
-    if (callback) {
-        callback();
-    }
+export async function setStorage(flag: StorageFlag, value: any): Promise<void> {
+    return new Promise((resolve, _) => {
+        GMApi.GM_setValue(flag.toString(), value);
+        resolve();
+    });
 }
 
-export function readStorage(callback: () => void) {
-    Global.token = GMApi.GM_getValue(StorageFlag.Token.toString());
-    Global.isPin = GMApi.GM_getValue(StorageFlag.Pin.toString());
-    Global.width = GMApi.GM_getValue(StorageFlag.Width.toString());
-    callback();
+export async function getStorage(flag: StorageFlag): Promise<any> {
+    return new Promise((resolve, _) => {
+        var value = GMApi.GM_getValue(flag.toString());
+        resolve(value);
+    });
 }
 
-export function getStorage(flag: StorageFlag, callback: (item: any) => void) {
-    callback(GMApi.GM_getValue(flag.toString()));
+export async function removeStorage(flag: StorageFlag): Promise<void> {
+    return new Promise((resolve, _) => {
+        GMApi.GM_deleteValue(flag.toString());
+        resolve();
+    })
 }
 
-export function removeStorage(flag: StorageFlag, callback?: () => void) {
-    GMApi.GM_deleteValue(flag.toString());
-    if (callback) {
-        callback();
-    }
+export async function readStorageToGlobal(): Promise<void> {
+    return new Promise((resolve, _) => {
+        Global.token = GMApi.GM_getValue(StorageFlag.TOKEN.toString());
+        Global.pinned = GMApi.GM_getValue(StorageFlag.PINNED.toString());
+        Global.width = GMApi.GM_getValue(StorageFlag.WIDTH.toString());
+        resolve();
+    });
 }
