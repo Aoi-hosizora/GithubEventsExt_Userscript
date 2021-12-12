@@ -71107,15 +71107,15 @@ function adjustGithubUI() {
         }, 1000);
     };
     avatarMenuSummary.on('mouseenter', menuHoverHdl);
-    if (global_1.Global.urlInfo.type === model_1.URLType.REPO) {
-        jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
-    }
     if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
-        adjustUserProfileUI();
+        adjustUserUIObservably();
+    }
+    else if (global_1.Global.urlInfo.type == model_1.URLType.REPO) {
+        adjustRepoUIObservably();
     }
 }
 exports.adjustGithubUI = adjustGithubUI;
-function adjustUserProfileUI(observe = true) {
+function adjustUserUIObservably(observe = true) {
     return __awaiter(this, void 0, void 0, function* () {
         const isMe = jquery_1.default('div.js-profile-editable-area button').length;
         try {
@@ -71157,7 +71157,26 @@ function adjustUserProfileUI(observe = true) {
                 if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
                     const el = mut.target;
                     if (!el.classList.contains("is-loading")) {
-                        adjustUserProfileUI(false);
+                        adjustUserUIObservably(false);
+                    }
+                }
+            }));
+            observer.observe(progressSpan, { attributes: true });
+        }
+    });
+}
+function adjustRepoUIObservably(observe = true) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (global_1.Global.urlInfo.type === model_1.URLType.REPO) {
+            jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+        }
+        if (observe) {
+            const progressSpan = jquery_1.default("span.progress-pjax-loader")[0];
+            const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
+                if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
+                    const el = mut.target;
+                    if (!el.classList.contains("is-loading")) {
+                        adjustRepoUIObservably(false);
                     }
                 }
             }));
