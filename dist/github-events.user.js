@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Github events
-// @version      1.0.7
+// @version      1.0.8
 // @author       Aoi-hosizora
 // @description  A userscript extension that let browser show GitHub activity events.
 // @namespace    https://github.com/
@@ -70797,9 +70797,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! ./ts/extension */ "./src/ts/extension.ts");
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const util_1 = __webpack_require__(/*! ./ts/util */ "./src/ts/util.ts");
 const global_1 = __webpack_require__(/*! ./ts/global */ "./src/ts/global.ts");
 const main_1 = __webpack_require__(/*! ./ts/main */ "./src/ts/main.ts");
+const util_1 = __webpack_require__(/*! ./ts/util */ "./src/ts/util.ts");
 jquery_1.default(() => {
     onLoaded();
 });
@@ -71152,7 +71152,7 @@ function adjustUserUIObservably(observe = true) {
         catch (_) { }
         jquery_1.default('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
         if (observe) {
-            const progressSpan = jquery_1.default("span.progress-pjax-loader")[0];
+            const progressSpan = jquery_1.default('span.progress-pjax-loader')[0];
             const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
                 if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
                     const el = mut.target;
@@ -71170,8 +71170,31 @@ function adjustRepoUIObservably(observe = true) {
         if (global_1.Global.urlInfo.type === model_1.URLType.REPO) {
             jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
         }
+        const repoName = `${global_1.Global.urlInfo.author}/${global_1.Global.urlInfo.repo}`;
+        const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
+        watchCounterSpan.attr('style', 'display: inline-block;');
+        if (!jquery_1.default('#repo-notifications-counter-a').length) {
+            watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
+        }
+        const forkCounterSpan = jquery_1.default('#repo-network-counter');
+        forkCounterSpan.attr('style', 'display: inline-block;');
+        if (!jquery_1.default('#repo-network-counter-a').length) {
+            forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+        }
+        const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
+        starCounterSpan.attr('style', 'display: inline-block;');
+        if (!jquery_1.default('#repo-stars-counter-a').length) {
+            starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
+            starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
+            jquery_1.default('#repo-stars-counter-unstar').attr('style', 'display: none;');
+            const unstarForm = jquery_1.default('form.unstarred.js-social-form.BtnGroup-parent');
+            jquery_1.default('#repo-stars-counter-a').insertAfter(unstarForm);
+            const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
+            starSummary.removeClass('px-2');
+            starSummary.addClass('px-1');
+        }
         if (observe) {
-            const progressSpan = jquery_1.default("span.progress-pjax-loader")[0];
+            const progressSpan = jquery_1.default('span.progress-pjax-loader')[0];
             const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
                 if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
                     const el = mut.target;
@@ -71739,7 +71762,7 @@ function checkURL() {
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
         'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
     ];
-    const result = /https?:\/\/github\.com\/(.*)/.exec(document.URL);
+    const result = /https?:\/\/github\.com\/(.+)/.exec(document.URL);
     if (!result) {
         return null;
     }

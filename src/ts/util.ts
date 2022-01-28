@@ -14,7 +14,7 @@ export function checkURL(): URLInfo | null {
     ];
 
     // https://github.com/xxx#xxx?xxx
-    const result = /https?:\/\/github\.com\/(.*)/.exec(document.URL);
+    const result = /https?:\/\/github\.com\/(.+)/.exec(document.URL);
     if (!result) {
         return null;
     }
