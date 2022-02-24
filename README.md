@@ -1,19 +1,26 @@
-# GithubEvents_TamperMonkey
+# GithubEventsExt_Userscript
 
-+ A userscript extension that let browser show GitHub activity events.
++ A Userscript (Tampermonkey) extension that let browser show GitHub activity events.
 + For chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
 
 ### Functions
 
 + [x] Show repo, user and org events in human readable format.
-+ [x] Support for private repo events.
-+ [x] Improve github profile page.
++ [x] Improve several GitHub UI details.
 
 ### Install
 
-+ Install `TamperMonkey` / `GreaseMonkey` extension for your browser.
-+ Visit https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/raw/master/dist/github-events.user.js and install the userscript.
-> + For more information, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt)
++ Install `Tampermonkey` / `Greasemonkey` extension for your browser (Chrome, Edge, Firefox, etc).
++ Visit https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/raw/master/dist/github-events.user.js.
++ Click the "Install" button to install the extension.
+
+![how-to-install.jpg](./assets/how-to-install.jpg)
+
+### Screenshot
+
+![screenshot-sidebar](./assets/screenshot-sidebar.jpg)
+
+![screenshot-setting](./assets/screenshot-setting.jpg)
 
 ### References
 

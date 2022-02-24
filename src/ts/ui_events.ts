@@ -23,7 +23,7 @@ export async function loadGithubEvents() {
     switchDisplayMode({ isLoading: true, isError: false });
     var infos: EventInfo[];
     try {
-        infos = await requestGithubEvents(Global.urlInfo, Global.page, Global.token);
+        infos = await requestGithubEvents(Global.urlInfo.eventAPI, Global.page, Global.token);
     } catch (ex) {
         if (Global.page === 1) {
             switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex as string });

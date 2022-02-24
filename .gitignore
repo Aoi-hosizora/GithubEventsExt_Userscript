@@ -6,8 +6,7 @@
 
 ### Project ###
 node_modules/
-# dist/
-*.map
+dist/
 
 ### My ###
 demo.json

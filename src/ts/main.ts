@@ -1,4 +1,4 @@
-import { GMApi } from 'greasemonkey';
+import GMApi from 'greasemonkey';
 import $ from 'jquery';
 import moment from 'moment';
 import template from '../html/template.html';

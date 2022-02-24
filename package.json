@@ -1,7 +1,7 @@
 {
-    "name": "githubevents_tampermonkey",
-    "version": "1.0.2",
-    "description": "Let github shows users and repos activity events",
+    "name": "githubeventsext_userscript",
+    "version": "1.0.8",
+    "description": "A Userscript extension that let browser show GitHub activity events.",
     "main": "index.js",
     "scripts": {
         "watch": "rm dist -rf && webpack -w",
@@ -9,14 +9,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey.git"
+        "url": "git+https://github.com/Aoi-hosizora/GithubEventsExt_Userscript.git"
     },
     "author": "Aoi-hosizora",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/issues"
+        "url": "https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/issues"
     },
-    "homepage": "https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey#readme",
+    "homepage": "https://github.com/Aoi-hosizora/GithubEventsExt_Userscript#readme",
     "devDependencies": {
         "@types/greasemonkey": "^4.0.0",
         "@types/jquery": "^3.3.0",

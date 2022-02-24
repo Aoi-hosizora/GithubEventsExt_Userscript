@@ -63,8 +63,8 @@ function myAxios(): AxiosInstance {
 /**
  * HTTP Get user/org/repo events information.
  */
-export async function requestGithubEvents(info: URLInfo, page: number, token: string = ''): Promise<EventInfo[]> {
-    const url = `${info.eventAPI}?page=${page}`;
+export async function requestGithubEvents(eventAPI: string, page: number, token: string = ''): Promise<EventInfo[]> {
+    const url = `${eventAPI}?page=${page}`;
     const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
     const resp = await myAxios().request<EventInfo[]>({
         method: 'get', url, headers

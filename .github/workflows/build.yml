@@ -1,0 +1,36 @@
+name: build-extension
+
+on:
+  push:
+    branches:
+      - master
+    strategy:
+      matrix:
+        node-version: 14.16.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Checkout action
+        uses: actions/checkout@v2
+
+      - name: Build extension
+        run: |
+          apt update && apt install sass
+          npm i
+          npm run build
+
+      - name: Copy to branch
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          FOLDER: dist
+          REPO: self
+          BRANCH: dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: "Build from {sha}"
