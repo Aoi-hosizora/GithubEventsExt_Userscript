@@ -1,0 +1,13 @@
+### Editor ###
+.idea/
+.vscode/
+.ionide/
+.history/
+
+### Project ###
+node_modules/
+dist/
+
+### My ###
+demo.json
+.token
