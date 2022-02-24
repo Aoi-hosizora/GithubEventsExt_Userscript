@@ -22,7 +22,8 @@ jobs:
 
       - name: Build extension
         run: |
-          apt update && apt install sass
+          sudo apt-get update
+          sudo apt-get install sass -y
           npm i
           npm run build
 

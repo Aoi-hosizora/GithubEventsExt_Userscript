@@ -11,7 +11,7 @@
 ### Install
 
 + Install `Tampermonkey` / `Greasemonkey` extension for your browser (Chrome, Edge, Firefox, etc).
-+ Visit https://github.com/Aoi-hosizora/GithubEvents_TamperMonkey/raw/master/dist/github-events.user.js.
++ Visit https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/dist/github-events.user.js (build by GitHub Actions).
 + Click the "Install" button to install the extension.
 
 ![how-to-install.jpg](./assets/how-to-install.jpg)
