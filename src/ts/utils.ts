@@ -4,7 +4,7 @@ import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
 import { EventInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
 
 /**
- * Check the document.URL, return null if current page is not a github page.
+ * Check the document.URL, return null if current page is not a GitHub page.
  */
 export function checkURL(): URLInfo | null {
     const preservedEndpoint = [
@@ -28,11 +28,27 @@ export function checkURL(): URLInfo | null {
         if ($('div[itemtype="http://schema.org/Organization"]').length > 0) {
             return new URLInfo(URLType.ORG, endpoints[0]);
         } else {
-            return new URLInfo(URLType.USER, endpoints[0]);
+            const isMe = $('div.js-profile-editable-area button').length > 0;
+            return new URLInfo(URLType.USER, endpoints[0], '', isMe);
         }
     } else {
         return new URLInfo(URLType.REPO, endpoints[0], endpoints[1]);
     }
+}
+
+/**
+ * Use MutationObserver to observe the attributes of given HTMLElement.
+ */
+export function observeAttributes(el: HTMLElement, callback: (record: MutationRecord, el: Element) => void): MutationObserver {
+    const observer = new MutationObserver(records => {
+        records.forEach(record => {
+            if (record.type === 'attributes' && record.target.nodeType == record.target.ELEMENT_NODE) {
+                callback(record, record.target as Element);
+            }
+        });
+    });
+    observer.observe(el, { attributes: true });
+    return observer;
 }
 
 /**
@@ -63,7 +79,7 @@ function myAxios(): AxiosInstance {
 /**
  * HTTP Get user/org/repo events information.
  */
-export async function requestGithubEvents(eventAPI: string, page: number, token: string = ''): Promise<EventInfo[]> {
+export async function requestGitHubEvents(eventAPI: string, page: number, token: string = ''): Promise<EventInfo[]> {
     const url = `${eventAPI}?page=${page}`;
     const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
     const resp = await myAxios().request<EventInfo[]>({

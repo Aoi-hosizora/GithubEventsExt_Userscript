@@ -35,14 +35,14 @@
     }
 
     svg {
-        margin-top: -3px;
+        margin-top: -5px;
         margin-right: -3px;
         color: white;
     }
 }
 
 #ahid-subtitle {
-    margin-top: 6px;
+    margin-top: 7px;
     font-size: 8px;
 
     a:-webkit-any-link {
@@ -62,10 +62,12 @@
 
 #ahid-commands {
     position: absolute;
-    top: 40px;
+    top: 39px;
     left: 12px;
 
-    a {
+    a,
+    details {
+        display: inline;
         position: relative;
         text-decoration: none;
     }
@@ -75,6 +77,49 @@
 
         &:hover {
             fill: white;
+        }
+    }
+}
+
+$body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+#ahid-commands details {
+    summary {
+        list-style: none;
+    }
+
+    details-menu {
+        top: 24px;
+        right: -11.8px;
+        z-index: 99;
+        width: 450px;
+
+        label,
+        a,
+        button {
+            display: block;
+            font-family: $body-font-family;
+            font-weight: 400 !important;
+
+            svg {
+                margin-right: 5px;
+                fill: currentColor;
+            }
+        }
+
+        .ah-checkable {
+            svg {
+                display: none;
+            }
+
+            &.ah-enabled svg {
+                display: inline-block;
+            }
+        }
+
+        .dropdown-divider {
+            margin: 4px 0;
         }
     }
 }
@@ -93,16 +138,20 @@
     }
 }
 
-#ahid-feedback {
-    left: 3px;
-}
-
 #ahid-refresh {
     left: 1px;
-    top: -1px;
 }
 
 #ahid-setting {
     left: 1px;
     top: -2px;
+}
+
+.ah-hover-underline {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline !important;
+        color: #79b7ff;
+    }
 }

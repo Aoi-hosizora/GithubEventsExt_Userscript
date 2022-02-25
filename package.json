@@ -1,12 +1,13 @@
 {
-    "name": "githubeventsext_userscript",
-    "title": "GitHub events extension",
+    "name": "github-events-ext-userscript",
+    "title": "Github events",
     "version": "1.0.8",
     "description": "A Userscript extension that let browser show GitHub activity events.",
     "main": "index.js",
     "scripts": {
         "watch": "rm dist -rf && webpack -w",
-        "build": "rm dist -rf && webpack"
+        "build": "rm dist -rf && webpack",
+        "serve": "sh serve_local.sh"
     },
     "repository": {
         "type": "git",

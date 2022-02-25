@@ -1,19 +1,18 @@
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import { onActionClicked } from '@src/ts/background';
-import { Global, setStorage, StorageFlag } from '@src/ts/global';
+import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/global';
 import { EventInfo } from '@src/ts/model';
 import { formatInfoToLi } from '@src/ts/sidebar_ui';
-import { requestGithubEvents } from '@src/ts/util';
+import { requestGitHubEvents } from '@src/ts/utils';
 
 // ===============
 // request related
 // ===============
 
 /**
- * Start loading the specific page of github events !!!
+ * Start loading the specific page of GitHub events !!!
  */
-export async function loadGithubEvents() {
+export async function loadGitHubEvents() {
     const ulTag = $('#ahid-list');
     if (Global.page == 1) {
         ulTag.html('');
@@ -23,7 +22,7 @@ export async function loadGithubEvents() {
     switchDisplayMode({ isLoading: true, isError: false });
     var infos: EventInfo[];
     try {
-        infos = await requestGithubEvents(Global.urlInfo.eventAPI, Global.page, Global.token);
+        infos = await requestGitHubEvents(Global.urlInfo.eventAPI, Global.page, Global.token);
     } catch (ex) {
         if (Global.page === 1) {
             switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex as string });
@@ -46,11 +45,11 @@ export async function loadGithubEvents() {
 }
 
 /**
- * Start loading next page of github events.
+ * Start loading next page of GitHub events.
  */
-async function loadNextGithubEvents() {
+async function loadNextGitHubEvents() {
     ++Global.page;
-    await loadGithubEvents();
+    await loadGitHubEvents();
 }
 
 /**
@@ -85,7 +84,7 @@ function switchDisplayMode(arg: { isLoading: boolean, isError: boolean, errorMes
 }
 
 // =================
-// ui events related
+// UI events related
 // =================
 
 /**
@@ -105,11 +104,13 @@ export function registerUIEvents() {
 
     // buttons events
     $('#ahid-pin').on('click', () => pinSidebar(!Global.pinned));
-    $('#ahid-feedback').on('click', () => window.open(Global.FEEDBACK_URL));
-    $('#ahid-refresh').on('click', () => { adjustBodyLayout(); Global.page = 1; loadGithubEvents(); });
-    $('#ahid-more').on('click', () => loadNextGithubEvents());
-    $('#ahid-retry').on('click', () => { Global.page = 1; loadGithubEvents(); });
-    $('#ahid-setting').on('click', () => onActionClicked());
+    $('#ahid-refresh').on('click', () => { adjustBodyLayout(); Global.page = 1; loadGitHubEvents(); });
+    $('#ahid-more').on('click', () => loadNextGitHubEvents());
+    $('#ahid-retry').on('click', () => { Global.page = 1; loadGitHubEvents(); });
+
+    // process menu items' UI and event
+    $('#ahid-setup-token').on('click', () => setTimeout(() => askToSetupToken(), 30));
+    processMenuSwitchers();
 
     // resize events
     registerResizeEvent();
@@ -153,8 +154,41 @@ function pinSidebar(needPin: boolean) {
         pinTag.removeClass('ah-pined');
     }
     Global.pinned = needPin;
-    setStorage(StorageFlag.PINNED, Global.pinned);
+    setStorage(StorageFlag.PINNED, Global.pinned); // also update Global
     adjustBodyLayout();
+}
+
+/**
+ * Update the UI of menu switcher items, and register its click events.
+ */
+function processMenuSwitchers() {
+    async function updateUIAndRegisterEvent(el: JQuery<HTMLElement>, flag: StorageFlag) {
+        if (!el.hasClass('ah-checkable')) {
+            return; // unreachable
+        }
+        // update ui
+        if (await getStorage<boolean>(flag, true)) { // do not query from Global
+            el.addClass('ah-enabled');
+        } else {
+            el.removeClass('ah-enabled');
+        }
+        // register event
+        el.on('click', () => setTimeout(async () => {
+            if (await getStorage<boolean>(flag, true)) { // do not query from Global
+                await setStorage(flag, false); // do not update Global
+                el.removeClass('ah-enabled');
+            } else {
+                await setStorage(flag, true); // do not update Global
+                el.addClass('ah-enabled');
+            }
+        }, 30));
+    }
+
+    updateUIAndRegisterEvent($('#ahid-setup-follow-menu'), StorageFlag.SHOW_FOLLOW_MENU,);
+    updateUIAndRegisterEvent($('#ahid-setup-center-follow'), StorageFlag.CENTER_FOLLOW_TEXT,);
+    updateUIAndRegisterEvent($('#ahid-setup-joined-time'), StorageFlag.SHOW_JOINED_TIME,);
+    updateUIAndRegisterEvent($('#ahid-setup-user-counter'), StorageFlag.SHOW_USER_PRIVATE_COUNTER,);
+    updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER,);
 }
 
 // =========================
@@ -184,7 +218,7 @@ function registerResizeEvent() {
     const event = () => {
         if (Global.width !== navTag.width()!!) {
             Global.width = navTag.width()!!;
-            setStorage(StorageFlag.WIDTH, Global.width);
+            setStorage(StorageFlag.WIDTH, Global.width); // also update Global
         }
         adjustBodyLayout(false);
     };

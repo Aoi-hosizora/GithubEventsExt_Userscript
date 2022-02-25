@@ -10,8 +10,8 @@
 //
 // @downloadURL  https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js
 // @updateURL    https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/src/etc/banner.js
-// @icon         https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/image/icon16.png
-// @icon64       https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/image/icon32.png
+// @icon         https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/img/icon16.png
+// @icon64       https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/img/icon32.png
 //
 // @run-at       document-start
 // @grant        GM_setValue

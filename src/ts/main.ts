@@ -4,191 +4,219 @@ import moment from 'moment';
 import template from '@src/html/template.html';
 import style from '@src/scss/core.scss';
 import { Global } from '@src/ts/global';
-import { URLType } from '@src/ts/model';
-import { loadGithubEvents, registerUIEvents } from '@src/ts/ui_events';
-import { requestUserInfo } from '@src/ts/util';
+import { URLType, UserInfo } from '@src/ts/model';
+import { loadGitHubEvents, registerUIEvents } from '@src/ts/ui_events';
+import { observeAttributes, requestUserInfo } from '@src/ts/utils';
+import { getPathTag } from '@src/ts/sidebar_ui';
 
 /**
- * Adjust github UI.
+ * Adjust GitHub UI !!!
  */
-export function adjustGithubUI() {
-    // 1. modify github shadow header z-index
-    const stuckHeader = $("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
-    const headerShadow = $("div#partial-discussion-header div.gh-header-shadow");
-    if (stuckHeader.length && headerShadow.length) {
-        stuckHeader.css('z-index', '89');
-        headerShadow.css('z-index', '88');
-    }
+export function adjustGitHubUI() {
+    // 1. global UI
+    adjustGlobalUIDirectly();
 
-    // 2. insert items to profile menu
-    const avatarMenuSummary = $('summary.Header-link[aria-label="View profile and more"]');
-    const menuHoverHdl = () => {
-        avatarMenuSummary.off('mouseenter', menuHoverHdl);
-        const intervalHdl = setInterval(() => {
-            if ($('details-menu a[data-ga-click$="your followers"]').length) {
-                clearInterval(intervalHdl);
-                return;
-            }
-            const username = $('details-menu a[data-ga-click$="Signed in as"] strong')!!.text();
-            if (!username) {
-                return;
-            }
-
-            const yourGistsMenuItem = $('details-menu a[data-ga-click$="your gists"]');
-            $('<a>', {
-                role: 'menuitem',
-                class: 'dropdown-item',
-                href: `/${username}?tab=followers`,
-                text: 'Your followers',
-                'data-ga-click': 'Header, go to followers, text:your followers'
-            }).insertBefore(yourGistsMenuItem);
-            $('<a>', {
-                role: 'menuitem',
-                class: 'dropdown-item',
-                href: `/${username}?tab=following`,
-                text: 'Your following',
-                'data-ga-click': 'Header, go to followings, text:your following'
-            }).insertBefore(yourGistsMenuItem);
-            $('<a>', {
-                role: 'menuitem',
-                class: 'dropdown-item',
-                href: '/',
-                text: 'GitHub Homepage',
-                'data-ga-click': 'Header, go to homepage, text:homepage'
-            }).insertAfter(yourGistsMenuItem);
-        }, 1000);
-    };
-    avatarMenuSummary.on('mouseenter', menuHoverHdl);
-
-    // 3. update user profile and repo page with MutationObserver
+    // 2. user UI
     if (Global.urlInfo.type == URLType.USER) {
         adjustUserUIObservably();
-    } else if (Global.urlInfo.type == URLType.REPO) {
+    }
+
+    // 3. repo UI
+    if (Global.urlInfo.type == URLType.REPO) {
         adjustRepoUIObservably();
     }
 }
 
 /**
- * Adjust github user profile UI with observer.
+ * Adjust GitHub global UI without observer.
  */
-async function adjustUserUIObservably(observe: boolean = true) {
-    // 1. add join time and private counters
-    const isMe = $('div.js-profile-editable-area button').length;
-    try {
-        const info = await requestUserInfo(Global.urlInfo.author, Global.token);
-        if (info.createdAt) {
-            const joinTimeString = moment(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
-            const joinTimeLi = $('ul.vcard-details li[itemprop="join time"]');
-            if (!joinTimeLi.length) {
-                $('ul.vcard-details').append(
-                    `<li class="vcard-detail pt-1" itemprop="join time">
-                        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
-                            <path fill-rule="evenodd" d="M14.064 0a8.75 8.75 0 00-6.187 2.563l-.459.458c-.314.314-.616.641-.904.979H3.31a1.75 1.75 0 00-1.49.833L.11 7.607a.75.75 0 00.418 1.11l3.102.954c.037.051.079.1.124.145l2.429 2.428c.046.046.094.088.145.125l.954 3.102a.75.75 0 001.11.418l2.774-1.707a1.75 1.75 0 00.833-1.49V9.485c.338-.288.665-.59.979-.904l.458-.459A8.75 8.75 0 0016 1.936V1.75A1.75 1.75 0 0014.25 0h-.186zM10.5 10.625c-.088.06-.177.118-.266.175l-2.35 1.521.548 1.783 1.949-1.2a.25.25 0 00.119-.213v-2.066zM3.678 8.116L5.2 5.766c.058-.09.117-.178.176-.266H3.309a.25.25 0 00-.213.119l-1.2 1.95 1.782.547zm5.26-4.493A7.25 7.25 0 0114.063 1.5h.186a.25.25 0 01.25.25v.186a7.25 7.25 0 01-2.123 5.127l-.459.458a15.21 15.21 0 01-2.499 2.02l-2.317 1.5-2.143-2.143 1.5-2.317a15.25 15.25 0 012.02-2.5l.458-.458h.002zM12 5a1 1 0 11-2 0 1 1 0 012 0zm-8.44 9.56a1.5 1.5 0 10-2.12-2.12c-.734.73-1.047 2.332-1.15 3.003a.23.23 0 00.265.265c.671-.103 2.273-.416 3.005-1.148z"></path>
-                        </svg>
-                        <span>Joined at ${joinTimeString}</span>
-                    </li>`
-                );
+function adjustGlobalUIDirectly() {
+    // 1. add menu items to avatar dropdown menu
+    if (Global.showFollowMenu) {
+        const avatarDetails = $('header div.Header-item:last-child details')[0];
+        const observer = observeAttributes(avatarDetails, (record, el) => {
+            if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
+                return;
             }
+            observer.disconnect(); // menu has been opened once, just disconnect the observer
+            // use setInterval to wait for the menu updated
+            const handler = setInterval(() => {
+                if ($('details-menu a[data-ga-click$="your followers"]').length) {
+                    clearInterval(handler); // done
+                    return;
+                }
+                const username = $('details-menu a[data-ga-click$="Signed in as"]')!!.text();
+                if (username) { // wait until items appeared
+                    const gistsMenuItem = $('details-menu a[data-ga-click$="gists"]')!!;
+                    const upgradeMenuItem = $('details-menu a[data-ga-click$="upgrade"]')!!;
+                    $('<a>', {
+                        role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=followers`,
+                        text: 'Your followers', 'data-ga-click': 'Header, go to followers, text:your followers'
+                    }).insertBefore(gistsMenuItem);
+                    $('<a>', {
+                        role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=following`,
+                        text: 'Your following', 'data-ga-click': 'Header, go to followings, text:your following'
+                    }).insertBefore(gistsMenuItem);
+                    $('<a>', {
+                        role: 'menuitem', class: 'dropdown-item', href: '/',
+                        text: 'GitHub Homepage', 'data-ga-click': 'Header, go to homepage, text:homepage'
+                    }).insertBefore(upgradeMenuItem);
+                }
+            }, 250);
+        });
+    }
+}
+
+/**
+ * Adjust GitHub user profile UI with observer.
+ */
+function adjustUserUIObservably() {
+    async function handler() {
+        // 0. get user information
+        let info: UserInfo | undefined;
+        if (Global.showJoinedTime || Global.showUserPrivateCounter) {
+            try {
+                info = await requestUserInfo(Global.urlInfo.author, Global.token);
+            } catch (_) { }
         }
-        if (isMe && Global.token) {
+
+        // 1. center follow* text
+        if (Global.centerFollowText) {
+            $('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
+        }
+
+        // 2. add joined time 
+        if (Global.showJoinedTime && info && info.createdAt && !$('ul.vcard-details li[itemprop="join time"]').length) {
+            const time = moment(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
+            $('ul.vcard-details').append(
+                `<li class="vcard-detail pt-1" itemprop="join time">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
+                        ${getPathTag('rocket')}
+                    </svg>
+                    <span>Joined at ${time}</span>
+                </li>`
+            );
+        }
+
+        // 3. add private counters
+        if (Global.showUserPrivateCounter && info && Global.urlInfo.isMe && Global.token) {
             for (const navItem of $('nav a.UnderlineNav-item')) {
                 const counterSpan = navItem.getElementsByTagName('span');
                 if (!counterSpan.length) {
                     continue;
                 }
-                if (navItem.innerText.includes('Repositories') && info.totalPrivateRepos) {
-                    counterSpan[0].setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
-                    counterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
-                } else if (navItem.innerText.includes('Gists') && info.privateGists) {
-                    counterSpan[0].setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
-                    counterSpan[0].textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+                const text = navItem.innerText, span = counterSpan[0];
+                if (text.includes('Repositories') && info.totalPrivateRepos) {
+                    span.setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
+                    span.textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+                } else if (text.includes('Gists') && info.privateGists) {
+                    span.setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
+                    span.textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
                 }
             }
+        };
+    }
+
+    // ===> start here
+    handler();
+    observeAttributes($('span.progress-pjax-loader')[0], (record, el) => {
+        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
+            handler();
         }
-    } catch (_) { }
-
-    // 2. center align follow* text
-    $('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center')
-
-    // *. observe route change
-    if (observe) {
-        const progressSpan = $('span.progress-pjax-loader')[0];
-        const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
-            if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
-                const el = mut.target as Element;
-                if (!el.classList.contains("is-loading")) {
-                    adjustUserUIObservably(false);
-                }
-            }
-        }));
-        observer.observe(progressSpan, { attributes: true });
-    }
+    });
 }
 
 /**
- * Adjust github repo UI with observer.
+ * Adjust GitHub repo UI with observer.
  */
-async function adjustRepoUIObservably(observe: boolean = true) {
-    // 1. improve repo page margin under octotree
-    if (Global.urlInfo.type === URLType.REPO) {
-        $('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
-    }
+function adjustRepoUIObservably() {
+    async function handler() {
+        // 1. adjust stuck header z-index
+        const stuckHeader = $("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
+        const headerShadow = $("div#partial-discussion-header div.gh-header-shadow");
+        if (stuckHeader.length && headerShadow.length) {
+            stuckHeader.css('z-index', '89');
+            headerShadow.css('z-index', '88');
+        }
 
-    // 2. show counter and add link for page head buttons
-    const repoName = `${Global.urlInfo.author}/${Global.urlInfo.repo}`
-    const watchCounterSpan = $('#repo-notifications-counter');
-    watchCounterSpan.attr('style', 'display: inline-block;');
-    if (!$('#repo-notifications-counter-a').length) {
-        watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
-    }
-    const forkCounterSpan = $('#repo-network-counter');
-    forkCounterSpan.attr('style', 'display: inline-block;')
-    if (!$('#repo-network-counter-a').length) {
-        forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
-    }
-    const starCounterSpan = $('#repo-stars-counter-star');
-    starCounterSpan.attr('style', 'display: inline-block;');
-    if (!$('#repo-stars-counter-a').length) {
-        // => <a #counter-a><span><span #counter-star>
-        starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
-        starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
-        $('#repo-stars-counter-unstar').attr('style', 'display: none;');
-        const unstarForm = $('form.unstarred.js-social-form.BtnGroup-parent');
-        $('#repo-stars-counter-a').insertAfter(unstarForm);
-        const starSummary = $('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
-        starSummary.removeClass('px-2');
-        starSummary.addClass('px-1');
-    }
+        // 2. improve repo page margin when using octotree
+        if ($('nav.octotree-sidebar').length) {
+            $('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+        }
 
-    // *. observe route change
-    if (observe) {
-        const progressSpan = $('span.progress-pjax-loader')[0];
-        const observer = new MutationObserver(mutationList => mutationList.forEach(mut => {
-            if (mut.type === 'attributes' && mut.attributeName == 'class' && mut.target.nodeType == mut.target.ELEMENT_NODE) {
-                const el = mut.target as Element;
-                if (!el.classList.contains("is-loading")) {
-                    adjustRepoUIObservably(false);
-                }
+        // 3. show counter and add link for page head buttons
+        if (Global.showRepoActionCounter) {
+            const repoName = `${Global.urlInfo.author}/${Global.urlInfo.repo}`
+            const watchCounterSpan = $('#repo-notifications-counter');
+            watchCounterSpan.attr('style', 'display: inline-block;');
+            watchCounterSpan.addClass('ah-hover-underline');
+            if (!$('#repo-notifications-counter-a').length) {
+                watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
             }
-        }));
-        observer.observe(progressSpan, { attributes: true });
+            const forkCounterSpan = $('#repo-network-counter');
+            forkCounterSpan.attr('style', 'display: inline-block;')
+            forkCounterSpan.addClass('ah-hover-underline');
+            if (!$('#repo-network-counter-a').length) {
+                forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+            }
+            const starCounterSpan = $('#repo-stars-counter-star');
+            const unstarCounterSpan = $('#repo-stars-counter-unstar');
+            starCounterSpan.attr('style', 'display: inline-block;');
+            starCounterSpan.addClass('ah-hover-underline');
+            unstarCounterSpan.attr('style', 'display: none;');
+            if (!$('#repo-stars-counter-a').length) {
+                // => <a #counter-a><span .btn><span #counter-star>...</span></span></a>
+                starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
+                starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
+                $('#repo-stars-counter-a').insertAfter($('form.unstarred.js-social-form.BtnGroup-parent'));
+                const starSummary = $('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
+                starSummary.removeClass('px-2');
+                starSummary.addClass('px-1');
+            };
+        }
     }
+
+    // ===> start here
+    handler();
+    observeAttributes($('span.progress-pjax-loader')[0], (record, el) => {
+        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
+            handler();
+        }
+    });
 }
 
 /**
-  * Add sidebar to github !!!
+  * Add sidebar to GitHub !!!
  */
 export function injectSidebar() {
     const info = Global.urlInfo;
     if (info.type === URLType.OTHER) {
+        // only show sidebar on user, org, repo page
         return;
     }
 
-    // 1. inject template into github page
+    // 1. inject html into GitHub page
+    $('body').append(getSidebarHtml());
+    GMApi.GM_addStyle(style);
+
+    // 2. register sidebar's UI events
+    registerUIEvents();
+
+    // 3. start loading GitHub events
+    loadGitHubEvents();
+}
+
+/**
+ * Get and format sidebar html from template.
+ */
+function getSidebarHtml(): string {
+    const info = Global.urlInfo;
     let renderedTemplate = template
         .replaceAll(/<!--[\s\S]+?-->/, '')
         .replaceAll('${urlType}', info.type.toString())
-        .replaceAll('${apiUrl}', info.eventAPI);
+        .replaceAll('${apiUrl}', info.eventAPI)
+        .replaceAll('${checkedPath}', getPathTag('checked'))
+        .replaceAll('${feedbackUrl}', Global.FEEDBACK_URL);
 
     const reAuthor = /\$\{if isAuthor\}([\s\S]+?)\$\{endif\}/m;
     const reRepo = /\$\{if isRepo\}([\s\S]+?)\$\{endif\}/m;
@@ -207,12 +235,6 @@ export function injectSidebar() {
             .replaceAll('${info.authorUrl}', info.authorURL)
             .replaceAll('${info.author}', info.author);
     }
-    $('body').append(renderedTemplate);
-    GMApi.GM_addStyle(style); // <<< inject css
 
-    // 2. register sidebar's UI events
-    registerUIEvents();
-
-    // 3. start loading github events
-    loadGithubEvents();
+    return renderedTemplate;
 }

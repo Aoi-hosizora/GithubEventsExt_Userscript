@@ -9,7 +9,7 @@ export enum URLType {
 }
 
 /**
- * The information of current github page's url.
+ * The information of current GitHub page's url.
  */
 export class URLInfo {
     public readonly authorURL: string = '';
@@ -19,6 +19,7 @@ export class URLInfo {
         public readonly type: URLType,
         public readonly author: string = '',
         public readonly repo: string = '',
+        public readonly isMe: boolean = false,
     ) {
         switch (type) {
             case URLType.OTHER:
@@ -41,7 +42,7 @@ export class URLInfo {
 }
 
 /**
- * Github hovercard type, the string value will be used in "data-hovercard-type".
+ * GitHub hovercard type, the string value will be used in "data-hovercard-type".
  */
 export enum HoverCardType {
     USER = 'user',
@@ -52,7 +53,7 @@ export enum HoverCardType {
 }
 
 // ==================
-// github api related
+// GitHub api related
 // ==================
 
 /**
