@@ -4,12 +4,17 @@
         "target": "es6",
         "strict": true,
         "sourceMap": true,
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["src/*"],
+        },
         "rootDir": "src",
         "outDir": "dist/js",
         "esModuleInterop": true,
         "removeComments": true,
         "moduleResolution": "node"
     },
+    "include": ["src"],
     "exclude": [
         "node_modules",
         "dist"

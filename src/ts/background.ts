@@ -1,4 +1,4 @@
-import { getStorage, removeStorage, setStorage, StorageFlag } from './global';
+import { getStorage, removeStorage, setStorage, StorageFlag } from '@src/ts/global';
 
 export async function onActionClicked() {
     const token = await getStorage(StorageFlag.TOKEN);

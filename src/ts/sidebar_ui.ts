@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { EventInfo, HoverCardType } from './model';
+import { EventInfo, HoverCardType } from '@src/ts/model';
 
 // ===================
 // format info related

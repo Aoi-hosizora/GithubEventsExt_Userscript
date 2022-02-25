@@ -1,13 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
 const fs = require('fs');
+const path = require('path');
+const PACKAGE = require('./package.json');
+const webpack = require('webpack');
 
 function p(f) {
     return path.join(__dirname, f);
-}
-
-function f(f) {
-    return fs.readFileSync(p(f), 'utf8').toString();
 }
 
 module.exports = {
@@ -15,6 +12,12 @@ module.exports = {
     devtool: 'cheap-module-source-map',
     entry: {
         main: p('./src/content_script.ts')
+    },
+    resolve: {
+        alias: {
+          '@src': path.resolve(__dirname, 'src')
+        },
+        extensions: ['.ts', '.tsx', '.js', '.css', '.sass', '.scss']
     },
     output: {
         path: p('./dist'),
@@ -24,7 +27,7 @@ module.exports = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: ['ts-loader'],
+                use: 'ts-loader',
                 exclude: /node_modules/
             },
             {
@@ -41,13 +44,18 @@ module.exports = {
             }
         ]
     },
-    resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.css', '.sass', '.scss']
-    },
     plugins: [
         new webpack.BannerPlugin({
             raw: true,
-            banner: f('./src/etc/banner.js')
+            banner: (() => {
+                var filename = p('./src/etc/banner.js');
+                content = fs.readFileSync(filename, 'utf8').toString();
+                content = content.replace(/@@title/g, PACKAGE.title);
+                content = content.replace(/@@version/g, PACKAGE.version)
+                content = content.replace(/@@description/g, PACKAGE.description);
+                content = content.replace(/@@author/g, PACKAGE.author);
+                return content;
+            })()
         })
     ]
 }

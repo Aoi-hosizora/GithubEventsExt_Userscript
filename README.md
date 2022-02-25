@@ -1,7 +1,7 @@
 # GithubEventsExt_Userscript
 
-+ A Userscript (Tampermonkey) extension that let browser show GitHub activity events.
-+ For chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
++ A Userscript extension that let browser show GitHub activity events.
++ For Chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
 
 ### Functions
 
@@ -10,17 +10,20 @@
 
 ### Install
 
-+ Install `Tampermonkey` / `Greasemonkey` extension for your browser (Chrome, Edge, Firefox, etc).
-+ Visit https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/dist/github-events.user.js (build by GitHub Actions).
-+ Click the "Install" button to install the extension.
+1. Install `Tampermonkey` / `Greasemonkey` extension for your browser (Chrome, Edge, Firefox, etc).
+2. Visit https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/dist/github-events.user.js, this code is built by GitHub Actions.
+3. Click the "Install" button to install the extension. Now you will see the effect after refresh the GitHub page.
 
-![how-to-install.jpg](./assets/how-to-install.jpg)
+<p align="center">
+    <img src="./assets/how-to-install.jpg" alt="how-to-install" />
+</p>
 
 ### Screenshot
 
-![screenshot-sidebar](./assets/screenshot-sidebar.jpg)
-
-![screenshot-setting](./assets/screenshot-setting.jpg)
+<p align="center">
+    <img src="./assets/screenshot-sidebar.jpg" alt="screenshot-sidebar" />
+    <img src="./assets/screenshot-setting.jpg" alt="screenshot-setting" />
+</p>
 
 ### References
 

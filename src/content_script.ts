@@ -1,11 +1,12 @@
-import './ts/extension';
+import '@src/ts/extension';
 import $ from 'jquery';
-import { Global, readStorageToGlobal } from './ts/global';
-import { adjustGithubUI, injectSidebar } from './ts/main';
-import { checkURL } from './ts/util';
+import { Global, readStorageToGlobal } from '@src/ts/global';
+import { adjustGithubUI, injectSidebar } from '@src/ts/main';
+import { checkURL } from '@src/ts/util';
 
 // python -m http.server 5000
 // http://localhost:5000/dist/github-events.user.js
+
 
 $(() => {
     onLoaded();

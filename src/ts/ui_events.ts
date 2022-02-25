@@ -1,10 +1,10 @@
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import { onActionClicked } from './background';
-import { Global, setStorage, StorageFlag } from './global';
-import { EventInfo } from './model';
-import { formatInfoToLi } from './sidebar_ui';
-import { requestGithubEvents } from './util';
+import { onActionClicked } from '@src/ts/background';
+import { Global, setStorage, StorageFlag } from '@src/ts/global';
+import { EventInfo } from '@src/ts/model';
+import { formatInfoToLi } from '@src/ts/sidebar_ui';
+import { requestGithubEvents } from '@src/ts/util';
 
 // ===============
 // request related

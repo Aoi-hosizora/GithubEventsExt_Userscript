@@ -8,6 +8,5 @@
 node_modules/
 dist/
 
-### My ###
+### Temp ###
 demo.json
-.token
