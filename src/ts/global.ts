@@ -17,6 +17,8 @@ export class Global {
     public static showJoinedTime: boolean = true;
     public static showUserPrivateCounter: boolean = true;
     public static showRepoActionCounter: boolean = true;
+    public static showRepoSize: boolean = true;
+    public static showRepoFilesSize: boolean = true;
 
     // Some global runtime variables
     public static urlInfo: URLInfo;
@@ -36,7 +38,9 @@ export enum StorageFlag {
     CENTER_FOLLOW_TEXT = 'ah-center-follow-text',
     SHOW_JOINED_TIME = 'ah-show-joined-time',
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
-    SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter'
+    SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter',
+    SHOW_REPO_SIZE = 'ah-show-repo-size',
+    SHOW_REPO_FILES_SIZE = 'ah-show-repo-files-size',
 }
 
 export async function readStorageToGlobal(): Promise<void> {
@@ -49,6 +53,8 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.showJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
+    Global.showRepoSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_SIZE, true, { alsoInit: true });
+    Global.showRepoFilesSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_FILES_SIZE, true, { alsoInit: true });
 }
 
 // ===============

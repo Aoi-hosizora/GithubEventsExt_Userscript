@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import $ from 'jquery';
-import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
-import { EventInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
+import { camelCase, head, isArray, isObject, mapKeys, mapValues, method } from 'lodash';
+import { EventInfo, RepoContentItem, RepoInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
 
 /**
  * Check the document.URL, return null if current page is not a GitHub page.
@@ -18,22 +18,50 @@ export function checkURL(): URLInfo | null {
     if (!result) {
         return null;
     }
-    var endpoint = result[result.length - 1].replaceAll(/(#.*|\?.*|\/$)/, '');
-    const endpoints = endpoint.split('/'); // xxx/yyy or xxx
+    var ep = result[result.length - 1].replaceAll(/(#.*|\?.*|\/$)/, '');
+    const endpoints = ep.split('/'); // => xxx or xxx/yyy or xxx/yyy/...
 
+    // other
     if (endpoints.length === 0 || preservedEndpoint.indexOf(endpoints[0]) !== -1) {
         return new URLInfo(URLType.OTHER);
     }
-    if (endpoints.length === 1) {
-        if ($('div[itemtype="http://schema.org/Organization"]').length > 0) {
+
+    // org or user
+    if (endpoints.length === 1) { // => xxx
+        const isOrg = $('div[itemtype="http://schema.org/Organization"]').length > 0;
+        if (isOrg) {
             return new URLInfo(URLType.ORG, endpoints[0]);
         } else {
+            const info = new URLInfo(URLType.USER, endpoints[0]);
             const isMe = $('div.js-profile-editable-area button').length > 0;
-            return new URLInfo(URLType.USER, endpoints[0], '', isMe);
+            info.extra.user = { isMe };
+            return info;
         }
-    } else {
-        return new URLInfo(URLType.REPO, endpoints[0], endpoints[1]);
     }
+
+    // repo
+    const info = new URLInfo(URLType.REPO, endpoints[0], endpoints[1]);
+    if (endpoints.length === 2) { // => xxx/yyy
+        let ref = '';
+        const refBtn = $('div.file-navigation summary:nth-child(1)');
+        if (refBtn.length) {
+            ref = refBtn[0].textContent?.trim() ?? '';
+        }
+        if (!ref) {
+            ref = 'master';
+        }
+        info.extra.repo = { isTree: true, ref, path: '' };
+    } else if (endpoints.length >= 4 && endpoints[2] === 'tree') { // => xxx/yyy/tree/.../
+        const ref = endpoints[3];
+        let path = '';
+        if (endpoints.length >= 5) {
+            path = endpoints.slice(4).join('/');
+        }
+        info.extra.repo = { isTree: true, ref, path };
+    } else {
+        info.extra.repo = { isTree: false, ref: '', path: '' };
+    }
+    return info;
 }
 
 /**
@@ -76,14 +104,17 @@ function myAxios(): AxiosInstance {
     return client;
 }
 
+function tokenRequestHeaders(token: string): any {
+    return token ? { 'Authorization': `Token ${token}` } : {};;
+}
+
 /**
  * HTTP Get user/org/repo events information.
  */
 export async function requestGitHubEvents(eventAPI: string, page: number, token: string = ''): Promise<EventInfo[]> {
     const url = `${eventAPI}?page=${page}`;
-    const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
     const resp = await myAxios().request<EventInfo[]>({
-        method: 'get', url, headers
+        method: 'get', url, headers: tokenRequestHeaders(token)
     });
     return resp.data;
 }
@@ -93,9 +124,53 @@ export async function requestGitHubEvents(eventAPI: string, page: number, token:
  */
 export async function requestUserInfo(user: string, token: string = ''): Promise<UserInfo> {
     const url = `https://api.github.com/users/${user}`;
-    const headers: any = token ? { 'Authorization': `Token ${token}` } : {};
     const resp = await myAxios().request<UserInfo>({
-        method: 'get', url, headers
+        method: 'get', url, headers: tokenRequestHeaders(token)
     });
     return resp.data;
+}
+
+/**
+ * HTTP Get repo information.
+ */
+export async function requestRepoInfo(user: string, repo: string, token: string = ''): Promise<RepoInfo> {
+    const url = `https://api.github.com/repos/${user}/${repo}`;
+    const resp = await myAxios().request<RepoInfo>({
+        method: 'get', url, headers: tokenRequestHeaders(token)
+    });
+    return resp.data;
+}
+
+/**
+ * HTTP Get repo content items information.
+ */
+export async function requestRepoContents(user: string, repo: string, ref: string, path: string, token: string = ''): Promise<RepoContentItem[]> {
+    const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${ref}`;
+    const resp = await myAxios().request<RepoContentItem[]>({
+        method: 'get', url, headers: tokenRequestHeaders(token)
+    });
+    return resp.data;
+}
+
+/**
+ * Format given bytes to string in two fixed decimal digits.
+ */
+export function formatBytes(bytes: number): string {
+    if (bytes <= 0) {
+        return '0.00 B';
+    }
+    const b = bytes;
+    if (b < 1024) {
+        return `${b.toFixed(2)} B`;
+    }
+    const kb = bytes / 1024;
+    if (kb < 1024) {
+        return `${kb.toFixed(2)} KB`;
+    }
+    const mb = kb / 1024;
+    if (mb < 1024) {
+        return `${kb.toFixed(2)} MB`;
+    }
+    const gb = mb / 1024;
+    return `${gb.toFixed(2)} GB`;
 }

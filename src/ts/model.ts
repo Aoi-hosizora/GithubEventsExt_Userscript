@@ -19,7 +19,7 @@ export class URLInfo {
         public readonly type: URLType,
         public readonly author: string = '',
         public readonly repo: string = '',
-        public readonly isMe: boolean = false,
+        public readonly extra: ExtraURLInfo = {},
     ) {
         switch (type) {
             case URLType.OTHER:
@@ -39,6 +39,11 @@ export class URLInfo {
                 return;
         }
     }
+}
+
+export interface ExtraURLInfo {
+    user?: { isMe: boolean; };
+    repo?: { isTree: boolean; ref: string; path: string; };
 }
 
 /**
@@ -70,6 +75,22 @@ export interface UserInfo {
     followers: number;
     following: number;
     createdAt: string;
+}
+
+/**
+ * Dto returned from https://api.github.com/repos/xxx/xxx.
+ */
+export interface RepoInfo {
+    name: string;
+    fullName: string;
+    private: boolean;
+    createdAt: string;
+    size: number;
+    stargazersCount: number;
+    watcherCount: number;
+    language: string;
+    forksCount: number;
+    defaultBranch: string;
 }
 
 /**
@@ -147,4 +168,14 @@ export interface Payload {
         title: string;
         htmlUrl: string;
     }[];
+}
+
+/**
+ * Dto returned from https://api.github.com/repos/xxx/xxx/contents?ref=xxx
+ */
+export interface RepoContentItem {
+    name: string;
+    path: string;
+    size: number;
+    type: string;
 }

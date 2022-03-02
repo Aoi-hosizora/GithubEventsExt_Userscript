@@ -107,6 +107,7 @@ export function registerUIEvents() {
     $('#ahid-refresh').on('click', () => { adjustBodyLayout(); Global.page = 1; loadGitHubEvents(); });
     $('#ahid-more').on('click', () => loadNextGitHubEvents());
     $('#ahid-retry').on('click', () => { Global.page = 1; loadGitHubEvents(); });
+    $('#ahid-file-size')?.on('click', () => loadAllFilesSize());
 
     // process menu items' UI and event
     $('#ahid-setup-token').on('click', () => setTimeout(() => askToSetupToken(), 30));
@@ -184,11 +185,19 @@ function processMenuSwitchers() {
         }, 30));
     }
 
-    updateUIAndRegisterEvent($('#ahid-setup-follow-menu'), StorageFlag.SHOW_FOLLOW_MENU,);
-    updateUIAndRegisterEvent($('#ahid-setup-center-follow'), StorageFlag.CENTER_FOLLOW_TEXT,);
-    updateUIAndRegisterEvent($('#ahid-setup-joined-time'), StorageFlag.SHOW_JOINED_TIME,);
-    updateUIAndRegisterEvent($('#ahid-setup-user-counter'), StorageFlag.SHOW_USER_PRIVATE_COUNTER,);
-    updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER,);
+    updateUIAndRegisterEvent($('#ahid-setup-follow-menu'), StorageFlag.SHOW_FOLLOW_MENU);
+    updateUIAndRegisterEvent($('#ahid-setup-center-follow'), StorageFlag.CENTER_FOLLOW_TEXT);
+    updateUIAndRegisterEvent($('#ahid-setup-joined-time'), StorageFlag.SHOW_JOINED_TIME);
+    updateUIAndRegisterEvent($('#ahid-setup-user-counter'), StorageFlag.SHOW_USER_PRIVATE_COUNTER);
+    updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER);
+    updateUIAndRegisterEvent($('#ahid-setup-repo-size'), StorageFlag.SHOW_REPO_SIZE);
+    updateUIAndRegisterEvent($('#ahid-setup-files-size'), StorageFlag.SHOW_REPO_FILES_SIZE);
+}
+
+/**
+ * Load all files size, that means including files inside directories, and recursively.
+ */
+async function loadAllFilesSize() {
 }
 
 // =========================

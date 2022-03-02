@@ -4,9 +4,9 @@ import moment from 'moment';
 import template from '@src/html/template.html';
 import style from '@src/scss/core.scss';
 import { Global } from '@src/ts/global';
-import { URLType, UserInfo } from '@src/ts/model';
+import { RepoContentItem, RepoInfo, URLType, UserInfo } from '@src/ts/model';
 import { loadGitHubEvents, registerUIEvents } from '@src/ts/ui_events';
-import { observeAttributes, requestUserInfo } from '@src/ts/utils';
+import { formatBytes, observeAttributes, requestRepoContents, requestRepoInfo, requestUserInfo } from '@src/ts/utils';
 import { getPathTag } from '@src/ts/sidebar_ui';
 
 /**
@@ -31,7 +31,7 @@ export function adjustGitHubUI() {
  * Adjust GitHub global UI without observer.
  */
 function adjustGlobalUIDirectly() {
-    // 1. add menu items to avatar dropdown menu
+    // 1. configurable: add menu items to avatar dropdown menu
     if (Global.showFollowMenu) {
         const avatarDetails = $('header div.Header-item:last-child details')[0];
         const observer = observeAttributes(avatarDetails, (record, el) => {
@@ -72,7 +72,7 @@ function adjustGlobalUIDirectly() {
  */
 function adjustUserUIObservably() {
     async function handler() {
-        // 0. get user information
+        // 0. fixed: get user information
         let info: UserInfo | undefined;
         if (Global.showJoinedTime || Global.showUserPrivateCounter) {
             try {
@@ -80,12 +80,12 @@ function adjustUserUIObservably() {
             } catch (_) { }
         }
 
-        // 1. center follow* text
+        // 1. configurable: center follow* text
         if (Global.centerFollowText) {
             $('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
         }
 
-        // 2. add joined time 
+        // 2. configurable: add joined time 
         if (Global.showJoinedTime && info && info.createdAt && !$('ul.vcard-details li[itemprop="join time"]').length) {
             const time = moment(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
             $('ul.vcard-details').append(
@@ -98,8 +98,8 @@ function adjustUserUIObservably() {
             );
         }
 
-        // 3. add private counters
-        if (Global.showUserPrivateCounter && info && Global.urlInfo.isMe && Global.token) {
+        // 3. configurable: add private counters
+        if (Global.showUserPrivateCounter && info && Global.urlInfo.extra.user!.isMe && Global.token) {
             for (const navItem of $('nav a.UnderlineNav-item')) {
                 const counterSpan = navItem.getElementsByTagName('span');
                 if (!counterSpan.length) {
@@ -131,7 +131,7 @@ function adjustUserUIObservably() {
  */
 function adjustRepoUIObservably() {
     async function handler() {
-        // 1. adjust stuck header z-index
+        // 1. fixed: adjust stuck header z-index
         const stuckHeader = $("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
         const headerShadow = $("div#partial-discussion-header div.gh-header-shadow");
         if (stuckHeader.length && headerShadow.length) {
@@ -139,12 +139,12 @@ function adjustRepoUIObservably() {
             headerShadow.css('z-index', '88');
         }
 
-        // 2. improve repo page margin when using octotree
+        // 2. fixed: improve repo page margin when using octotree
         if ($('nav.octotree-sidebar').length) {
             $('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
         }
 
-        // 3. show counter and add link for page head buttons
+        // 3. configurable: show counter and add link for page head buttons
         if (Global.showRepoActionCounter) {
             const repoName = `${Global.urlInfo.author}/${Global.urlInfo.repo}`
             const watchCounterSpan = $('#repo-notifications-counter');
@@ -173,6 +173,64 @@ function adjustRepoUIObservably() {
                 starSummary.removeClass('px-2');
                 starSummary.addClass('px-1');
             };
+        }
+
+        // 4. configurable: show repo size
+        if (Global.showRepoSize) {
+            let repoInfo: RepoInfo | undefined;
+            if ($('#ahid-file-size').length === 0) {
+                try {
+                    repoInfo = await requestRepoInfo(Global.urlInfo.author, Global.urlInfo.repo, Global.token);
+                } catch (_) { }
+            }
+            if (repoInfo) {
+                $(`<a id="ahid-file-size" title="Click here to load directories size" style="cursor: pointer;" class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+                    <svg aria-hidden="true" width="12" height="16" viewBox="0 0 12 16" version="1.1" data-view-component="true" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
+                        ${getPathTag('database')}
+                    </svg>
+                    ${formatBytes(repoInfo.size)}
+                </a>`).insertAfter($('nav.js-repo-nav ul li:last-child'));
+            }
+        }
+
+        console.log(Global.urlInfo);
+        // 5. configurable: show files size
+        if (Global.showRepoFilesSize) {
+            let repoContents: RepoContentItem[] | undefined;
+            try {
+                repoContents = await requestRepoContents(Global.urlInfo.author, Global.urlInfo.repo, Global.urlInfo.extra.repo!.ref, Global.urlInfo.extra.repo!.path, Global.token);
+            } catch (_) { }
+            if (repoContents) {
+                const contentSizes = new Map<string, number>();
+                for (const c of repoContents) {
+                    if (c.type !== 'dir') {
+                        contentSizes.set(c.name, c.size);
+                    }
+                }
+                const divRows = $('div.Box div[role="grid"] div[role="row"]');
+                for (const row of divRows) {
+                    if (row.querySelector('div.ah-file-size')) {
+                        continue;
+                    }
+                    let sizeString = '';
+                    let sizeTitle = 'could not ';
+                    const title = row.querySelector('div[role="rowheader"]')?.textContent?.trim() ?? '';
+                    if (title) {
+                        const size = contentSizes.get(title);
+                        if (size) {
+                            sizeTitle = `${size} bytes`;
+                            sizeString = formatBytes(size);
+                        }
+                    }
+                    $('<div>', {
+                        role: 'gridcell',
+                        class: 'mr-3 text-right color-fg-muted ah-file-size',
+                        title: sizeTitle,
+                        style: 'width: 80px;',
+                        text: sizeString,
+                    }).insertBefore(row.querySelector('div[role="gridcell"]:last-child')!);
+                }
+            }
         }
     }
 
