@@ -12,18 +12,20 @@ export class Global {
     public static width: number = 250; // $min-width: 165px
 
     // Menu switchers from storage
-    public static showFollowMenu: boolean = true;
+    public static showFollowMenuItem: boolean = true;
     public static centerFollowText: boolean = true;
     public static showJoinedTime: boolean = true;
     public static showUserPrivateCounter: boolean = true;
     public static showRepoActionCounter: boolean = true;
-    public static showRepoSize: boolean = true;
-    public static showRepoFilesSize: boolean = true;
+    public static showRepoAndContentsSize: boolean = true;
 
     // Some global runtime variables
     public static urlInfo: URLInfo;
     public static page: number = 1;
     public static isHovering: boolean = false;
+    public static contentsSizeCache: Map<string, number> | undefined;
+    public static contentsSizeCachedRef: string = '';
+    public static contentsSizeTruncated: boolean = false;
 
     // Constants
     public static readonly FEEDBACK_URL: string = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
@@ -34,13 +36,12 @@ export enum StorageFlag {
     PINNED = 'ah-pinned',
     WIDTH = 'ah-width',
 
-    SHOW_FOLLOW_MENU = 'ah-show-follow-menu',
+    SHOW_FOLLOW_MENU_ITEM = 'ah-show-follow-menu-item',
     CENTER_FOLLOW_TEXT = 'ah-center-follow-text',
     SHOW_JOINED_TIME = 'ah-show-joined-time',
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
     SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter',
-    SHOW_REPO_SIZE = 'ah-show-repo-size',
-    SHOW_REPO_FILES_SIZE = 'ah-show-repo-files-size',
+    SHOW_REPO_AND_CONTENTS_SIZE = 'ah-show-repo-contents-size',
 }
 
 export async function readStorageToGlobal(): Promise<void> {
@@ -48,13 +49,12 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.pinned = await getStorage<boolean>(StorageFlag.PINNED, false, { alsoInit: true });
     Global.width = await getStorage<number>(StorageFlag.WIDTH, 250, { alsoInit: true });
 
-    Global.showFollowMenu = await getStorage<boolean>(StorageFlag.SHOW_FOLLOW_MENU, true, { alsoInit: true });
+    Global.showFollowMenuItem = await getStorage<boolean>(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
     Global.centerFollowText = await getStorage<boolean>(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
     Global.showJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
-    Global.showRepoSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_SIZE, true, { alsoInit: true });
-    Global.showRepoFilesSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_FILES_SIZE, true, { alsoInit: true });
+    Global.showRepoAndContentsSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
 }
 
 // ===============

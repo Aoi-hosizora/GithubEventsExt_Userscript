@@ -1,3 +1,7 @@
+// ===========
+// url related
+// ===========
+
 /**
  * GitHub page's url type.
  */
@@ -15,11 +19,15 @@ export class URLInfo {
     public readonly authorURL: string = '';
     public readonly repoURL: string = '';
     public readonly eventAPI: string = '';
+    public readonly extra: {
+        user?: { isMe: boolean; };
+        repo?: { isTree: boolean; ref: string; path: string; };
+    } = {};
+
     constructor(
         public readonly type: URLType,
         public readonly author: string = '',
         public readonly repo: string = '',
-        public readonly extra: ExtraURLInfo = {},
     ) {
         switch (type) {
             case URLType.OTHER:
@@ -39,11 +47,6 @@ export class URLInfo {
                 return;
         }
     }
-}
-
-export interface ExtraURLInfo {
-    user?: { isMe: boolean; };
-    repo?: { isTree: boolean; ref: string; path: string; };
 }
 
 /**
@@ -92,6 +95,32 @@ export interface RepoInfo {
     forksCount: number;
     defaultBranch: string;
 }
+
+/**
+ * Dto returned from https://api.github.com/repos/xxx/xxx/contents?ref=xxx
+ */
+export interface RepoContentInfo {
+    name: string;
+    path: string;
+    size: number;
+    type: string;
+}
+
+/**
+ * Dto returned from https://api.github.com/repos/xxx/xxx/git/trees/xxx
+ */
+export interface RepoTreeInfo {
+    truncated: boolean;
+    tree: {
+        path: string;
+        type: string;
+        size: number;
+    }[];
+}
+
+// ========================
+// GitHub event api related
+// ========================
 
 /**
  * Dto returned from https://api.github.com/[users|repos|orgs]/xxx/events.
@@ -168,14 +197,4 @@ export interface Payload {
         title: string;
         htmlUrl: string;
     }[];
-}
-
-/**
- * Dto returned from https://api.github.com/repos/xxx/xxx/contents?ref=xxx
- */
-export interface RepoContentItem {
-    name: string;
-    path: string;
-    size: number;
-    type: string;
 }

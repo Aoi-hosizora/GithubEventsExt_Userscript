@@ -1,6 +1,6 @@
 # GithubEventsExt_Userscript
 
-+ A Userscript extension that let browser show GitHub activity events.
++ A Userscript extension that show GitHub activity events in sidebar and improve several GitHub UI details.
 + For Chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
 
 ### Functions
@@ -32,3 +32,4 @@
 + [GM_addStyle equivalent in TamperMonkey](https://stackoverflow.com/questions/23683439/gm-addstyle-equivalent-in-tampermonkey)
 + [tobyqin/tampermonkey_vue](https://github.com/tobyqin/tampermonkey_vue)
 + [TypeScript でユーザースクリプトを書いた](http://kotas.hatenablog.jp/entry/2013/10/27/212037)
++ [TheDavidDelta/scope-extensions-js](https://github.com/TheDavidDelta/scope-extensions-js)

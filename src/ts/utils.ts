@@ -1,28 +1,28 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import $ from 'jquery';
-import { camelCase, head, isArray, isObject, mapKeys, mapValues, method } from 'lodash';
-import { EventInfo, RepoContentItem, RepoInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
+import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
+import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
 
 /**
  * Check the document.URL, return null if current page is not a GitHub page.
  */
 export function checkURL(): URLInfo | null {
-    const preservedEndpoint = [
+    // extract GitHub url
+    const result = /https?:\/\/github\.com(.*)?/.exec(document.URL); // https://github.com/xxx?xxx#xxx
+    if (!result) {
+        return null;
+    }
+    if (result.length <= 1) {
+        return new URLInfo(URLType.OTHER);
+    }
+    const preservedEndpoints = [
         'pulls', 'issues', 'marketplace', 'explore', 'notifications',
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
         'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
     ];
-
-    // https://github.com/xxx#xxx?xxx
-    const result = /https?:\/\/github\.com\/(.+)/.exec(document.URL);
-    if (!result) {
-        return null;
-    }
-    var ep = result[result.length - 1].replaceAll(/(#.*|\?.*|\/$)/, '');
-    const endpoints = ep.split('/'); // => xxx or xxx/yyy or xxx/yyy/...
-
-    // other
-    if (endpoints.length === 0 || preservedEndpoint.indexOf(endpoints[0]) !== -1) {
+    const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
+    const endpoints = finalPart.split('/').filter(e => !!e); // => xxx or xxx/yyy or xxx/yyy/zzz/...
+    if (endpoints.length === 0 || preservedEndpoints.indexOf(endpoints[0]) !== -1) {
         return new URLInfo(URLType.OTHER);
     }
 
@@ -47,10 +47,7 @@ export function checkURL(): URLInfo | null {
         if (refBtn.length) {
             ref = refBtn[0].textContent?.trim() ?? '';
         }
-        if (!ref) {
-            ref = 'master';
-        }
-        info.extra.repo = { isTree: true, ref, path: '' };
+        info.extra.repo = { isTree: true, ref: (!!ref ? ref : 'master'), path: '' };
     } else if (endpoints.length >= 4 && endpoints[2] === 'tree') { // => xxx/yyy/tree/.../
         const ref = endpoints[3];
         let path = '';
@@ -61,6 +58,7 @@ export function checkURL(): URLInfo | null {
     } else {
         info.extra.repo = { isTree: false, ref: '', path: '' };
     }
+    console.log(info);
     return info;
 }
 
@@ -77,6 +75,29 @@ export function observeAttributes(el: HTMLElement, callback: (record: MutationRe
     });
     observer.observe(el, { attributes: true });
     return observer;
+}
+
+/**
+ * Get GitHub progress loader element, with fake start loading function and finish loading function.
+ */
+export function getGitHubProgressBar(): { el: JQuery<HTMLElement>; startLoading: () => void; finishLoading: () => void } {
+    const progressBarOuter = $('span.progress-pjax-loader');
+    const progressBarInner = $('span.progress-pjax-loader span');
+    return {
+        el: progressBarOuter,
+        startLoading: () => {
+            progressBarInner.attr('style', 'width: 0%; transition: width 0.4s ease 0s;');
+            progressBarOuter.addClass('is-loading');
+            progressBarInner.attr('style', 'width: 40%; transition: width 0.4s ease 0s;');
+        },
+        finishLoading: () => {
+            progressBarInner.attr('style', 'width: 100%; transition: width 0.4s ease 0s;');
+            setTimeout(() => {
+                progressBarOuter.removeClass('is-loading');
+                progressBarInner.attr('style', 'width: 0%; transition: width 0.4s ease 0s;');
+            }, 450);
+        },
+    }
 }
 
 /**
@@ -104,8 +125,15 @@ function myAxios(): AxiosInstance {
     return client;
 }
 
-function tokenRequestHeaders(token: string): any {
-    return token ? { 'Authorization': `Token ${token}` } : {};;
+/**
+ * Make a http request to given url and return its axios response.
+ */
+async function httpRequest<T>(method: 'get', url: string, token: string): Promise<AxiosResponse<T>> {
+    let headers = {};
+    if (token) {
+        headers = { 'Authorization': `Token ${token}` };
+    }
+    return await myAxios().request<T>({ method, url, headers })
 }
 
 /**
@@ -113,10 +141,7 @@ function tokenRequestHeaders(token: string): any {
  */
 export async function requestGitHubEvents(eventAPI: string, page: number, token: string = ''): Promise<EventInfo[]> {
     const url = `${eventAPI}?page=${page}`;
-    const resp = await myAxios().request<EventInfo[]>({
-        method: 'get', url, headers: tokenRequestHeaders(token)
-    });
-    return resp.data;
+    return (await httpRequest<EventInfo[]>('get', url, token)).data;
 }
 
 /**
@@ -124,10 +149,7 @@ export async function requestGitHubEvents(eventAPI: string, page: number, token:
  */
 export async function requestUserInfo(user: string, token: string = ''): Promise<UserInfo> {
     const url = `https://api.github.com/users/${user}`;
-    const resp = await myAxios().request<UserInfo>({
-        method: 'get', url, headers: tokenRequestHeaders(token)
-    });
-    return resp.data;
+    return (await httpRequest<UserInfo>('get', url, token)).data;
 }
 
 /**
@@ -135,21 +157,23 @@ export async function requestUserInfo(user: string, token: string = ''): Promise
  */
 export async function requestRepoInfo(user: string, repo: string, token: string = ''): Promise<RepoInfo> {
     const url = `https://api.github.com/repos/${user}/${repo}`;
-    const resp = await myAxios().request<RepoInfo>({
-        method: 'get', url, headers: tokenRequestHeaders(token)
-    });
-    return resp.data;
+    return (await httpRequest<RepoInfo>('get', url, token)).data;
 }
 
 /**
- * HTTP Get repo content items information.
+ * HTTP Get repo contents information.
  */
-export async function requestRepoContents(user: string, repo: string, ref: string, path: string, token: string = ''): Promise<RepoContentItem[]> {
+export async function requestRepoContents(user: string, repo: string, ref: string, path: string, token: string = ''): Promise<RepoContentInfo[]> {
     const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${ref}`;
-    const resp = await myAxios().request<RepoContentItem[]>({
-        method: 'get', url, headers: tokenRequestHeaders(token)
-    });
-    return resp.data;
+    return (await httpRequest<RepoContentInfo[]>('get', url, token)).data;
+}
+
+/**
+ * HTTP Get repo tree information.
+ */
+export async function requestRepoTreeInfo(user: string, repo: string, ref: string, token: string = ''): Promise<RepoTreeInfo> {
+    const url = `https://api.github.com/repos/${user}/${repo}/git/trees/${ref}?recursive=1`;
+    return (await httpRequest<RepoTreeInfo>('get', url, token)).data;
 }
 
 /**
@@ -169,7 +193,7 @@ export function formatBytes(bytes: number): string {
     }
     const mb = kb / 1024;
     if (mb < 1024) {
-        return `${kb.toFixed(2)} MB`;
+        return `${mb.toFixed(2)} MB`;
     }
     const gb = mb / 1024;
     return `${gb.toFixed(2)} GB`;

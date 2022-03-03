@@ -10,12 +10,13 @@ function p(f) {
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
     devtool: 'cheap-module-source-map',
+    // devtool: 'inline-module-source-map',
     entry: {
         main: p('./src/content_script.ts')
     },
     resolve: {
         alias: {
-          '@src': path.resolve(__dirname, 'src')
+            '@src': path.resolve(__dirname, 'src')
         },
         extensions: ['.ts', '.tsx', '.js', '.css', '.sass', '.scss']
     },

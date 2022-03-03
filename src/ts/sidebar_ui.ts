@@ -13,8 +13,9 @@ export function formatInfoToLi(item: EventInfo): string {
     if (!body) {
         return "";
     }
-    const userUrl = `https://github.com/${item.actor.login}`;
-    const userHovercard = hovercard(HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`);
+    const isBot = item.actor.login.endsWith('[bot]');
+    const userUrl = !isBot ? `https://github.com/${item.actor.login}` : `https://github.com/apps/${item.actor.login.replaceAll('[bot]', '')}`;
+    const userHovercard = !isBot ? hovercard(HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`) : '';
     const createAt = moment(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
