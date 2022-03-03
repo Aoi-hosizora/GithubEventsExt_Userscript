@@ -3,7 +3,7 @@
 // @name         Github events
 // @version      1.0.10
 // @author       Aoi-hosizora
-// @description  A Userscript extension that show GitHub activity events in sidebar and improve several UI details.
+// @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
 // @match        http*://github.com/*
 // @copyright    2020+, Aoi-hosizora
