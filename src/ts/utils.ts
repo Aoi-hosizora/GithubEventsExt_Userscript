@@ -58,7 +58,6 @@ export function checkURL(): URLInfo | null {
     } else {
         info.extra.repo = { isTree: false, ref: '', path: '' };
     }
-    console.log(info);
     return info;
 }
 

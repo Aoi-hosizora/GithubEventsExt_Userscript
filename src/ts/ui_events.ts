@@ -203,7 +203,7 @@ function adjustBodyLayout(resizing: boolean = false) {
     const navTag = $('#ahid-nav');
     navTag.css('left', '');
     if (Global.pinned) {
-        const to = resizing ? navTag.width()!! : Global.width;
+        const to = resizing ? navTag.width()! : Global.width;
         $('body').css('margin-right', `${to}px`);
     } else {
         $('body').css('margin-right', '');
@@ -217,8 +217,8 @@ function registerResizeEvent() {
     const navTag = $('#ahid-nav');
     const hdlTag = $('.ui-resizable-handle');
     const event = () => {
-        if (Global.width !== navTag.width()!!) {
-            Global.width = navTag.width()!!;
+        if (Global.width !== navTag.width()!) {
+            Global.width = navTag.width()!;
             setStorage(StorageFlag.WIDTH, Global.width); // also update Global
         }
         adjustBodyLayout(false);

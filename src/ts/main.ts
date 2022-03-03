@@ -83,7 +83,7 @@ function getSidebarHtml(): string {
     if (info.type === URLType.REPO) {
         renderedTemplate = renderedTemplate
             .replaceAll(reAuthor, '')
-            .replaceAll(reRepo, reRepo.exec(renderedTemplate)!![1])
+            .replaceAll(reRepo, reRepo.exec(renderedTemplate)![1])
             .replaceAll('${info.authorUrl}', info.authorURL)
             .replaceAll('${info.author}', info.author)
             .replaceAll('${info.repoUrl}', info.repoURL)
@@ -91,7 +91,7 @@ function getSidebarHtml(): string {
     } else {
         renderedTemplate = renderedTemplate
             .replaceAll(reRepo, '')
-            .replaceAll(reAuthor, reAuthor.exec(renderedTemplate)!![1])
+            .replaceAll(reAuthor, reAuthor.exec(renderedTemplate)![1])
             .replaceAll('${info.authorUrl}', info.authorURL)
             .replaceAll('${info.author}', info.author);
     }

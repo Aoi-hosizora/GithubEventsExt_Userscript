@@ -35,27 +35,21 @@ function showFollowAvatarMenuItem() {
                 clearInterval(handler); // done
                 return;
             }
-            const username = $('details-menu a[data-ga-click$="Signed in as"]')!!.text();
+            const username = $('details-menu a[data-ga-click$="Signed in as"]').text();
             if (username) { // wait until items appeared
-                const gistsMenuItem = $('details-menu a[data-ga-click$="gists"]')!!;
-                const upgradeMenuItem = $('details-menu a[data-ga-click$="upgrade"]')!!;
+                const gistsMenuItem = $('details-menu a[data-ga-click$="gists"]');
+                const upgradeMenuItem = $('details-menu a[data-ga-click$="upgrade"]');
                 $('<a>', {
-                    role: 'menuitem',
-                    class: 'dropdown-item',
-                    href: `/${username}?tab=followers`,
-                    text: 'Your followers',
+                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=followers`,
+                    text: 'Your followers', 'data-ga-click': 'Header, go to followers, text:your followers'
                 }).insertBefore(gistsMenuItem);
                 $('<a>', {
-                    role: 'menuitem',
-                    class: 'dropdown-item',
-                    href: `/${username}?tab=following`,
-                    text: 'Your following',
+                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=following`,
+                    text: 'Your following', 'data-ga-click': 'Header, go to followings, text:your following'
                 }).insertBefore(gistsMenuItem);
                 $('<a>', {
-                    role: 'menuitem',
-                    class: 'dropdown-item',
-                    href: '/',
-                    text: 'GitHub Homepage',
+                    role: 'menuitem', class: 'dropdown-item', href: '/',
+                    text: 'GitHub Homepage', 'data-ga-click': 'Header, go to homepage, text:homepage'
                 }).insertBefore(upgradeMenuItem);
             }
         }, 250);
