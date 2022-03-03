@@ -1,9 +1,9 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.8
+// @version      1.0.9
 // @author       Aoi-hosizora
-// @description  A Userscript extension that let browser show GitHub activity events.
+// @description  A Userscript extension that show GitHub activity events in sidebar and improve several GitHub UI details.
 // @namespace    https://github.com/
 // @match        http*://github.com/*
 // @copyright    2020+, Aoi-hosizora
@@ -70828,7 +70828,7 @@ function onLoaded() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header panel start ////// -->\n    <header id=\"ahid-header\">\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            ${if isAuthor}\n            <!-- ////// author start ////// -->\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            <!-- ////// author end ////// -->\n            ${endif}\n\n            ${if isRepo}\n            <!-- ////// repo start ////// -->\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            <!-- ////// repo end ////// -->\n            ${endif}\n        </div>\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} events</span></a>\n        </div>\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path\n                        d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <!-- Setting Dropdown Menu -->\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                            d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        Setup access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" / \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"followers\" / \"following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh this page if settings change.\n                    </button>\n                    <div class=\"dropdown-divider\" />\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 24 24\" class=\"octicon ml-n4\">\n                            <path\n                                d=\"M20,2L4,2c-1.1,0 -1.99,0.9 -1.99,2L2,22l4,-4h14c1.1,0 2,-0.9 2,-2L22,4c0,-1.1 -0.9,-2 -2,-2zM13,14h-2v-2h2v2zM13,10h-2L11,6h2v4z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header panel start ////// -->\n\n    <!-- ////// Main body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main body end ////// -->\n\n</nav>\n"
+module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        Setup access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" / \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"followers\" / \"following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of the whole repository and contents inside\n                    </label>\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting change.\n                    </button>\n                    <div class=\"dropdown-divider\" />\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 24 24\" class=\"octicon ml-n4\">\n                            <path d=\"M20,2L4,2c-1.1,0 -1.99,0.9 -1.99,2L2,22l4,-4h14c1.1,0 2,-0.9 2,-2L22,4c0,-1.1 -0.9,-2 -2,-2zM13,14h-2v-2h2v2zM13,10h-2L11,6h2v4z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
 
 /***/ }),
 
@@ -70918,35 +70918,40 @@ exports.Global = Global;
 Global.token = '';
 Global.pinned = false;
 Global.width = 250;
-Global.showFollowMenu = true;
+Global.showFollowMenuItem = true;
 Global.centerFollowText = true;
 Global.showJoinedTime = true;
 Global.showUserPrivateCounter = true;
 Global.showRepoActionCounter = true;
+Global.showRepoAndContentsSize = true;
 Global.page = 1;
 Global.isHovering = false;
+Global.contentsSizeCachedRef = '';
+Global.contentsSizeTruncated = false;
 Global.FEEDBACK_URL = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
 var StorageFlag;
 (function (StorageFlag) {
     StorageFlag["TOKEN"] = "ah-token";
     StorageFlag["PINNED"] = "ah-pinned";
     StorageFlag["WIDTH"] = "ah-width";
-    StorageFlag["SHOW_FOLLOW_MENU"] = "ah-show-follow-menu";
+    StorageFlag["SHOW_FOLLOW_MENU_ITEM"] = "ah-show-follow-menu-item";
     StorageFlag["CENTER_FOLLOW_TEXT"] = "ah-center-follow-text";
     StorageFlag["SHOW_JOINED_TIME"] = "ah-show-joined-time";
     StorageFlag["SHOW_USER_PRIVATE_COUNTER"] = "ah-show-user-private-counter";
     StorageFlag["SHOW_REPO_ACTION_COUNTER"] = "ah-show-repo-action-counter";
+    StorageFlag["SHOW_REPO_AND_CONTENTS_SIZE"] = "ah-show-repo-contents-size";
 })(StorageFlag = exports.StorageFlag || (exports.StorageFlag = {}));
 function readStorageToGlobal() {
     return __awaiter(this, void 0, void 0, function* () {
         Global.token = yield getStorage(StorageFlag.TOKEN, '', { alsoInit: false });
         Global.pinned = yield getStorage(StorageFlag.PINNED, false, { alsoInit: true });
         Global.width = yield getStorage(StorageFlag.WIDTH, 250, { alsoInit: true });
-        Global.showFollowMenu = yield getStorage(StorageFlag.SHOW_FOLLOW_MENU, true, { alsoInit: true });
+        Global.showFollowMenuItem = yield getStorage(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
         Global.centerFollowText = yield getStorage(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
         Global.showJoinedTime = yield getStorage(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
         Global.showUserPrivateCounter = yield getStorage(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
         Global.showRepoActionCounter = yield getStorage(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
+        Global.showRepoAndContentsSize = yield getStorage(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
     });
 }
 exports.readStorageToGlobal = readStorageToGlobal;
@@ -71033,172 +71038,44 @@ function removeToken(token) {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const greasemonkey_1 = __importDefault(__webpack_require__(/*! greasemonkey */ "./node_modules/greasemonkey/index.js"));
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
 const template_html_1 = __importDefault(__webpack_require__(/*! @src/html/template.html */ "./src/html/template.html"));
 const core_scss_1 = __importDefault(__webpack_require__(/*! @src/scss/core.scss */ "./src/scss/core.scss"));
 const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
 const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
+const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
+const ui_adjust_1 = __webpack_require__(/*! @src/ts/ui_adjust */ "./src/ts/ui_adjust.ts");
 const ui_events_1 = __webpack_require__(/*! @src/ts/ui_events */ "./src/ts/ui_events.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
-const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
 function adjustGitHubUI() {
-    adjustGlobalUIDirectly();
-    if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
-        adjustUserUIObservably();
+    ui_adjust_1.adjustGlobalUI();
+    function handleObservably() {
+        if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
+            ui_adjust_1.adjustUserUIObservably();
+        }
+        if (global_1.Global.urlInfo.type == model_1.URLType.REPO) {
+            ui_adjust_1.adjustRepoUIObservably();
+        }
+        if (global_1.Global.urlInfo.type == model_1.URLType.ORG) {
+        }
     }
-    if (global_1.Global.urlInfo.type == model_1.URLType.REPO) {
-        adjustRepoUIObservably();
-    }
+    handleObservably();
+    utils_1.observeAttributes(utils_1.getGitHubProgressBar().el[0], (record, el) => {
+        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
+            const urlInfo = utils_1.checkURL();
+            if (urlInfo) {
+                global_1.Global.urlInfo = urlInfo;
+                handleObservably();
+            }
+        }
+    });
 }
 exports.adjustGitHubUI = adjustGitHubUI;
-function adjustGlobalUIDirectly() {
-    if (global_1.Global.showFollowMenu) {
-        const avatarDetails = jquery_1.default('header div.Header-item:last-child details')[0];
-        const observer = utils_1.observeAttributes(avatarDetails, (record, el) => {
-            if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
-                return;
-            }
-            observer.disconnect();
-            const handler = setInterval(() => {
-                if (jquery_1.default('details-menu a[data-ga-click$="your followers"]').length) {
-                    clearInterval(handler);
-                    return;
-                }
-                const username = jquery_1.default('details-menu a[data-ga-click$="Signed in as"]').text();
-                if (username) {
-                    const gistsMenuItem = jquery_1.default('details-menu a[data-ga-click$="gists"]');
-                    const upgradeMenuItem = jquery_1.default('details-menu a[data-ga-click$="upgrade"]');
-                    jquery_1.default('<a>', {
-                        role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=followers`,
-                        text: 'Your followers', 'data-ga-click': 'Header, go to followers, text:your followers'
-                    }).insertBefore(gistsMenuItem);
-                    jquery_1.default('<a>', {
-                        role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=following`,
-                        text: 'Your following', 'data-ga-click': 'Header, go to followings, text:your following'
-                    }).insertBefore(gistsMenuItem);
-                    jquery_1.default('<a>', {
-                        role: 'menuitem', class: 'dropdown-item', href: '/',
-                        text: 'GitHub Homepage', 'data-ga-click': 'Header, go to homepage, text:homepage'
-                    }).insertBefore(upgradeMenuItem);
-                }
-            }, 250);
-        });
-    }
-}
-function adjustUserUIObservably() {
-    function handler() {
-        return __awaiter(this, void 0, void 0, function* () {
-            let info;
-            if (global_1.Global.showJoinedTime || global_1.Global.showUserPrivateCounter) {
-                try {
-                    info = yield utils_1.requestUserInfo(global_1.Global.urlInfo.author, global_1.Global.token);
-                }
-                catch (_) { }
-            }
-            if (global_1.Global.centerFollowText) {
-                jquery_1.default('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
-            }
-            if (global_1.Global.showJoinedTime && info && info.createdAt && !jquery_1.default('ul.vcard-details li[itemprop="join time"]').length) {
-                const time = moment_1.default(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
-                jquery_1.default('ul.vcard-details').append(`<li class="vcard-detail pt-1" itemprop="join time">
-                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
-                        ${sidebar_ui_1.getPathTag('rocket')}
-                    </svg>
-                    <span>Joined at ${time}</span>
-                </li>`);
-            }
-            if (global_1.Global.showUserPrivateCounter && info && global_1.Global.urlInfo.isMe && global_1.Global.token) {
-                for (const navItem of jquery_1.default('nav a.UnderlineNav-item')) {
-                    const counterSpan = navItem.getElementsByTagName('span');
-                    if (!counterSpan.length) {
-                        continue;
-                    }
-                    const text = navItem.innerText, span = counterSpan[0];
-                    if (text.includes('Repositories') && info.totalPrivateRepos) {
-                        span.setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
-                        span.textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
-                    }
-                    else if (text.includes('Gists') && info.privateGists) {
-                        span.setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
-                        span.textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
-                    }
-                }
-            }
-            ;
-        });
-    }
-    handler();
-    utils_1.observeAttributes(jquery_1.default('span.progress-pjax-loader')[0], (record, el) => {
-        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
-            handler();
-        }
-    });
-}
-function adjustRepoUIObservably() {
-    function handler() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const stuckHeader = jquery_1.default("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
-            const headerShadow = jquery_1.default("div#partial-discussion-header div.gh-header-shadow");
-            if (stuckHeader.length && headerShadow.length) {
-                stuckHeader.css('z-index', '89');
-                headerShadow.css('z-index', '88');
-            }
-            if (jquery_1.default('nav.octotree-sidebar').length) {
-                jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
-            }
-            if (global_1.Global.showRepoActionCounter) {
-                const repoName = `${global_1.Global.urlInfo.author}/${global_1.Global.urlInfo.repo}`;
-                const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
-                watchCounterSpan.attr('style', 'display: inline-block;');
-                watchCounterSpan.addClass('ah-hover-underline');
-                if (!jquery_1.default('#repo-notifications-counter-a').length) {
-                    watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
-                }
-                const forkCounterSpan = jquery_1.default('#repo-network-counter');
-                forkCounterSpan.attr('style', 'display: inline-block;');
-                forkCounterSpan.addClass('ah-hover-underline');
-                if (!jquery_1.default('#repo-network-counter-a').length) {
-                    forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
-                }
-                const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
-                const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
-                starCounterSpan.attr('style', 'display: inline-block;');
-                starCounterSpan.addClass('ah-hover-underline');
-                unstarCounterSpan.attr('style', 'display: none;');
-                if (!jquery_1.default('#repo-stars-counter-a').length) {
-                    starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
-                    starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
-                    jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('form.unstarred.js-social-form.BtnGroup-parent'));
-                    const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
-                    starSummary.removeClass('px-2');
-                    starSummary.addClass('px-1');
-                }
-                ;
-            }
-        });
-    }
-    handler();
-    utils_1.observeAttributes(jquery_1.default('span.progress-pjax-loader')[0], (record, el) => {
-        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
-            handler();
-        }
-    });
-}
 function injectSidebar() {
     const info = global_1.Global.urlInfo;
     if (info.type === model_1.URLType.OTHER) {
@@ -71260,14 +71137,14 @@ var URLType;
     URLType["OTHER"] = "other";
 })(URLType = exports.URLType || (exports.URLType = {}));
 class URLInfo {
-    constructor(type, author = '', repo = '', isMe = false) {
+    constructor(type, author = '', repo = '') {
         this.type = type;
         this.author = author;
         this.repo = repo;
-        this.isMe = isMe;
         this.authorURL = '';
         this.repoURL = '';
         this.eventAPI = '';
+        this.extra = {};
         switch (type) {
             case URLType.OTHER:
                 return;
@@ -71320,8 +71197,9 @@ function formatInfoToLi(item) {
     if (!body) {
         return "";
     }
-    const userUrl = `https://github.com/${item.actor.login}`;
-    const userHovercard = hovercard(model_1.HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`);
+    const isBot = item.actor.login.endsWith('[bot]');
+    const userUrl = !isBot ? `https://github.com/${item.actor.login}` : `https://github.com/apps/${item.actor.login.replaceAll('[bot]', '')}`;
+    const userHovercard = !isBot ? hovercard(model_1.HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`) : '';
     const createAt = moment_1.default(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
@@ -71546,9 +71424,313 @@ function getPathTag(type) {
                     d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
                 </path>
             `;
+        case 'database':
+            return `
+                <path
+                    d="M6 15c-3.31 0-6-.9-6-2v-2c0-.17.09-.34.21-.5.67.86 3 1.5 5.79 1.5s5.12-.64 5.79-1.5c.13.16.21.33.21.5v2c0 1.1-2.69 2-6 2zm0-4c-3.31 0-6-.9-6-2V7c0-.11.04-.21.09-.31.03-.06.07-.13.12-.19C.88 7.36 3.21 8 6 8s5.12-.64 5.79-1.5c.05.06.09.13.12.19.05.1.09.21.09.31v2c0 1.1-2.69 2-6 2zm0-4c-3.31 0-6-.9-6-2V3c0-1.1 2.69-2 6-2s6 .9 6 2v2c0 1.1-2.69 2-6 2zm0-5c-2.21 0-4 .45-4 1s1.79 1 4 1 4-.45 4-1-1.79-1-4-1z">
+                </path>
+            `;
     }
 }
 exports.getPathTag = getPathTag;
+
+
+/***/ }),
+
+/***/ "./src/ts/ui_adjust.ts":
+/*!*****************************!*\
+  !*** ./src/ts/ui_adjust.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
+const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
+function adjustGlobalUI() {
+    if (global_1.Global.showFollowMenuItem) {
+        showFollowAvatarMenuItem();
+    }
+}
+exports.adjustGlobalUI = adjustGlobalUI;
+function showFollowAvatarMenuItem() {
+    const avatarDetails = jquery_1.default('header div.Header-item:last-child details')[0];
+    const observer = utils_1.observeAttributes(avatarDetails, (record, el) => {
+        if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
+            return;
+        }
+        observer.disconnect();
+        const handler = setInterval(() => {
+            if (jquery_1.default('details-menu a[data-ga-click$="your followers"]').length) {
+                clearInterval(handler);
+                return;
+            }
+            const username = jquery_1.default('details-menu a[data-ga-click$="Signed in as"]').text();
+            if (username) {
+                const gistsMenuItem = jquery_1.default('details-menu a[data-ga-click$="gists"]');
+                const upgradeMenuItem = jquery_1.default('details-menu a[data-ga-click$="upgrade"]');
+                jquery_1.default('<a>', {
+                    role: 'menuitem',
+                    class: 'dropdown-item',
+                    href: `/${username}?tab=followers`,
+                    text: 'Your followers',
+                }).insertBefore(gistsMenuItem);
+                jquery_1.default('<a>', {
+                    role: 'menuitem',
+                    class: 'dropdown-item',
+                    href: `/${username}?tab=following`,
+                    text: 'Your following',
+                }).insertBefore(gistsMenuItem);
+                jquery_1.default('<a>', {
+                    role: 'menuitem',
+                    class: 'dropdown-item',
+                    href: '/',
+                    text: 'GitHub Homepage',
+                }).insertBefore(upgradeMenuItem);
+            }
+        }, 250);
+    });
+}
+function adjustUserUIObservably() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (global_1.Global.centerFollowText) {
+            centerUserFollowText();
+        }
+        let info;
+        if (global_1.Global.showJoinedTime || global_1.Global.showUserPrivateCounter) {
+            try {
+                info = yield utils_1.requestUserInfo(global_1.Global.urlInfo.author, global_1.Global.token);
+            }
+            catch (_) { }
+        }
+        if (global_1.Global.showJoinedTime && info) {
+            showUserJoinedTime(info);
+        }
+        if (global_1.Global.showUserPrivateCounter && info) {
+            addUserPrivateCounters(info);
+        }
+        ;
+    });
+}
+exports.adjustUserUIObservably = adjustUserUIObservably;
+function centerUserFollowText() {
+    jquery_1.default('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
+}
+function showUserJoinedTime(info) {
+    if (!info.createdAt || jquery_1.default('ul.vcard-details li[itemprop="join time"]').length) {
+        return;
+    }
+    const time = moment_1.default(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
+    jquery_1.default('ul.vcard-details').append(`<li class="vcard-detail pt-1" itemprop="join time">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
+                ${sidebar_ui_1.getPathTag('rocket')}
+            </svg>
+            <span>Joined at ${time}</span>
+        </li>`);
+}
+function addUserPrivateCounters(info) {
+    if (!global_1.Global.token || !global_1.Global.urlInfo.extra.user.isMe) {
+        return;
+    }
+    for (const navItem of jquery_1.default('nav a.UnderlineNav-item')) {
+        const counterSpan = navItem.getElementsByTagName('span');
+        if (!counterSpan.length) {
+            continue;
+        }
+        const text = navItem.innerText, span = counterSpan[0];
+        if (text.includes('Repositories') && info.totalPrivateRepos) {
+            span.setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
+            span.textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+        }
+        else if (text.includes('Gists') && info.privateGists) {
+            span.setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
+            span.textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+        }
+    }
+}
+function adjustRepoUIObservably() {
+    return __awaiter(this, void 0, void 0, function* () {
+        adjustRepoStuckHeader();
+        fixOctotreePageMargin();
+        if (global_1.Global.showRepoActionCounter) {
+            showRepoActionCounters();
+        }
+        if (global_1.Global.showRepoAndContentsSize) {
+            try {
+                const repo = yield utils_1.requestRepoInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, global_1.Global.token);
+                showRepoContentsSize(repo);
+            }
+            catch (_) { }
+        }
+    });
+}
+exports.adjustRepoUIObservably = adjustRepoUIObservably;
+function adjustRepoStuckHeader() {
+    const stuckHeader = jquery_1.default("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
+    const headerShadow = jquery_1.default("div#partial-discussion-header div.gh-header-shadow");
+    if (stuckHeader.length && headerShadow.length) {
+        stuckHeader.css('z-index', '89');
+        headerShadow.css('z-index', '88');
+    }
+}
+function fixOctotreePageMargin() {
+    if (jquery_1.default('nav.octotree-sidebar').length) {
+        jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+    }
+}
+function showRepoActionCounters() {
+    const repoName = `${global_1.Global.urlInfo.author}/${global_1.Global.urlInfo.repo}`;
+    const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
+    watchCounterSpan.attr('style', 'display: inline-block;');
+    watchCounterSpan.addClass('ah-hover-underline');
+    if (!jquery_1.default('#repo-notifications-counter-a').length) {
+        watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
+    }
+    const forkCounterSpan = jquery_1.default('#repo-network-counter');
+    forkCounterSpan.attr('style', 'display: inline-block;');
+    forkCounterSpan.addClass('ah-hover-underline');
+    if (!jquery_1.default('#repo-network-counter-a').length) {
+        forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+    }
+    const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
+    const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
+    starCounterSpan.attr('style', 'display: inline-block;');
+    starCounterSpan.addClass('ah-hover-underline');
+    unstarCounterSpan.attr('style', 'display: none;');
+    if (!jquery_1.default('#repo-stars-counter-a').length) {
+        starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
+        starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
+        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('form.unstarred.js-social-form.BtnGroup-parent'));
+        const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
+        starSummary.removeClass('px-2');
+        starSummary.addClass('px-1');
+    }
+    ;
+}
+function showRepoContentsSize(repoInfo) {
+    var _a, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        const repoExtra = global_1.Global.urlInfo.extra.repo;
+        const sizeFormatted = utils_1.formatBytes(repoInfo.size);
+        let tabTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
+        if (!global_1.Global.contentsSizeCache) {
+            tabTitle += ' (click here to load directories size)';
+        }
+        else if (global_1.Global.contentsSizeTruncated) {
+            tabTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
+        }
+        else {
+            tabTitle += ' (directories size have been loaded successfully)';
+        }
+        const sizeTab = jquery_1.default('#ahid-contents-size');
+        if (sizeTab.length) {
+            sizeTab.attr('title', tabTitle);
+        }
+        else {
+            jquery_1.default(`<li id="ahid-contents-size" title="${tabTitle}" style="cursor: pointer;" data-view-component="true" class="d-inline-flex">
+            <a class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+                <svg width="12" height="16" viewBox="0 0 12 16" version="1.1" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
+                    ${sidebar_ui_1.getPathTag('database')}
+                </svg>
+                ${sizeFormatted}
+            </a>
+        </li>`).insertAfter(jquery_1.default('nav.js-repo-nav ul li:last-child'));
+            jquery_1.default('#ahid-contents-size').on('click', () => __awaiter(this, void 0, void 0, function* () {
+                const progressBar = utils_1.getGitHubProgressBar();
+                progressBar.startLoading();
+                yield updateSizeCache();
+                progressBar.finishLoading();
+            }));
+        }
+        function updateSizeCache() {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const treeInfo = yield utils_1.requestRepoTreeInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, global_1.Global.token);
+                    const cache = new Map();
+                    const [files, dirs] = [treeInfo.tree.filter(i => i.type === 'blob'), treeInfo.tree.filter(i => i.type === 'tree')];
+                    files.forEach(f => cache.set(f.path, f.size));
+                    dirs.forEach(d => cache.set(d.path, files.filter(f => f.path.startsWith(d.path)).reduce((accumulate, f) => accumulate + f.size, 0)));
+                    global_1.Global.contentsSizeCache = cache;
+                    global_1.Global.contentsSizeCachedRef = repoExtra.ref;
+                    global_1.Global.contentsSizeTruncated = treeInfo.truncated;
+                }
+                catch (_) { }
+            });
+        }
+        if (global_1.Global.contentsSizeCache && global_1.Global.contentsSizeCachedRef !== repoExtra.ref) {
+            yield updateSizeCache();
+        }
+        let contentsSize = new Map();
+        if (global_1.Global.contentsSizeCache) {
+            contentsSize = global_1.Global.contentsSizeCache;
+        }
+        else {
+            try {
+                const contents = yield utils_1.requestRepoContents(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, repoExtra.path, global_1.Global.token);
+                contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size));
+            }
+            catch (_) { }
+        }
+        yield new Promise((resolve, _) => {
+            const skeleton = () => jquery_1.default('div.Box div[role="grid"] div[role="row"] div[role="gridcell"] div.Skeleton');
+            if (!skeleton().length) {
+                resolve();
+                return;
+            }
+            const interval = setInterval(() => {
+                if (!skeleton().length) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 50);
+        });
+        for (const row of jquery_1.default('div.Box div[role="grid"] div[role="row"]')) {
+            if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
+                continue;
+            }
+            let [sizeFormatted, gridTitle] = ['', ''];
+            const filename = (_c = (_b = (_a = row.querySelector('div[role="rowheader"]')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
+            if (filename) {
+                let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+                if (global_1.Global.contentsSizeCache && !fileSize) {
+                    fileSize = 0;
+                }
+                if (fileSize !== undefined) {
+                    sizeFormatted = utils_1.formatBytes(fileSize);
+                    gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+                }
+            }
+            const sizeDiv = row.querySelector('div.ah-file-size');
+            if (!sizeDiv) {
+                jquery_1.default('<div>', {
+                    role: 'gridcell', class: 'mr-3 text-right color-fg-muted ah-file-size', style: 'width: 80px;',
+                    text: sizeFormatted, title: gridTitle,
+                }).insertBefore(row.querySelector('div[role="gridcell"]:last-child'));
+            }
+            else {
+                sizeDiv.textContent = sizeFormatted;
+                sizeDiv.setAttribute('title', gridTitle);
+            }
+        }
+    });
+}
 
 
 /***/ }),
@@ -71722,11 +71904,12 @@ function processMenuSwitchers() {
             }), 30));
         });
     }
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), global_1.StorageFlag.CENTER_FOLLOW_TEXT);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), global_1.StorageFlag.SHOW_JOINED_TIME);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), global_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), global_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), global_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
 }
 function adjustBodyLayout(resizing = false) {
     const navTag = jquery_1.default('#ahid-nav');
@@ -71802,32 +71985,58 @@ const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modul
 const lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
 function checkURL() {
-    const preservedEndpoint = [
+    var _a, _b;
+    const result = /https?:\/\/github\.com(.*)?/.exec(document.URL);
+    if (!result) {
+        return null;
+    }
+    if (result.length <= 1) {
+        return new model_1.URLInfo(model_1.URLType.OTHER);
+    }
+    const preservedEndpoints = [
         'pulls', 'issues', 'marketplace', 'explore', 'notifications',
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
         'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
     ];
-    const result = /https?:\/\/github\.com\/(.+)/.exec(document.URL);
-    if (!result) {
-        return null;
-    }
-    var endpoint = result[result.length - 1].replaceAll(/(#.*|\?.*|\/$)/, '');
-    const endpoints = endpoint.split('/');
-    if (endpoints.length === 0 || preservedEndpoint.indexOf(endpoints[0]) !== -1) {
+    const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
+    const endpoints = finalPart.split('/').filter(e => !!e);
+    if (endpoints.length === 0 || preservedEndpoints.indexOf(endpoints[0]) !== -1) {
         return new model_1.URLInfo(model_1.URLType.OTHER);
     }
     if (endpoints.length === 1) {
-        if (jquery_1.default('div[itemtype="http://schema.org/Organization"]').length > 0) {
+        const isOrg = jquery_1.default('div[itemtype="http://schema.org/Organization"]').length > 0;
+        if (isOrg) {
             return new model_1.URLInfo(model_1.URLType.ORG, endpoints[0]);
         }
         else {
+            const info = new model_1.URLInfo(model_1.URLType.USER, endpoints[0]);
             const isMe = jquery_1.default('div.js-profile-editable-area button').length > 0;
-            return new model_1.URLInfo(model_1.URLType.USER, endpoints[0], '', isMe);
+            info.extra.user = { isMe };
+            return info;
         }
     }
-    else {
-        return new model_1.URLInfo(model_1.URLType.REPO, endpoints[0], endpoints[1]);
+    const info = new model_1.URLInfo(model_1.URLType.REPO, endpoints[0], endpoints[1]);
+    if (endpoints.length === 2) {
+        let ref = '';
+        const refBtn = jquery_1.default('div.file-navigation summary:nth-child(1)');
+        if (refBtn.length) {
+            ref = (_b = (_a = refBtn[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
+        }
+        info.extra.repo = { isTree: true, ref: (!!ref ? ref : 'master'), path: '' };
     }
+    else if (endpoints.length >= 4 && endpoints[2] === 'tree') {
+        const ref = endpoints[3];
+        let path = '';
+        if (endpoints.length >= 5) {
+            path = endpoints.slice(4).join('/');
+        }
+        info.extra.repo = { isTree: true, ref, path };
+    }
+    else {
+        info.extra.repo = { isTree: false, ref: '', path: '' };
+    }
+    console.log(info);
+    return info;
 }
 exports.checkURL = checkURL;
 function observeAttributes(el, callback) {
@@ -71842,6 +72051,26 @@ function observeAttributes(el, callback) {
     return observer;
 }
 exports.observeAttributes = observeAttributes;
+function getGitHubProgressBar() {
+    const progressBarOuter = jquery_1.default('span.progress-pjax-loader');
+    const progressBarInner = jquery_1.default('span.progress-pjax-loader span');
+    return {
+        el: progressBarOuter,
+        startLoading: () => {
+            progressBarInner.attr('style', 'width: 0%; transition: width 0.4s ease 0s;');
+            progressBarOuter.addClass('is-loading');
+            progressBarInner.attr('style', 'width: 40%; transition: width 0.4s ease 0s;');
+        },
+        finishLoading: () => {
+            progressBarInner.attr('style', 'width: 100%; transition: width 0.4s ease 0s;');
+            setTimeout(() => {
+                progressBarOuter.removeClass('is-loading');
+                progressBarInner.attr('style', 'width: 0%; transition: width 0.4s ease 0s;');
+            }, 450);
+        },
+    };
+}
+exports.getGitHubProgressBar = getGitHubProgressBar;
 function myAxios() {
     const mapDeep = (data, callback) => {
         if (lodash_1.isArray(data)) {
@@ -71860,28 +72089,70 @@ function myAxios() {
     });
     return client;
 }
+function httpRequest(method, url, token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        let headers = {};
+        if (token) {
+            headers = { 'Authorization': `Token ${token}` };
+        }
+        return yield myAxios().request({ method, url, headers });
+    });
+}
 function requestGitHubEvents(eventAPI, page, token = '') {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `${eventAPI}?page=${page}`;
-        const headers = token ? { 'Authorization': `Token ${token}` } : {};
-        const resp = yield myAxios().request({
-            method: 'get', url, headers
-        });
-        return resp.data;
+        return (yield httpRequest('get', url, token)).data;
     });
 }
 exports.requestGitHubEvents = requestGitHubEvents;
 function requestUserInfo(user, token = '') {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://api.github.com/users/${user}`;
-        const headers = token ? { 'Authorization': `Token ${token}` } : {};
-        const resp = yield myAxios().request({
-            method: 'get', url, headers
-        });
-        return resp.data;
+        return (yield httpRequest('get', url, token)).data;
     });
 }
 exports.requestUserInfo = requestUserInfo;
+function requestRepoInfo(user, repo, token = '') {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `https://api.github.com/repos/${user}/${repo}`;
+        return (yield httpRequest('get', url, token)).data;
+    });
+}
+exports.requestRepoInfo = requestRepoInfo;
+function requestRepoContents(user, repo, ref, path, token = '') {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${ref}`;
+        return (yield httpRequest('get', url, token)).data;
+    });
+}
+exports.requestRepoContents = requestRepoContents;
+function requestRepoTreeInfo(user, repo, ref, token = '') {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `https://api.github.com/repos/${user}/${repo}/git/trees/${ref}?recursive=1`;
+        return (yield httpRequest('get', url, token)).data;
+    });
+}
+exports.requestRepoTreeInfo = requestRepoTreeInfo;
+function formatBytes(bytes) {
+    if (bytes <= 0) {
+        return '0.00 B';
+    }
+    const b = bytes;
+    if (b < 1024) {
+        return `${b.toFixed(2)} B`;
+    }
+    const kb = bytes / 1024;
+    if (kb < 1024) {
+        return `${kb.toFixed(2)} KB`;
+    }
+    const mb = kb / 1024;
+    if (mb < 1024) {
+        return `${mb.toFixed(2)} MB`;
+    }
+    const gb = mb / 1024;
+    return `${gb.toFixed(2)} GB`;
+}
+exports.formatBytes = formatBytes;
 
 
 /***/ })
