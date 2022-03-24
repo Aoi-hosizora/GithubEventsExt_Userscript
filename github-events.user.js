@@ -71586,7 +71586,7 @@ function adjustRepoStuckHeader() {
 }
 function fixOctotreePageMargin() {
     if (jquery_1.default('nav.octotree-sidebar').length) {
-        jquery_1.default('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+        jquery_1.default('div#repo-content-pjax-container>div.clearfix.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
     }
 }
 function showRepoActionCounters() {
@@ -71990,7 +71990,7 @@ function checkURL() {
     const preservedEndpoints = [
         'pulls', 'issues', 'marketplace', 'explore', 'notifications',
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
-        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
+        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets', 'topics',
     ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e);
