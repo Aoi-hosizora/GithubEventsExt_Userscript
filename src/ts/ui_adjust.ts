@@ -179,7 +179,7 @@ function adjustRepoStuckHeader() {
  */
 function fixOctotreePageMargin() {
     if ($('nav.octotree-sidebar').length) {
-        $('main#js-repo-pjax-container>div.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+        $('div#repo-content-pjax-container>div.clearfix.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
     }
 }
 

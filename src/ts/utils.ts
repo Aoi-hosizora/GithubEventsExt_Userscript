@@ -18,7 +18,7 @@ export function checkURL(): URLInfo | null {
     const preservedEndpoints = [
         'pulls', 'issues', 'marketplace', 'explore', 'notifications',
         'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
-        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets'
+        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets', 'topics',
     ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e); // => xxx or xxx/yyy or xxx/yyy/zzz/...
