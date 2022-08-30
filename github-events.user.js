@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.10
+// @version      1.0.11
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -71065,8 +71065,8 @@ function adjustGitHubUI() {
         }
     }
     handleObservably();
-    utils_1.observeAttributes(utils_1.getGitHubProgressBar().el[0], (record, el) => {
-        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
+    utils_1.observeChildChanged(jquery_1.default('html')[0], (record) => {
+        if (record.removedNodes && utils_1.handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0])) {
             const urlInfo = utils_1.checkURL();
             if (urlInfo) {
                 global_1.Global.urlInfo = urlInfo;
@@ -71602,6 +71602,9 @@ function showRepoActionCounters() {
     forkCounterSpan.addClass('ah-hover-underline');
     if (!jquery_1.default('#repo-network-counter-a').length) {
         forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+        const forkSummary = jquery_1.default('summary.BtnGroup-item[aria-label="See your forks of this repository"]');
+        forkSummary.removeClass('px-2');
+        forkSummary.addClass('px-1');
     }
     const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
     const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
@@ -71647,7 +71650,7 @@ function showRepoContentsSize(repoInfo) {
             </a>
         </li>`).insertAfter(jquery_1.default('nav.js-repo-nav ul li:last-child'));
             jquery_1.default('#ahid-contents-size').on('click', () => __awaiter(this, void 0, void 0, function* () {
-                const progressBar = utils_1.getGitHubProgressBar();
+                const progressBar = utils_1.handleGithubTurboProgressBar();
                 progressBar.startLoading();
                 yield updateSizeCache();
                 progressBar.finishLoading();
@@ -71988,9 +71991,10 @@ function checkURL() {
         return new model_1.URLInfo(model_1.URLType.OTHER);
     }
     const preservedEndpoints = [
-        'pulls', 'issues', 'marketplace', 'explore', 'notifications',
-        'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
-        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets', 'topics',
+        'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
+        'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
+        'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
+        'assets', 'topics', 'readme',
     ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e);
@@ -72044,6 +72048,18 @@ function observeAttributes(el, callback) {
     return observer;
 }
 exports.observeAttributes = observeAttributes;
+function observeChildChanged(el, callback) {
+    const observer = new MutationObserver(records => {
+        records.forEach(record => {
+            if (record.type === 'childList') {
+                callback(record);
+            }
+        });
+    });
+    observer.observe(el, { attributes: false, childList: true, subtree: false });
+    return observer;
+}
+exports.observeChildChanged = observeChildChanged;
 function getGitHubProgressBar() {
     const progressBarOuter = jquery_1.default('span.progress-pjax-loader');
     const progressBarInner = jquery_1.default('span.progress-pjax-loader span');
@@ -72064,6 +72080,30 @@ function getGitHubProgressBar() {
     };
 }
 exports.getGitHubProgressBar = getGitHubProgressBar;
+function handleGithubTurboProgressBar() {
+    return {
+        isTurboProgressBar: (el) => {
+            return el && el.classList.contains('turbo-progress-bar');
+        },
+        startLoading: () => {
+            if (!jquery_1.default('div.turbo-progress-bar').length) {
+                jquery_1.default(`<div class="turbo-progress-bar" style="width: 0%; opacity: 100%"></div>`).insertAfter(jquery_1.default('head'));
+                jquery_1.default('div.turbo-progress-bar').attr('style', 'width: 30%; opacity: 100%;');
+            }
+        },
+        finishLoading: () => {
+            var progressBar = jquery_1.default('div.turbo-progress-bar');
+            if (progressBar.length) {
+                progressBar.attr('style', 'width: 100%; opacity: 100%;');
+                setTimeout(() => {
+                    progressBar.attr('style', 'width: 100%; opacity: 0%;');
+                    setTimeout(() => { progressBar.remove(); }, 50);
+                }, 450);
+            }
+        },
+    };
+}
+exports.handleGithubTurboProgressBar = handleGithubTurboProgressBar;
 function myAxios() {
     const mapDeep = (data, callback) => {
         if (lodash_1.isArray(data)) {
