@@ -7,7 +7,7 @@ import { URLType } from '@src/ts/model';
 import { getPathTag } from '@src/ts/sidebar_ui';
 import { adjustGlobalUI, adjustRepoUIObservably, adjustUserUIObservably } from '@src/ts/ui_adjust';
 import { loadGitHubEvents, registerUIEvents } from '@src/ts/ui_events';
-import { checkURL, getGitHubProgressBar, observeAttributes } from '@src/ts/utils';
+import { checkURL, handleGithubTurboProgressBar, observeChildChanged } from '@src/ts/utils';
 
 /**
  * Adjust GitHub UI !!!
@@ -34,8 +34,8 @@ export function adjustGitHubUI() {
     }
 
     handleObservably();
-    observeAttributes(getGitHubProgressBar().el[0], (record, el) => {
-        if (record.attributeName === 'class' && !el.classList.contains("is-loading")) {
+    observeChildChanged($('html')[0], (record) => {
+        if (record.removedNodes && handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
             const urlInfo = checkURL();
             if (urlInfo) {
                 Global.urlInfo = urlInfo;

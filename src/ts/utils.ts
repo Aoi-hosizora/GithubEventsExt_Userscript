@@ -16,9 +16,10 @@ export function checkURL(): URLInfo | null {
         return new URLInfo(URLType.OTHER);
     }
     const preservedEndpoints = [
-        'pulls', 'issues', 'marketplace', 'explore', 'notifications',
-        'new', 'login', 'organizations', 'settings', 'dashboard', 'features', 'codespaces',
-        'search', 'orgs', 'apps', 'users', 'repos', 'stars', 'account', 'assets', 'topics',
+        'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
+        'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
+        'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
+        'assets', 'topics', 'readme', // ...
     ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e); // => xxx or xxx/yyy or xxx/yyy/zzz/...
@@ -77,6 +78,22 @@ export function observeAttributes(el: HTMLElement, callback: (record: MutationRe
 }
 
 /**
+ * Use MutationObserver to observe the changing of element inside given HTMLElement.
+ */
+export function observeChildChanged(el: HTMLElement, callback: (record: MutationRecord) => void): MutationObserver {
+    const observer = new MutationObserver(records => {
+        records.forEach(record => {
+            if (record.type === 'childList') {
+                callback(record);
+            }
+        });
+    });
+    observer.observe(el, { attributes: false, childList: true, subtree: false });
+    return observer;
+}
+
+/**
+ * @Deprecated
  * Get GitHub progress loader element, with fake start loading function and finish loading function.
  */
 export function getGitHubProgressBar(): { el: JQuery<HTMLElement>; startLoading: () => void; finishLoading: () => void } {
@@ -95,6 +112,33 @@ export function getGitHubProgressBar(): { el: JQuery<HTMLElement>; startLoading:
                 progressBarOuter.removeClass('is-loading');
                 progressBarInner.attr('style', 'width: 0%; transition: width 0.4s ease 0s;');
             }, 450);
+        },
+    }
+}
+
+/**
+ * Get GitHub turbo progress loader element, with fake start loading function and finish loading function.
+ */
+export function handleGithubTurboProgressBar(): { isTurboProgressBar: (el: Element) => boolean, startLoading: () => void; finishLoading: () => void } {
+    return {
+        isTurboProgressBar: (el) => {
+            return el && el.classList.contains('turbo-progress-bar');
+        },
+        startLoading: () => {
+            if (!$('div.turbo-progress-bar').length) {
+                $(`<div class="turbo-progress-bar" style="width: 0%; opacity: 100%"></div>`).insertAfter($('head'));
+                $('div.turbo-progress-bar').attr('style', 'width: 30%; opacity: 100%;');
+            }
+        },
+        finishLoading: () => {
+            var progressBar = $('div.turbo-progress-bar');
+            if (progressBar.length) {
+                progressBar.attr('style', 'width: 100%; opacity: 100%;');
+                setTimeout(() => {
+                    progressBar.attr('style', 'width: 100%; opacity: 0%;');
+                    setTimeout(() => { progressBar.remove(); }, 50);
+                }, 450);
+            }
         },
     }
 }

@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import moment from "moment";
 import { Global } from "@src/ts/global";
-import { RepoInfo, RepoTreeInfo, UserInfo } from "@src/ts/model";
+import { RepoInfo, UserInfo } from "@src/ts/model";
 import { getPathTag } from "@src/ts/sidebar_ui";
-import { formatBytes, getGitHubProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo } from "@src/ts/utils";
+import { formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo } from "@src/ts/utils";
 
 // =================
 // global ui related
@@ -200,6 +200,9 @@ function showRepoActionCounters() {
     forkCounterSpan.addClass('ah-hover-underline');
     if (!$('#repo-network-counter-a').length) {
         forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+        const forkSummary = $('summary.BtnGroup-item[aria-label="See your forks of this repository"]');
+        forkSummary.removeClass('px-2');
+        forkSummary.addClass('px-1');
     }
 
     const starCounterSpan = $('#repo-stars-counter-star');
@@ -208,7 +211,7 @@ function showRepoActionCounters() {
     starCounterSpan.addClass('ah-hover-underline');
     unstarCounterSpan.attr('style', 'display: none;');
     if (!$('#repo-stars-counter-a').length) {
-        // => <a #counter-a><span .btn><span #counter-star>...</span></span></a>
+        // => <form .starred /><form .unstarred /><a #counter-a><span .btn><span #counter-star>...</span></span></a>
         starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
         starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
         $('#repo-stars-counter-a').insertAfter($('form.unstarred.js-social-form.BtnGroup-parent'));
@@ -246,7 +249,7 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
             </a>
         </li>`).insertAfter($('nav.js-repo-nav ul li:last-child'));
         $('#ahid-contents-size').on('click', async () => {
-            const progressBar = getGitHubProgressBar();
+            const progressBar = handleGithubTurboProgressBar();
             progressBar.startLoading();
             await updateSizeCache();
             progressBar.finishLoading();
