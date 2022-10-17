@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.11
+// @version      1.0.12
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -71607,14 +71607,22 @@ function showRepoActionCounters() {
         forkSummary.addClass('px-1');
     }
     const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
-    const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
     starCounterSpan.attr('style', 'display: inline-block;');
     starCounterSpan.addClass('ah-hover-underline');
-    unstarCounterSpan.attr('style', 'display: none;');
+    const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
+    unstarCounterSpan.addClass('ah-hover-underline');
+    unstarCounterSpan.attr('style', 'display: inline-block;');
     if (!jquery_1.default('#repo-stars-counter-a').length) {
-        starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
-        starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
-        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('form.unstarred.js-social-form.BtnGroup-parent'));
+        const aTag = `
+            <a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent">
+                <span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);">
+                </span>
+            </a>
+        `;
+        starCounterSpan.wrap(aTag);
+        unstarCounterSpan.wrap(aTag);
+        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.unstarred.BtnGroup.flex-1>form'));
+        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.starred.BtnGroup.flex-1>form'));
         const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
         starSummary.removeClass('px-2');
         starSummary.addClass('px-1');
