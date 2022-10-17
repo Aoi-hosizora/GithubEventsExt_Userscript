@@ -206,15 +206,25 @@ function showRepoActionCounters() {
     }
 
     const starCounterSpan = $('#repo-stars-counter-star');
-    const unstarCounterSpan = $('#repo-stars-counter-unstar');
     starCounterSpan.attr('style', 'display: inline-block;');
     starCounterSpan.addClass('ah-hover-underline');
-    unstarCounterSpan.attr('style', 'display: none;');
+    const unstarCounterSpan = $('#repo-stars-counter-unstar');
+    unstarCounterSpan.addClass('ah-hover-underline');
+    unstarCounterSpan.attr('style', 'display: inline-block;');
     if (!$('#repo-stars-counter-a').length) {
-        // => <form .starred /><form .unstarred /><a #counter-a><span .btn><span #counter-star>...</span></span></a>
-        starCounterSpan.wrap(`<a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent"></a>`);
-        starCounterSpan.wrap(`<span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);"></span>`);
-        $('#repo-stars-counter-a').insertAfter($('form.unstarred.js-social-form.BtnGroup-parent'));
+        // => <div .unstarred><form /><a /><details /></div>
+        // <a /> => <a #counter-a><span .btn><span #counter-star>...</span></span></a>
+        const aTag = `
+            <a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent">
+                <span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);">
+                </span>
+            </a>
+        `;
+        starCounterSpan.wrap(aTag);
+        unstarCounterSpan.wrap(aTag);
+        $('#repo-stars-counter-a').insertAfter($('div.unstarred.BtnGroup.flex-1>form'));
+        $('#repo-stars-counter-a').insertAfter($('div.starred.BtnGroup.flex-1>form'));
+
         const starSummary = $('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
         starSummary.removeClass('px-2');
         starSummary.addClass('px-1');
