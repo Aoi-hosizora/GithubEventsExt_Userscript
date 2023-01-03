@@ -30,10 +30,12 @@ export function formatInfoToLi(item: EventInfo): string {
                         <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                     </span>
                     <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${getSvgTag(item.type)}</span>
+                    <!-- TODO make span not allow to flow, and make text be overflow-able -->
                 </div>
                 <div class="ah-content-header-info">
                     <span class="ah-content-header-time" title="${fullCreateAt}">${displayCreateAt}</span>
                     ${item.public ? '' : '<span class="ah-content-header-private" title="This is a private event">Private</span>'}
+                    <!-- TODO make span not allow to flow, and make text be overflow-able -->
                 </div>
             </div>
             <div class="ah-content-body">

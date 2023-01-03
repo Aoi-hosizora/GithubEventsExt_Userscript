@@ -36,6 +36,7 @@ export function adjustGitHubUI() {
     handleObservably();
     observeChildChanged($('html')[0], (record) => {
         if (record.removedNodes && handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
+            // TODO after progress bar hided, check page layout
             const urlInfo = checkURL();
             if (urlInfo) {
                 Global.urlInfo = urlInfo;
@@ -49,6 +50,8 @@ export function adjustGitHubUI() {
   * Add sidebar to GitHub !!!
  */
 export function injectSidebar() {
+    // TODO check and re-inject when url info is changed (navigate to another repo page, or navigate from repo page to user page)
+
     const info = Global.urlInfo;
     if (info.type === URLType.OTHER) {
         // only show sidebar on user, org, repo page
