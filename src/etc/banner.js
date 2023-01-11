@@ -6,10 +6,11 @@
 // @description  @@description
 // @namespace    https://github.com/
 // @match        http*://github.com/*
-// @copyright    2020+, @@author
+// @copyright    @@copyright
 //
-// @downloadURL  https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js <!-- TODO check how to upgrade this userscript -->
-// @updateURL    https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/src/etc/banner.js
+// @downloadURL  https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js
+// @updateURL    https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js
+// @supportURL   https://github.com/Aoi-hosizora/GithubEventsExt_Userscript
 // @icon         https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/img/icon16.png
 // @icon64       https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/public/img/icon32.png
 //

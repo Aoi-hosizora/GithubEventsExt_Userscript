@@ -55,6 +55,7 @@ module.exports = {
                 content = content.replace(/@@version/g, PACKAGE.version)
                 content = content.replace(/@@description/g, PACKAGE.description);
                 content = content.replace(/@@author/g, PACKAGE.author);
+                content = content.replace(/@@copyright/g, PACKAGE.copyright);
                 return content;
             })()
         })

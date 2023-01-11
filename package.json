@@ -1,7 +1,7 @@
 {
     "name": "github-events-ext-userscript",
     "title": "Github events",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "description": "A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.",
     "main": "index.js",
     "scripts": {
@@ -14,6 +14,7 @@
         "url": "git+https://github.com/Aoi-hosizora/GithubEventsExt_Userscript.git"
     },
     "author": "Aoi-hosizora",
+    "copyright": "Copyright © 2020-2023 Aoi-hosizora",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/issues"
