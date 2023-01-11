@@ -19,7 +19,7 @@ export function formatInfoToLi(item: EventInfo): string {
     const createAt = moment(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
-    return `
+    var html = `
         <li>
             <div class="ah-content-header">
                 <!-- ////// Avatar | Username | Event icon ////// -->
@@ -45,6 +45,7 @@ export function formatInfoToLi(item: EventInfo): string {
             </div>
         </li>
     `;
+    return html.replaceAll(/<!--[\s\S]+?-->/, '');
 }
 
 /**

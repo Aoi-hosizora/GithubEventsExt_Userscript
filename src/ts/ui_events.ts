@@ -217,6 +217,7 @@ function processMenuSwitchers() {
     updateUIAndRegisterEvent($('#ahid-setup-user-counter'), StorageFlag.SHOW_USER_PRIVATE_COUNTER);
     updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER);
     updateUIAndRegisterEvent($('#ahid-setup-repo-size'), StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
+    updateUIAndRegisterEvent($('#ahid-setup-blank-target'), StorageFlag.USE_BLANK_TARGET);
 }
 
 // =========================
