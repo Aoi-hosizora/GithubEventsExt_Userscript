@@ -36,36 +36,46 @@ export function adjustGitHubUI() {
     handleObservably();
     observeChildChanged($('html')[0], (record) => {
         if (record.removedNodes && handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
-            // TODO after progress bar hided, check page layout
             const urlInfo = checkURL();
             if (urlInfo) {
+                var oldUrlInfo = Global.urlInfo;
                 Global.urlInfo = urlInfo;
+
+                // adjust github ui
                 handleObservably();
+
+                // re-inject sidebar
+                if (!Global.urlInfo.equals(oldUrlInfo)) {
+                    injectSidebar();
+                }
             }
         }
     });
 }
 
 /**
-  * Add sidebar to GitHub !!!
+  * Add sidebar with events to GitHub page !!!
  */
 export function injectSidebar() {
-    // TODO check and re-inject when url info is changed (navigate to another repo page, or navigate from repo page to user page)
-
-    const info = Global.urlInfo;
-    if (info.type === URLType.OTHER) {
-        // only show sidebar on user, org, repo page
-        return;
+    // 1. remove previous elements and reset status
+    if ($('div#ahid-toggle').length) {
+        $('div#ahid-toggle').remove();
+        $('nav#ahid-nav').remove();
+        Global.page = 1;
     }
 
-    // 1. inject html into GitHub page
+    // 2. inject html into GitHub page
+    const info = Global.urlInfo;
+    if (info.type === URLType.OTHER) {
+        return; // only show sidebar on user, org, repo page
+    }
     $('body').append(getSidebarHtml());
     GMApi.GM_addStyle(style);
 
-    // 2. register sidebar's UI events
+    // 3. register sidebar's UI events
     registerUIEvents();
 
-    // 3. start loading GitHub events
+    // 4. start loading GitHub events
     loadGitHubEvents();
 }
 

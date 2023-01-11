@@ -47,6 +47,10 @@ export class URLInfo {
                 return;
         }
     }
+
+    public equals(o: URLInfo): boolean {
+        return o.type == this.type && o.author == this.author && o.repo == this.repo;
+    }
 }
 
 /**

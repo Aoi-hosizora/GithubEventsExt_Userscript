@@ -3,7 +3,8 @@ import 'jquery-ui-dist/jquery-ui';
 import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/global';
 import { EventInfo } from '@src/ts/model';
 import { formatInfoToLi } from '@src/ts/sidebar_ui';
-import { requestGitHubEvents } from '@src/ts/utils';
+import { requestGitHubEvents, checkURL } from '@src/ts/utils';
+import { injectSidebar } from '@src/ts/main';
 
 // ===============
 // request related
@@ -104,7 +105,7 @@ export function registerUIEvents() {
 
     // buttons events
     $('#ahid-pin').on('click', () => pinSidebar(!Global.pinned));
-    $('#ahid-refresh').on('click', () => { adjustBodyLayout(); Global.page = 1; loadGitHubEvents(); });
+    $('#ahid-refresh').on('click', () => refreshSidebar());
     $('#ahid-more').on('click', () => loadNextGitHubEvents());
     $('#ahid-retry').on('click', () => { Global.page = 1; loadGitHubEvents(); });
 
@@ -156,6 +157,29 @@ function pinSidebar(needPin: boolean) {
     Global.pinned = needPin;
     setStorage(StorageFlag.PINNED, Global.pinned); // also update Global
     adjustBodyLayout();
+}
+
+/**
+ * Refresh layout and content of sidebar.
+ */
+function refreshSidebar() {
+    // refresh sidebar layout
+    adjustBodyLayout();
+
+    // check page url
+    var oldUrlInfo = Global.urlInfo;
+    const urlInfo = checkURL();
+    if (urlInfo) {
+        Global.urlInfo = urlInfo;
+    }
+
+    // re-inject sidebar, or reload events
+    if (!Global.urlInfo.equals(oldUrlInfo)) {
+        injectSidebar();
+    } else {
+        Global.page = 1;
+        loadGitHubEvents();
+    }
 }
 
 /**
