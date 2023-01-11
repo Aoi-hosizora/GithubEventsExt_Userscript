@@ -70,6 +70,9 @@ export function injectSidebar() {
         return; // only show sidebar on user, org, repo page
     }
     $('body').append(getSidebarHtml());
+    if (!Global.useBlankTarget) {
+        $('nav#ahid-nav a[target="_blank"]').removeAttr('target');
+    }
     GMApi.GM_addStyle(style);
 
     // 3. register sidebar's UI events

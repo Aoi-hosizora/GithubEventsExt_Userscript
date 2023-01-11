@@ -43,6 +43,9 @@ export async function loadGitHubEvents() {
         }
         ulTag.append(li);
     });
+    if (!Global.useBlankTarget) {
+        $('nav#ahid-nav a[target="_blank"]').removeAttr('target');
+    }
 }
 
 /**

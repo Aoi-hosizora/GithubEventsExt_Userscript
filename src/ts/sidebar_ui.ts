@@ -22,20 +22,22 @@ export function formatInfoToLi(item: EventInfo): string {
     return `
         <li>
             <div class="ah-content-header">
+                <!-- ////// Avatar | Username | Event icon ////// -->
                 <div class="ah-content-header-user">
-                    <a href="${userUrl}" target="_blank" style="text-decoration:none" ${userHovercard}>
-                        <img class="ah-content-header-avatar ah-content-header-icon" src="${item.actor.avatarUrl}" alt="" />
-                    </a>
-                    <span class="ah-content-header-link">
-                        <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
-                    </span>
+                    <div class="ah-content-header-left">
+                        <a href="${userUrl}" target="_blank" style="text-decoration:none" ${userHovercard}>
+                            <img class="ah-content-header-avatar ah-content-header-icon" src="${item.actor.avatarUrl}" alt="" />
+                        </a>
+                        <span class="ah-content-header-link">
+                            <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
+                        </span>
+                    </div>
                     <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${getSvgTag(item.type)}</span>
-                    <!-- TODO make span not allow to flow, and make text be overflow-able -->
                 </div>
+                <!-- ////// Date time | Private badge ////// -->
                 <div class="ah-content-header-info">
                     <span class="ah-content-header-time" title="${fullCreateAt}">${displayCreateAt}</span>
                     ${item.public ? '' : '<span class="ah-content-header-private" title="This is a private event">Private</span>'}
-                    <!-- TODO make span not allow to flow, and make text be overflow-able -->
                 </div>
             </div>
             <div class="ah-content-body">

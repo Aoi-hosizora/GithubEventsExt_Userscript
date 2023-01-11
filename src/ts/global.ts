@@ -18,6 +18,7 @@ export class Global {
     public static showUserPrivateCounter: boolean = true;
     public static showRepoActionCounter: boolean = true;
     public static showRepoAndContentsSize: boolean = true;
+    public static useBlankTarget: boolean = true;
 
     // Some global runtime variables
     public static urlInfo: URLInfo;
@@ -42,6 +43,7 @@ export enum StorageFlag {
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
     SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter',
     SHOW_REPO_AND_CONTENTS_SIZE = 'ah-show-repo-contents-size',
+    USE_BLANK_TARGET = 'ah-use-blank-target',
 }
 
 export async function readStorageToGlobal(): Promise<void> {
@@ -55,6 +57,7 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
     Global.showRepoAndContentsSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
+    Global.useBlankTarget = await getStorage<boolean>(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
 }
 
 // ===============

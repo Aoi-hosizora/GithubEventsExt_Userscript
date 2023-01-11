@@ -62,16 +62,23 @@ hr.ah-hr {
 
 .ah-content-header {
     $g: &;
-    margin-bottom: 8px;
 
     &-user {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-size: 13px;
         color: black;
 
+        #{$g}-left {
+            flex: 1 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         #{$g}-icon {
-            align-items: center;
             vertical-align: middle;
-            justify-content: center;
             border-radius: 50%;
         }
 
@@ -85,32 +92,46 @@ hr.ah-hr {
         }
 
         #{$g}-event {
+            flex: 0 0 auto;
             display: flex;
-            float: right;
+            align-items: center;
+            justify-content: center;
+
             background: #e1e4e8;
             height: 26px;
             width: 26px;
-            margin: -2px -2px 0 0;
+            margin: -2px -2px 0 3px;
         }
     }
 
     &-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-size: 10.5px;
-        margin: 5px 0px -4px 0px;
+        margin: 5px 0px 5px 0px;
         color: gray;
 
         #{$g}-time {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             display: inline;
-            text-align: left;
+
+            padding-top: 1px;
+            line-height: 1;
         }
 
         #{$g}-private {
+            flex: 0 0 auto;
             display: flex;
-            float: right;
-            padding: 2px 3px;
-            margin-left: 2px;
+            align-items: center;
+            justify-content: center;
 
             background: transparent;
+            padding: 3px 4px 1px 4px;
+            margin-left: 4px;
             border: 1px solid rgba(27, 31, 35, 0.15);
             border-radius: 2px;
             line-height: 1;
@@ -139,9 +160,10 @@ hr.ah-hr {
     }
 
     &-subtitle {
+        margin: 2px 0 4px 0;
         padding-left: 5px;
-        margin: 2px 0px 2px 1px;
-        border-left: 2px solid rgb(197, 197, 197);
+        padding-top: 1px;
+        border-left: 3px solid rgb(197, 197, 197);
     }
 
     &-subcontent {
