@@ -36,7 +36,7 @@
         "webpack-cli": "^4.8.0"
     },
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "greasemonkey": "^1.0.3",
         "jquery": "^3.3.1",
         "jquery-ui-dist": "^1.12.1",
