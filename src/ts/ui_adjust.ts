@@ -35,8 +35,11 @@ function adjustHovercardZindex() {
  * Add follow* menu items to avatar dropdown menu.
  */
 function showFollowAvatarMenuItem() {
-    const avatarDetails = $('header div.Header-item:last-child details')[0];
-    const observer = observeAttributes(avatarDetails, (record, el) => {
+    const avatarDetails = $('header div.Header-item:last-child details');
+    if (!avatarDetails.length) {
+        return;
+    }
+    const observer = observeAttributes(avatarDetails[0], (record, el) => {
         if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
             return;
         }
