@@ -6,7 +6,7 @@ on:
       - master
     strategy:
       matrix:
-        node-version: 14.16.1
+        node-version: 14.20.0
 
 jobs:
   build:
@@ -26,6 +26,8 @@ jobs:
           sudo apt-get install sass -y
           npm i
           npm run build
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
 
       - name: Copy to branch
         uses: s0/git-publish-subdir-action@develop
