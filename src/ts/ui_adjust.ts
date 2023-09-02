@@ -13,10 +13,22 @@ import { formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRe
  * Adjust GitHub global UI without observer.
  */
 export function adjustGlobalUI() {
-    // 1. (configurable)
+    // 1. (fixed)
+    adjustHovercardZindex();
+
+    // 2. (configurable)
     if (Global.showFollowMenuItem) {
         showFollowAvatarMenuItem()
     }
+}
+
+/**
+ * Adjust hovercard element for z-index.
+ */
+function adjustHovercardZindex() {
+    const hovercard = $('div.Popover.js-hovercard-content');
+    const mainDiv = $('div[data-turbo-body]');
+    mainDiv.after(hovercard);
 }
 
 /**
