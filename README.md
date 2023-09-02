@@ -1,6 +1,6 @@
 # GithubEventsExt_Userscript
 
-+ A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
++ A Userscript extension that shows GitHub activity events in sidebar, and improves several UI details.
 + For Chrome version, please visit [Aoi-hosizora/GithubEventsExt](https://github.com/Aoi-hosizora/GithubEventsExt).
 
 ### Features
