@@ -135,18 +135,30 @@ function addUserPrivateCounters(info: UserInfo) {
     if (!Global.token || !Global.urlInfo.extra.user!.isMe) {
         return;
     }
-    for (const navItem of $('nav a.UnderlineNav-item')) {
-        const counterSpan = navItem.getElementsByTagName('span');
-        if (!counterSpan.length) {
-            continue;
+
+    const repoCounterA = $('header.AppHeader nav a#repositories-tab');
+    if (repoCounterA.length) {
+        const title = `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`;
+        repoCounterA[0].setAttribute('title', title);
+        const repoCounterSpan = $('nav a#repositories-tab span:last-child');
+        if (repoCounterSpan.length) {
+            repoCounterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+            repoCounterSpan[0].setAttribute('title', title);
         }
-        const text = navItem.innerText, span = counterSpan[0];
-        if (text.includes('Repositories') && info.totalPrivateRepos) {
-            span.setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
-            span.textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
-        } else if (text.includes('Gists') && info.privateGists) {
-            span.setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
-            span.textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+    }
+
+    const gistCounterA = $('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child');
+    if (gistCounterA.length && gistCounterA[0].textContent?.includes('Gists') == true) {
+        const title = `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`;
+        gistCounterA[0].setAttribute('title', title);
+        let gistCounterSpan = $('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
+        if (!gistCounterSpan.length) {
+            gistCounterA.append('<span data-view-component="true" class="Counter" />');
+            gistCounterSpan = $('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
+        }
+        if (gistCounterSpan.length) {
+            gistCounterSpan[0].textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+            gistCounterSpan[0].setAttribute('title', title);
         }
     }
 }

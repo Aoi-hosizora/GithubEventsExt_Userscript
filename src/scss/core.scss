@@ -38,10 +38,14 @@
     }
 }
 
+$head-height: null;
+
 #ahid-header {
     $head-height: 64px !global;
     height: $head-height;
 }
+
+$foot-height: null;
 
 #ahid-footer {
     $foot-height: 30px !global;
