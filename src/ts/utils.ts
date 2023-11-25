@@ -172,6 +172,26 @@ export function handleGithubTurboProgressBar(): { isTurboProgressBar: (el: Eleme
     }
 }
 
+var _scrollYOffsetGetter: (() => number) | undefined;
+
+/**
+ * Return document's current scroll Y offset.
+ */
+export function getDocumentScrollYOffset(): number {
+    if (_scrollYOffsetGetter === undefined) {
+        _scrollYOffsetGetter = (() => {
+            var pageYOffset = 0.0;
+            addEventListener('scroll', (_) => {
+                var doc = document.documentElement;
+                pageYOffset = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+            });
+            return () => pageYOffset;
+        })();
+    }
+    return _scrollYOffsetGetter?.() ?? 0.0;
+}
+
+
 /**
  * Get an AxiosInstance with camelCase data parser.
  */

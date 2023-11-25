@@ -3,7 +3,7 @@ import moment from "moment";
 import { Global } from "@src/ts/global";
 import { RepoInfo, UserInfo, URLType } from "@src/ts/model";
 import { getPathTag } from "@src/ts/sidebar_ui";
-import { Completer, formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo, observeChildChanged } from "@src/ts/utils";
+import { Completer, formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo, observeChildChanged, getDocumentScrollYOffset } from "@src/ts/utils";
 
 // =================
 // global ui related
@@ -17,10 +17,13 @@ export function adjustGlobalUI() {
     adjustHovercardZindex();
 
     // 2. (fixed)
-    adjustModalDialogLayout().then((ok) => {
-        // 3. (configurable)
+    adjustGlobalModalDialogLayout();
+    var menuLoaded = adjustUserModalDialogLayout();
+
+    // 3. (configurable)
+    menuLoaded.then((ok) => {
         if (ok && Global.showFollowMenuItem) {
-            showFollowAvatarMenuItem()
+            showFollowAvatarMenuItem();
         }
     });
 }
@@ -35,45 +38,53 @@ function adjustHovercardZindex() {
 }
 
 /**
- * Adjust modal dialog for its layout.
+ * Adjust modal dialog for layout.
  */
-function adjustModalDialogLayout(): Promise<boolean> {
+function adjustModalDialogLayout(
+    headerClassName: string,
+    ifAddedChecker: (element?: Element) => boolean,
+    adjustOverlayLayout: (element: JQuery<HTMLElement>, opened: boolean) => void,
+): Promise<boolean> {
     const completer = new Completer<boolean>();
-    const sidePanel = $('div.AppHeader-user deferred-side-panel');
+
+    const headerDiv = $(`div.${headerClassName}`);
+    const sidePanel = headerDiv.find('deferred-side-panel');
     if (!sidePanel.length) {
         completer.complete(false);
         return completer.future();
     }
 
-    function adjustOverlayLayout(element: JQuery<HTMLElement>, opened: boolean) {
-        if (Global.urlInfo.type !== URLType.OTHER) {
-            element.css('margin-right', `${Global.width}px`);
-        }
-        opened = false; // show overflow scroll bar always
-        if (opened) {
-            $('body').css('padding-right', '17px');
-            $('body').css('overflow', 'hidden');
-        } else {
-            $('body').css('padding-right', '0');
-            $('body').css('overflow', 'initial');
-        }
+    const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+    const modalDialog = headerDiv.find('modal-dialog');
+    if (!modalDialog.length || !modalDialogOverlay.length) {
+        completer.complete(false);
+        return completer.future();
     }
 
-    const modalDialogOverlay = $('div.AppHeader-user div.Overlay-backdrop--side');
-    if (modalDialogOverlay.length) {
-        adjustOverlayLayout(modalDialogOverlay, false); // adjust margin first
-    }
+    // 1. observe the node which will be deleted
+    adjustOverlayLayout(modalDialogOverlay, false); // adjust margin first
+    var tempObserver = observeAttributes(modalDialog[0], (record, el) => {
+        if (record.attributeName === 'open') {
+            var opened = el.hasAttribute('open');
+            adjustOverlayLayout(modalDialogOverlay, opened);
+            if (!opened) {
+                // restore scroll offset, maybe a bug of GitHub
+                document.documentElement.scrollTo({ top: getDocumentScrollYOffset() });
+            }
+        }
+    });
 
+    // 2. observe the header div for node adding
     var observer = observeChildChanged(sidePanel[0], (record) => {
         if (!record.addedNodes) {
             return;
         }
 
-        var added = true;
+        var added = false;
         for (var node of record.addedNodes) {
-            var addedNode = node as Element;
-            if (addedNode?.tagName?.toLowerCase() === 'user-drawer-side-panel') {
+            if (ifAddedChecker(node as Element) === true) {
                 added = true; // this node is added in interactive manner
+                tempObserver.disconnect();
                 observer.disconnect(); // after node is added, disconnect the observer
                 break;
             }
@@ -82,25 +93,63 @@ function adjustModalDialogLayout(): Promise<boolean> {
             return;
         }
 
-        // observe the new node
-        const modalDialogOverlay = $('div.AppHeader-user div.Overlay-backdrop--side');
-        const modalDialog = $('div.AppHeader-user modal-dialog');
+        // 3. observe the new node which is inserted when dialog loaded
+        const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+        const modalDialog = headerDiv.find('modal-dialog');
         if (!modalDialog.length || !modalDialogOverlay.length) {
             return;
         }
-
-        var opened = modalDialog[0].hasAttribute('opened');
-        adjustOverlayLayout(modalDialogOverlay, opened); // adjust margin first
+        adjustOverlayLayout(modalDialogOverlay, true); // adjust margin first
         observeAttributes(modalDialog[0], (record, el) => {
             if (record.attributeName === 'open') {
                 var opened = el.hasAttribute('open');
-                adjustOverlayLayout(modalDialogOverlay, opened); // adjust margin when opened
+                adjustOverlayLayout(modalDialogOverlay, opened);
+                if (!opened) {
+                    // restore scroll offset, maybe a bug of GitHub
+                    document.documentElement.scrollTo({ top: getDocumentScrollYOffset() });
+                }
             }
         });
         completer.complete(true);
     });
 
     return completer.future();
+}
+
+/**
+ * Adjust global modal dialog for its layout.
+ */
+function adjustGlobalModalDialogLayout() {
+    adjustModalDialogLayout(
+        'AppHeader-globalBar-start',
+        (element) => element?.tagName?.toLowerCase() === 'div' && element?.classList.contains('Overlay-backdrop--side') === true,
+        (element, _) => {
+            const showOctotree = $('html').hasClass('octotree-show');
+            const octotree = $('nav.octotree-sidebar.octotree-github-sidebar');
+            if (showOctotree && octotree.length) {
+                element.css('margin-left', `${octotree.width()}px`);
+            }
+            $('body').css('padding-right', '0');
+            $('body').css('overflow', 'initial');
+        },
+    );
+}
+
+/**
+ * Adjust user modal dialog for its layout.
+ */
+function adjustUserModalDialogLayout(): Promise<boolean> {
+    return adjustModalDialogLayout(
+        'AppHeader-user',
+        (element) => element?.tagName?.toLowerCase() === 'user-drawer-side-panel',
+        (element, _) => {
+            if (Global.urlInfo.type !== URLType.OTHER) {
+                element.css('margin-right', `${Global.width}px`);
+            }
+            $('body').css('padding-right', '0');
+            $('body').css('overflow', 'initial');
+        },
+    );
 }
 
 /**
