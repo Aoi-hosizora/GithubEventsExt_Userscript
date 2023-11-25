@@ -128,6 +128,8 @@ function adjustGlobalModalDialogLayout() {
             const octotree = $('nav.octotree-sidebar.octotree-github-sidebar');
             if (showOctotree && octotree.length) {
                 element.css('margin-left', `${octotree.width()}px`);
+            } else {
+                element.css('margin-left', '0');
             }
             $('body').css('padding-right', '0');
             $('body').css('overflow', 'initial');
@@ -143,8 +145,10 @@ function adjustUserModalDialogLayout(): Promise<boolean> {
         'AppHeader-user',
         (element) => element?.tagName?.toLowerCase() === 'user-drawer-side-panel',
         (element, _) => {
-            if (Global.urlInfo.type !== URLType.OTHER) {
+            if (Global.urlInfo.type !== URLType.OTHER && Global.pinned) {
                 element.css('margin-right', `${Global.width}px`);
+            } else {
+                element.css('margin-right', '0');
             }
             $('body').css('padding-right', '0');
             $('body').css('overflow', 'initial');
@@ -162,13 +166,12 @@ function showFollowAvatarMenuItem() {
         return;
     }
 
-    const peopleSvgPath = 'M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z';
     function generateMenuItem(text: string, href: string, svgPath: string) {
         return `<li data-item-id="" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
             <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
                 <span class="ActionListItem-visual ActionListItem-visual--leading">
                     <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
-                        <path d="${svgPath}"></path>
+                        ${svgPath}
                     </svg>
                 </span>
                 <span data-view-component="true" class="ActionListItem-label">
@@ -180,8 +183,8 @@ function showFollowAvatarMenuItem() {
 
     const username = modalDialog.find('div.Overlay-header span:first-child')[0].textContent?.trim() ?? '';
     const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
-    $(generateMenuItem('Your followers', `/${username}?tab=followers`, peopleSvgPath)).insertAfter(starsMenuItem);
-    $(generateMenuItem('Your following', `/${username}?tab=following`, peopleSvgPath)).insertAfter(starsMenuItem);
+    $(generateMenuItem('Your followers', `/${username}?tab=followers`, getPathTag('people'))).insertAfter(starsMenuItem);
+    $(generateMenuItem('Your following', `/${username}?tab=following`, getPathTag('people'))).insertAfter(starsMenuItem);
 }
 
 // ===============
@@ -448,6 +451,20 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         }, 50);
     });
 
+    // *. render size string and grid title
+    function renderSizeAndTitle(filename: string): string[] {
+        let [sizeFormatted, gridTitle] = ['', ''];
+        let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+        if (Global.contentsSizeCache && !fileSize) {
+            fileSize = 0;
+        }
+        if (fileSize !== undefined) {
+            sizeFormatted = formatBytes(fileSize);
+            gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+        }
+        return [sizeFormatted, gridTitle];
+    }
+
     // 3. show / update each content size grid
     for (const row of $('div.Box div[role="grid"] div[role="row"]')) {
         if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
@@ -456,14 +473,7 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         let [sizeFormatted, gridTitle] = ['', ''];
         const filename = row.querySelector('div[role="rowheader"]')?.textContent?.trim() ?? '';
         if (filename) {
-            let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-            if (Global.contentsSizeCache && !fileSize) {
-                fileSize = 0;
-            }
-            if (fileSize !== undefined) {
-                sizeFormatted = formatBytes(fileSize);
-                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
-            }
+            [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
         }
         const sizeDiv = row.querySelector('div.ah-file-size');
         if (!sizeDiv) {
@@ -474,6 +484,63 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         } else {
             sizeDiv.textContent = sizeFormatted;
             sizeDiv.setAttribute('title', gridTitle);
+        }
+    }
+
+    // 4. wait for loading finishing (new style)
+    await new Promise<void>((resolve, _) => {
+        const unloadedRows = () => {
+            var emptyRows = [];
+            for (var td of $('table[aria-labelledby="folders-and-files"] tr.react-directory-row td:last-child')) {
+                if ((td.textContent ?? '').trim().length === 0) {
+                    emptyRows.push(td);
+                }
+            }
+            return emptyRows;
+        };
+        if (unloadedRows().length) {
+            resolve();
+            return;
+        }
+        const interval = setInterval(() => {
+            if (unloadedRows().length) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 50);
+    });
+
+    // 5. show / update each content size grid (new style)
+    await new Promise((resolve, _) => {
+        setTimeout(() => resolve(null), 200);
+    });
+    if (!$('th#ah-file-size-header').length) {
+        const headLastTh = $('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
+        $(`<th id="ah-file-size-header" style="width: 80px">
+            <div title="Item size">
+                Item size
+            </div>
+        </th>`).insertBefore(headLastTh);
+    }
+    var firstRow = $('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
+    if (firstRow.length) {
+        firstRow[0].setAttribute('colspan', '4');
+    }
+    for (const row of $('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
+        let [sizeFormatted, gridTitle] = ['', ''];
+        const filename = row.querySelector('div.react-directory-filename-column h3')?.textContent?.trim() ?? '';
+        if (filename) {
+            [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
+        }
+        const sizeTd = row.querySelector('td.ah-file-size');
+        if (!sizeTd) {
+            $('<td>', {
+                class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
+                text: sizeFormatted, title: gridTitle,
+            }).insertBefore(row.querySelector('td:last-child')!);
+        } else {
+            sizeTd.textContent = sizeFormatted;
+            sizeTd.setAttribute('title', gridTitle);
         }
     }
 }
