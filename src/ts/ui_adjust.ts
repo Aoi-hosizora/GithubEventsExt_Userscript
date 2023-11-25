@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import moment from "moment";
 import { Global } from "@src/ts/global";
-import { RepoInfo, UserInfo } from "@src/ts/model";
+import { RepoInfo, UserInfo, URLType } from "@src/ts/model";
 import { getPathTag } from "@src/ts/sidebar_ui";
-import { formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo } from "@src/ts/utils";
+import { Completer, formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo, observeChildChanged } from "@src/ts/utils";
 
 // =================
 // global ui related
@@ -16,10 +16,13 @@ export function adjustGlobalUI() {
     // 1. (fixed)
     adjustHovercardZindex();
 
-    // 2. (configurable)
-    if (Global.showFollowMenuItem) {
-        showFollowAvatarMenuItem()
-    }
+    // 2. (fixed)
+    adjustModalDialogLayout().then((ok) => {
+        // 3. (configurable)
+        if (ok && Global.showFollowMenuItem) {
+            showFollowAvatarMenuItem()
+        }
+    });
 }
 
 /**
@@ -32,43 +35,104 @@ function adjustHovercardZindex() {
 }
 
 /**
+ * Adjust modal dialog for its layout.
+ */
+function adjustModalDialogLayout(): Promise<boolean> {
+    const completer = new Completer<boolean>();
+    const sidePanel = $('div.AppHeader-user deferred-side-panel');
+    if (!sidePanel.length) {
+        completer.complete(false);
+        return completer.future();
+    }
+
+    function adjustOverlayLayout(element: JQuery<HTMLElement>, opened: boolean) {
+        if (Global.urlInfo.type !== URLType.OTHER) {
+            element.css('margin-right', `${Global.width}px`);
+        }
+        opened = false; // show overflow scroll bar always
+        if (opened) {
+            $('body').css('padding-right', '17px');
+            $('body').css('overflow', 'hidden');
+        } else {
+            $('body').css('padding-right', '0');
+            $('body').css('overflow', 'initial');
+        }
+    }
+
+    const modalDialogOverlay = $('div.AppHeader-user div.Overlay-backdrop--side');
+    if (modalDialogOverlay.length) {
+        adjustOverlayLayout(modalDialogOverlay, false); // adjust margin first
+    }
+
+    var observer = observeChildChanged(sidePanel[0], (record) => {
+        if (!record.addedNodes) {
+            return;
+        }
+
+        var added = true;
+        for (var node of record.addedNodes) {
+            var addedNode = node as Element;
+            if (addedNode?.tagName?.toLowerCase() === 'user-drawer-side-panel') {
+                added = true; // this node is added in interactive manner
+                observer.disconnect(); // after node is added, disconnect the observer
+                break;
+            }
+        }
+        if (!added) {
+            return;
+        }
+
+        // observe the new node
+        const modalDialogOverlay = $('div.AppHeader-user div.Overlay-backdrop--side');
+        const modalDialog = $('div.AppHeader-user modal-dialog');
+        if (!modalDialog.length || !modalDialogOverlay.length) {
+            return;
+        }
+
+        var opened = modalDialog[0].hasAttribute('opened');
+        adjustOverlayLayout(modalDialogOverlay, opened); // adjust margin first
+        observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                adjustOverlayLayout(modalDialogOverlay, opened); // adjust margin when opened
+            }
+        });
+        completer.complete(true);
+    });
+
+    return completer.future();
+}
+
+/**
  * Add follow* menu items to avatar dropdown menu.
  */
 function showFollowAvatarMenuItem() {
-    const avatarDetails = $('header div.Header-item:last-child details');
-    if (!avatarDetails.length) {
+    var modalDialog = $('div.AppHeader-user modal-dialog');
+    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
+    if (!avatarMenuUl.length) {
         return;
     }
-    const observer = observeAttributes(avatarDetails[0], (record, el) => {
-        if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
-            return;
-        }
-        observer.disconnect(); // menu has been opened once, just disconnect the observer
-        // use setInterval to wait for the menu updated
-        const handler = setInterval(() => {
-            if ($('details-menu a[data-ga-click$="your followers"]').length) {
-                clearInterval(handler); // done
-                return;
-            }
-            const username = $('details-menu a[data-ga-click$="Signed in as"]').text();
-            if (username) { // wait until items appeared
-                const gistsMenuItem = $('details-menu a[data-ga-click$="gists"]');
-                const upgradeMenuItem = $('details-menu a[data-ga-click$="upgrade"]');
-                $('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=followers`,
-                    text: 'Your followers', 'data-ga-click': 'Header, go to followers, text:your followers'
-                }).insertBefore(gistsMenuItem);
-                $('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=following`,
-                    text: 'Your following', 'data-ga-click': 'Header, go to followings, text:your following'
-                }).insertBefore(gistsMenuItem);
-                $('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: '/',
-                    text: 'GitHub Homepage', 'data-ga-click': 'Header, go to homepage, text:homepage'
-                }).insertBefore(upgradeMenuItem);
-            }
-        }, 250);
-    });
+
+    const peopleSvgPath = 'M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z';
+    function generateMenuItem(text: string, href: string, svgPath: string) {
+        return `<li data-item-id="" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
+            <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+                <span class="ActionListItem-visual ActionListItem-visual--leading">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
+                        <path d="${svgPath}"></path>
+                    </svg>
+                </span>
+                <span data-view-component="true" class="ActionListItem-label">
+                    ${text}
+                </span>
+            </a>
+        </li>`;
+    }
+
+    const username = modalDialog.find('div.Overlay-header span:first-child')[0].textContent?.trim() ?? '';
+    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
+    $(generateMenuItem('Your followers', `/${username}?tab=followers`, peopleSvgPath)).insertAfter(starsMenuItem);
+    $(generateMenuItem('Your following', `/${username}?tab=following`, peopleSvgPath)).insertAfter(starsMenuItem);
 }
 
 // ===============

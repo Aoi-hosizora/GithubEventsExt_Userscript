@@ -92,6 +92,35 @@ export function observeChildChanged(el: HTMLElement, callback: (record: Mutation
     return observer;
 }
 
+export class Completer<T> {
+    constructor() { }
+
+    private completed: T | undefined;
+    private resolver: ((value: T) => void) | undefined;
+
+    future(): Promise<T> {
+        if (this.resolver !== undefined) {
+            throw new Error('Completer.future can be called once.');
+        }
+        return new Promise<T>((resolve, _) => {
+            this.resolver = resolve;
+            if (this.completed !== undefined) {
+                resolve(this.completed);
+            }
+        });
+    }
+
+    complete(value: T) {
+        if (this.completed !== undefined) {
+            throw new Error('Completer.complete can be called once.');
+        }
+        this.completed = value;
+        if (this.resolver !== undefined) {
+            this.resolver?.(value);
+        }
+    }
+}
+
 /**
  * @Deprecated
  * Get GitHub progress loader element, with fake start loading function and finish loading function.
