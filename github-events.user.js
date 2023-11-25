@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.15
+// @version      1.0.16
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -71454,6 +71454,12 @@ function getPathTag(type) {
                     d="M6 15c-3.31 0-6-.9-6-2v-2c0-.17.09-.34.21-.5.67.86 3 1.5 5.79 1.5s5.12-.64 5.79-1.5c.13.16.21.33.21.5v2c0 1.1-2.69 2-6 2zm0-4c-3.31 0-6-.9-6-2V7c0-.11.04-.21.09-.31.03-.06.07-.13.12-.19C.88 7.36 3.21 8 6 8s5.12-.64 5.79-1.5c.05.06.09.13.12.19.05.1.09.21.09.31v2c0 1.1-2.69 2-6 2zm0-4c-3.31 0-6-.9-6-2V3c0-1.1 2.69-2 6-2s6 .9 6 2v2c0 1.1-2.69 2-6 2zm0-5c-2.21 0-4 .45-4 1s1.79 1 4 1 4-.45 4-1-1.79-1-4-1z">
                 </path>
             `;
+        case 'people':
+            return `
+                <path
+                    d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z">
+                </path>
+            `;
     }
 }
 exports.getPathTag = getPathTag;
@@ -71486,13 +71492,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
 const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
+const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
 const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
 function adjustGlobalUI() {
     adjustHovercardZindex();
-    if (global_1.Global.showFollowMenuItem) {
-        showFollowAvatarMenuItem();
-    }
+    adjustGlobalModalDialogLayout();
+    var menuLoaded = adjustUserModalDialogLayout();
+    menuLoaded.then((ok) => {
+        if (ok && global_1.Global.showFollowMenuItem) {
+            showFollowAvatarMenuItem();
+        }
+    });
 }
 exports.adjustGlobalUI = adjustGlobalUI;
 function adjustHovercardZindex() {
@@ -71500,40 +71511,116 @@ function adjustHovercardZindex() {
     const mainDiv = jquery_1.default('div[data-turbo-body]');
     mainDiv.after(hovercard);
 }
-function showFollowAvatarMenuItem() {
-    const avatarDetails = jquery_1.default('header div.Header-item:last-child details');
-    if (!avatarDetails.length) {
-        return;
+function adjustModalDialogLayout(headerClassName, ifAddedChecker, adjustOverlayLayout) {
+    const completer = new utils_1.Completer();
+    const headerDiv = jquery_1.default(`div.${headerClassName}`);
+    const sidePanel = headerDiv.find('deferred-side-panel');
+    if (!sidePanel.length) {
+        completer.complete(false);
+        return completer.future();
     }
-    const observer = utils_1.observeAttributes(avatarDetails[0], (record, el) => {
-        if (record.attributeName !== 'open' && !el.hasAttribute('open')) {
+    const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+    const modalDialog = headerDiv.find('modal-dialog');
+    if (!modalDialog.length || !modalDialogOverlay.length) {
+        completer.complete(false);
+        return completer.future();
+    }
+    adjustOverlayLayout(modalDialogOverlay, false);
+    var tempObserver = utils_1.observeAttributes(modalDialog[0], (record, el) => {
+        if (record.attributeName === 'open') {
+            var opened = el.hasAttribute('open');
+            adjustOverlayLayout(modalDialogOverlay, opened);
+            if (!opened) {
+                document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
+            }
+        }
+    });
+    var observer = utils_1.observeChildChanged(sidePanel[0], (record) => {
+        if (!record.addedNodes) {
             return;
         }
-        observer.disconnect();
-        const handler = setInterval(() => {
-            if (jquery_1.default('details-menu a[data-ga-click$="your followers"]').length) {
-                clearInterval(handler);
-                return;
+        var added = false;
+        for (var node of record.addedNodes) {
+            if (ifAddedChecker(node) === true) {
+                added = true;
+                tempObserver.disconnect();
+                observer.disconnect();
+                break;
             }
-            const username = jquery_1.default('details-menu a[data-ga-click$="Signed in as"]').text();
-            if (username) {
-                const gistsMenuItem = jquery_1.default('details-menu a[data-ga-click$="gists"]');
-                const upgradeMenuItem = jquery_1.default('details-menu a[data-ga-click$="upgrade"]');
-                jquery_1.default('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=followers`,
-                    text: 'Your followers', 'data-ga-click': 'Header, go to followers, text:your followers'
-                }).insertBefore(gistsMenuItem);
-                jquery_1.default('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: `/${username}?tab=following`,
-                    text: 'Your following', 'data-ga-click': 'Header, go to followings, text:your following'
-                }).insertBefore(gistsMenuItem);
-                jquery_1.default('<a>', {
-                    role: 'menuitem', class: 'dropdown-item', href: '/',
-                    text: 'GitHub Homepage', 'data-ga-click': 'Header, go to homepage, text:homepage'
-                }).insertBefore(upgradeMenuItem);
+        }
+        if (!added) {
+            return;
+        }
+        const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+        const modalDialog = headerDiv.find('modal-dialog');
+        if (!modalDialog.length || !modalDialogOverlay.length) {
+            return;
+        }
+        adjustOverlayLayout(modalDialogOverlay, true);
+        utils_1.observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                adjustOverlayLayout(modalDialogOverlay, opened);
+                if (!opened) {
+                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
+                }
             }
-        }, 250);
+        });
+        completer.complete(true);
     });
+    return completer.future();
+}
+function adjustGlobalModalDialogLayout() {
+    adjustModalDialogLayout('AppHeader-globalBar-start', (element) => { var _a, _b, _c; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'div' && ((_c = element) === null || _c === void 0 ? void 0 : _c.classList.contains('Overlay-backdrop--side')) === true; }, (element, _) => {
+        const showOctotree = jquery_1.default('html').hasClass('octotree-show');
+        const octotree = jquery_1.default('nav.octotree-sidebar.octotree-github-sidebar');
+        if (showOctotree && octotree.length) {
+            element.css('margin-left', `${octotree.width()}px`);
+        }
+        else {
+            element.css('margin-left', '0');
+        }
+        jquery_1.default('body').css('padding-right', '0');
+        jquery_1.default('body').css('overflow', 'initial');
+    });
+}
+function adjustUserModalDialogLayout() {
+    return adjustModalDialogLayout('AppHeader-user', (element) => { var _a, _b; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'user-drawer-side-panel'; }, (element, _) => {
+        if (global_1.Global.urlInfo.type !== model_1.URLType.OTHER && global_1.Global.pinned) {
+            element.css('margin-right', `${global_1.Global.width}px`);
+        }
+        else {
+            element.css('margin-right', '0');
+        }
+        jquery_1.default('body').css('padding-right', '0');
+        jquery_1.default('body').css('overflow', 'initial');
+    });
+}
+function showFollowAvatarMenuItem() {
+    var _a, _b;
+    var modalDialog = jquery_1.default('div.AppHeader-user modal-dialog');
+    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
+    if (!avatarMenuUl.length) {
+        return;
+    }
+    function generateMenuItem(text, href, svgPath) {
+        return `<li data-item-id="" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
+            <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+                <span class="ActionListItem-visual ActionListItem-visual--leading">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
+                        ${svgPath}
+                    </svg>
+                </span>
+                <span data-view-component="true" class="ActionListItem-label">
+                    ${text}
+                </span>
+            </a>
+        </li>`;
+    }
+    const username = (_b = (_a = modalDialog.find('div.Overlay-header span:first-child')[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
+    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
+    jquery_1.default(generateMenuItem('Your followers', `/${username}?tab=followers`, sidebar_ui_1.getPathTag('people'))).insertAfter(starsMenuItem);
+    jquery_1.default(generateMenuItem('Your following', `/${username}?tab=following`, sidebar_ui_1.getPathTag('people'))).insertAfter(starsMenuItem);
 }
 function adjustUserUIObservably() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -71573,22 +71660,32 @@ function showUserJoinedTime(info) {
         </li>`);
 }
 function addUserPrivateCounters(info) {
+    var _a;
     if (!global_1.Global.token || !global_1.Global.urlInfo.extra.user.isMe) {
         return;
     }
-    for (const navItem of jquery_1.default('nav a.UnderlineNav-item')) {
-        const counterSpan = navItem.getElementsByTagName('span');
-        if (!counterSpan.length) {
-            continue;
+    const repoCounterA = jquery_1.default('header.AppHeader nav a#repositories-tab');
+    if (repoCounterA.length) {
+        const title = `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`;
+        repoCounterA[0].setAttribute('title', title);
+        const repoCounterSpan = jquery_1.default('nav a#repositories-tab span:last-child');
+        if (repoCounterSpan.length) {
+            repoCounterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+            repoCounterSpan[0].setAttribute('title', title);
         }
-        const text = navItem.innerText, span = counterSpan[0];
-        if (text.includes('Repositories') && info.totalPrivateRepos) {
-            span.setAttribute('title', `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`);
-            span.textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+    }
+    const gistCounterA = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child');
+    if (gistCounterA.length && ((_a = gistCounterA[0].textContent) === null || _a === void 0 ? void 0 : _a.includes('Gists')) == true) {
+        const title = `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`;
+        gistCounterA[0].setAttribute('title', title);
+        let gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
+        if (!gistCounterSpan.length) {
+            gistCounterA.append('<span data-view-component="true" class="Counter" />');
+            gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
         }
-        else if (text.includes('Gists') && info.privateGists) {
-            span.setAttribute('title', `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`);
-            span.textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+        if (gistCounterSpan.length) {
+            gistCounterSpan[0].textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+            gistCounterSpan[0].setAttribute('title', title);
         }
     }
 }
@@ -71663,7 +71760,7 @@ function showRepoActionCounters() {
     ;
 }
 function showRepoContentsSize(repoInfo) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d, _e, _f;
     return __awaiter(this, void 0, void 0, function* () {
         const repoExtra = global_1.Global.urlInfo.extra.repo;
         const sizeFormatted = utils_1.formatBytes(repoInfo.size);
@@ -71739,6 +71836,18 @@ function showRepoContentsSize(repoInfo) {
                 }
             }, 50);
         });
+        function renderSizeAndTitle(filename) {
+            let [sizeFormatted, gridTitle] = ['', ''];
+            let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+            if (global_1.Global.contentsSizeCache && !fileSize) {
+                fileSize = 0;
+            }
+            if (fileSize !== undefined) {
+                sizeFormatted = utils_1.formatBytes(fileSize);
+                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+            }
+            return [sizeFormatted, gridTitle];
+        }
         for (const row of jquery_1.default('div.Box div[role="grid"] div[role="row"]')) {
             if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
                 continue;
@@ -71746,14 +71855,7 @@ function showRepoContentsSize(repoInfo) {
             let [sizeFormatted, gridTitle] = ['', ''];
             const filename = (_c = (_b = (_a = row.querySelector('div[role="rowheader"]')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
             if (filename) {
-                let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-                if (global_1.Global.contentsSizeCache && !fileSize) {
-                    fileSize = 0;
-                }
-                if (fileSize !== undefined) {
-                    sizeFormatted = utils_1.formatBytes(fileSize);
-                    gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
-                }
+                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
             }
             const sizeDiv = row.querySelector('div.ah-file-size');
             if (!sizeDiv) {
@@ -71765,6 +71867,61 @@ function showRepoContentsSize(repoInfo) {
             else {
                 sizeDiv.textContent = sizeFormatted;
                 sizeDiv.setAttribute('title', gridTitle);
+            }
+        }
+        yield new Promise((resolve, _) => {
+            const unloadedRows = () => {
+                var _a;
+                var emptyRows = [];
+                for (var td of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row td:last-child')) {
+                    if ((_a = td.textContent, (_a !== null && _a !== void 0 ? _a : '')).trim().length === 0) {
+                        emptyRows.push(td);
+                    }
+                }
+                return emptyRows;
+            };
+            if (unloadedRows().length) {
+                resolve();
+                return;
+            }
+            const interval = setInterval(() => {
+                if (unloadedRows().length) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 50);
+        });
+        yield new Promise((resolve, _) => {
+            setTimeout(() => resolve(null), 200);
+        });
+        if (!jquery_1.default('th#ah-file-size-header').length) {
+            const headLastTh = jquery_1.default('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
+            jquery_1.default(`<th id="ah-file-size-header" style="width: 80px">
+            <div title="Item size">
+                Item size
+            </div>
+        </th>`).insertBefore(headLastTh);
+        }
+        var firstRow = jquery_1.default('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
+        if (firstRow.length) {
+            firstRow[0].setAttribute('colspan', '4');
+        }
+        for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
+            let [sizeFormatted, gridTitle] = ['', ''];
+            const filename = (_f = (_e = (_d = row.querySelector('div.react-directory-filename-column h3')) === null || _d === void 0 ? void 0 : _d.textContent) === null || _e === void 0 ? void 0 : _e.trim(), (_f !== null && _f !== void 0 ? _f : ''));
+            if (filename) {
+                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
+            }
+            const sizeTd = row.querySelector('td.ah-file-size');
+            if (!sizeTd) {
+                jquery_1.default('<td>', {
+                    class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
+                    text: sizeFormatted, title: gridTitle,
+                }).insertBefore(row.querySelector('td:last-child'));
+            }
+            else {
+                sizeTd.textContent = sizeFormatted;
+                sizeTd.setAttribute('title', gridTitle);
             }
         }
     });
@@ -72121,6 +72278,31 @@ function observeChildChanged(el, callback) {
     return observer;
 }
 exports.observeChildChanged = observeChildChanged;
+class Completer {
+    constructor() { }
+    future() {
+        if (this.resolver !== undefined) {
+            throw new Error('Completer.future can be called once.');
+        }
+        return new Promise((resolve, _) => {
+            this.resolver = resolve;
+            if (this.completed !== undefined) {
+                resolve(this.completed);
+            }
+        });
+    }
+    complete(value) {
+        var _a, _b;
+        if (this.completed !== undefined) {
+            throw new Error('Completer.complete can be called once.');
+        }
+        this.completed = value;
+        if (this.resolver !== undefined) {
+            (_b = (_a = this).resolver) === null || _b === void 0 ? void 0 : _b.call(_a, value);
+        }
+    }
+}
+exports.Completer = Completer;
 function getGitHubProgressBar() {
     const progressBarOuter = jquery_1.default('span.progress-pjax-loader');
     const progressBarInner = jquery_1.default('span.progress-pjax-loader span');
@@ -72165,6 +72347,22 @@ function handleGithubTurboProgressBar() {
     };
 }
 exports.handleGithubTurboProgressBar = handleGithubTurboProgressBar;
+var _scrollYOffsetGetter;
+function getDocumentScrollYOffset() {
+    var _a, _b;
+    if (_scrollYOffsetGetter === undefined) {
+        _scrollYOffsetGetter = (() => {
+            var pageYOffset = 0.0;
+            addEventListener('scroll', (_) => {
+                var doc = document.documentElement;
+                pageYOffset = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+            });
+            return () => pageYOffset;
+        })();
+    }
+    return _b = (_a = _scrollYOffsetGetter) === null || _a === void 0 ? void 0 : _a(), (_b !== null && _b !== void 0 ? _b : 0.0);
+}
+exports.getDocumentScrollYOffset = getDocumentScrollYOffset;
 function myAxios() {
     const mapDeep = (data, callback) => {
         if (lodash_1.isArray(data)) {
