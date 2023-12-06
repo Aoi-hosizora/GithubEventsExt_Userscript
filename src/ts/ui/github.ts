@@ -15,7 +15,7 @@ import {
 /**
  * Adjust GitHub global UI without observer.
  */
-export function adjustGlobalUI() {
+export function adjustGlobalUIObservably() {
     // 1. (fixed)
     adjustHovercardZindex();
 
@@ -54,54 +54,72 @@ function adjustModalDialogLayout(
     const sidePanel = headerDiv.find('deferred-side-panel');
     if (!sidePanel.length) {
         completer.complete(false);
-        return completer.future();
+        return completer.future(); // unreachable
     }
 
     const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
     const modalDialog = headerDiv.find('modal-dialog');
     if (!modalDialog.length || !modalDialogOverlay.length) {
         completer.complete(false);
-        return completer.future();
+        return completer.future(); // unreachable
     }
 
-    // 1. observe the node which will be deleted
-    adjustOverlayLayout(modalDialogOverlay, false); // adjust margin first
-    var tempObserver = observeAttributes(modalDialog[0], (record, el) => {
-        if (record.attributeName === 'open') {
-            var opened = el.hasAttribute('open');
-            adjustOverlayLayout(modalDialogOverlay, opened);
-            if (!opened) {
-                // restore scroll offset, maybe a bug of GitHub
-                document.documentElement.scrollTo({ top: getDocumentScrollYOffset() });
+    if (headerDiv.find('include-fragment').length) {
+        observeTempNode(); // observe temp node, and than observe new node
+    } else {
+        observeRealNode(); // observe new node directly
+        completer.complete(true);
+    }
+    return completer.future();
+
+    // >>> two helpers functions
+
+    function observeTempNode() {
+        // 1. observe the node which will be deleted
+        adjustOverlayLayout(modalDialogOverlay, false); // adjust margin first
+        var tempObserver = observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                adjustOverlayLayout(modalDialogOverlay, opened);
+                if (!opened) {
+                    // restore scroll offset, maybe a bug of GitHub
+                    document.documentElement.scrollTo({ top: getDocumentScrollYOffset() });
+                }
             }
-        }
-    });
+        });
 
-    // 2. observe the header div for node adding
-    var observer = observeChildChanged(sidePanel[0], (record) => {
-        if (!record.addedNodes) {
-            return;
-        }
-
-        var added = false;
-        for (var node of record.addedNodes) {
-            if (ifAddedChecker(node as Element) === true) {
-                added = true; // this node is added in interactive manner
-                tempObserver.disconnect();
-                observer.disconnect(); // after node is added, disconnect the observer
-                break;
+        // 2. observe the header div for node adding, and starting new observing
+        var observer = observeChildChanged(sidePanel[0], (record) => {
+            if (!record.addedNodes) {
+                return;
             }
-        }
-        if (!added) {
-            return;
-        }
 
+            var added = false;
+            for (var node of record.addedNodes) {
+                if (ifAddedChecker(node as Element) === true) {
+                    added = true; // this node is added in interactive manner
+                    tempObserver.disconnect();
+                    observer.disconnect(); // after node is added, disconnect the observer
+                    break;
+                }
+            }
+            if (!added) {
+                return;
+            }
+
+            observeRealNode();
+            completer.complete(true);
+        });
+    }
+
+    function observeRealNode() {
         // 3. observe the new node which is inserted when dialog loaded
         const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
         const modalDialog = headerDiv.find('modal-dialog');
         if (!modalDialog.length || !modalDialogOverlay.length) {
             return;
         }
+
         adjustOverlayLayout(modalDialogOverlay, true); // adjust margin first
         observeAttributes(modalDialog[0], (record, el) => {
             if (record.attributeName === 'open') {
@@ -113,10 +131,7 @@ function adjustModalDialogLayout(
                 }
             }
         });
-        completer.complete(true);
-    });
-
-    return completer.future();
+    }
 }
 
 /**
@@ -169,8 +184,8 @@ function showFollowAvatarMenuItem() {
         return;
     }
 
-    function generateMenuItem(text: string, href: string, svgPath: string) {
-        return `<li data-item-id="" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
+    function generateMenuItem(id: string, text: string, href: string, svgPath: string) {
+        return `<li data-item-id="${id}" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
             <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
                 <span class="ActionListItem-visual ActionListItem-visual--leading">
                     <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
@@ -186,8 +201,12 @@ function showFollowAvatarMenuItem() {
 
     const username = modalDialog.find('div.Overlay-header span:first-child')[0].textContent?.trim() ?? '';
     const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
-    $(generateMenuItem('Your followers', `/${username}?tab=followers`, getPathTag('people'))).insertAfter(starsMenuItem);
-    $(generateMenuItem('Your following', `/${username}?tab=following`, getPathTag('people'))).insertAfter(starsMenuItem);
+    if (!$('li[data-item-id="ah-avatar-followers"]').length) {
+        $(generateMenuItem('ah-avatar-followers', 'Your followers', `/${username}?tab=followers`, getPathTag('people'))).insertAfter(starsMenuItem);
+    }
+    if (!$('li[data-item-id="ah-avatar-following"]').length) {
+        $(generateMenuItem('ah-avatar-following', 'Your following', `/${username}?tab=following`, getPathTag('people'))).insertAfter(starsMenuItem);
+    }
 }
 
 // ===============

@@ -3,7 +3,7 @@ import $ from 'jquery';
 import style from '@src/scss/core.scss';
 import { Global } from '@src/ts/data/storage';
 import { URLType } from '@src/ts/data/model';
-import { adjustGlobalUI, adjustUserUIObservably, adjustRepoUIObservably } from '@src/ts/ui/github';
+import { adjustGlobalUIObservably, adjustUserUIObservably, adjustRepoUIObservably } from '@src/ts/ui/github';
 import { observeChildChanged, handleGithubTurboProgressBar, checkURL } from '@src/ts/utils/utils';
 import { resetSidebar, getSidebarHtml, disableBlankTargetForSidebar } from '@src/ts/ui/sidebar';
 import { registerUIEvents, loadGitHubEvents } from '@src/ts/ui/ui_events';
@@ -12,10 +12,10 @@ import { registerUIEvents, loadGitHubEvents } from '@src/ts/ui/ui_events';
  * Adjust GitHub UI !!!
  */
 export function adjustGitHubUI() {
-    // 1. global UI
-    adjustGlobalUI();
-
     function handleObservably() {
+        // 1. global UI (in observation)
+        adjustGlobalUIObservably();
+
         // 2. user UI (in observation)
         if (Global.urlInfo.type == URLType.USER) {
             adjustUserUIObservably();

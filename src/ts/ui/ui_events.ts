@@ -94,7 +94,7 @@ function switchDisplayMode(arg: { isLoading: boolean, isError: boolean, errorMes
 /**
  * Register sidebar's UI events !!!
  */
-export function registerUIEvents() {
+export function registerUIEvents(extraRefreshHandler?: () => void) {
     // toggle and nav (sidebar) events
     $('#ahid-toggle').on('mouseenter', () => showSidebar(true));
     $('#ahid-toggle').on('click', () => showSidebar(true));
@@ -108,7 +108,7 @@ export function registerUIEvents() {
 
     // buttons events
     $('#ahid-pin').on('click', () => pinSidebar(!Global.pinned));
-    $('#ahid-refresh').on('click', () => refreshSidebar());
+    $('#ahid-refresh').on('click', () => refreshSidebar(extraRefreshHandler));
     $('#ahid-more').on('click', () => loadNextGitHubEvents());
     $('#ahid-retry').on('click', () => { Global.page = 1; loadGitHubEvents(); });
 
@@ -165,9 +165,12 @@ function pinSidebar(needPin: boolean) {
 /**
  * Refresh layout and content of sidebar.
  */
-function refreshSidebar() {
+function refreshSidebar(extraRefreshHandler?: () => void) {
     // refresh sidebar layout
     adjustBodyLayout();
+
+    // call extra handler
+    extraRefreshHandler?.();
 
     // check page url
     var oldUrlInfo = Global.urlInfo;

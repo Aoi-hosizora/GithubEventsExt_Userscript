@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import '@src/ts/utils/extensions';
 import { Global, readStorageToGlobal } from '@src/ts/data/storage';
 import { adjustGitHubUI, injectSidebar } from '@src/ts/main';

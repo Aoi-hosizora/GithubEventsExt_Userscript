@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import moment from 'moment';
 import template from '@src/html/template.html';
 import { EventInfo, HoverCardType, URLType } from '@src/ts/data/model';
