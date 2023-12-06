@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.16
+// @version      1.0.17
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -70794,16 +70794,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-__webpack_require__(/*! @src/ts/extensions */ "./src/ts/extensions.ts");
-const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
+__webpack_require__(/*! @src/ts/utils/extensions */ "./src/ts/utils/extensions.ts");
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
-const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
-jquery_1.default(() => {
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+document.addEventListener('DOMContentLoaded', () => {
     onLoaded();
 });
 function onLoaded() {
@@ -70812,8 +70808,8 @@ function onLoaded() {
         if (!info) {
             return;
         }
-        global_1.Global.urlInfo = info;
-        yield global_1.readStorageToGlobal();
+        storage_1.Global.urlInfo = info;
+        yield storage_1.readStorageToGlobal();
         main_1.adjustGitHubUI();
         main_1.injectSidebar();
     });
@@ -70864,39 +70860,71 @@ module.exports = exported;
 
 /***/ }),
 
-/***/ "./src/ts/extensions.ts":
+/***/ "./src/ts/data/model.ts":
 /*!******************************!*\
-  !*** ./src/ts/extensions.ts ***!
+  !*** ./src/ts/data/model.ts ***!
   \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-String.prototype.replaceAll = function (from, to) {
-    if (from instanceof RegExp) {
-        const re = new RegExp(from, 'g');
-        return String(this).replace(re, to);
-    }
-    else {
-        let result = String(this);
-        while (result.indexOf(from) !== -1) {
-            result = result.replace(from, to);
+Object.defineProperty(exports, "__esModule", { value: true });
+var URLType;
+(function (URLType) {
+    URLType["USER"] = "user";
+    URLType["ORG"] = "org";
+    URLType["REPO"] = "repo";
+    URLType["OTHER"] = "other";
+})(URLType = exports.URLType || (exports.URLType = {}));
+class URLInfo {
+    constructor(type, author = '', repo = '') {
+        this.type = type;
+        this.author = author;
+        this.repo = repo;
+        this.authorURL = '';
+        this.repoURL = '';
+        this.eventAPI = '';
+        this.extra = {};
+        switch (type) {
+            case URLType.OTHER:
+                return;
+            case URLType.USER:
+                this.authorURL = `https://github.com/${author}`;
+                this.eventAPI = `https://api.github.com/users/${author}/events`;
+                return;
+            case URLType.ORG:
+                this.authorURL = `https://github.com/${author}`;
+                this.eventAPI = `https://api.github.com/orgs/${author}/events`;
+                return;
+            case URLType.REPO:
+                this.authorURL = `https://github.com/${author}`;
+                this.repoURL = `https://github.com/${author}/${repo}`;
+                this.eventAPI = `https://api.github.com/repos/${author}/${repo}/events`;
+                return;
         }
-        return result;
     }
-};
-String.prototype.capital = function () {
-    return String(this).replace(String(this)[0], String(this)[0].toUpperCase());
-};
+    equals(o) {
+        return o.type == this.type && o.author == this.author && o.repo == this.repo;
+    }
+}
+exports.URLInfo = URLInfo;
+var HoverCardType;
+(function (HoverCardType) {
+    HoverCardType["USER"] = "user";
+    HoverCardType["REPO"] = "repository";
+    HoverCardType["COMMIT"] = "commit";
+    HoverCardType["ISSUE"] = "issue";
+    HoverCardType["PULL"] = "pull_request";
+})(HoverCardType = exports.HoverCardType || (exports.HoverCardType = {}));
 
 
 /***/ }),
 
-/***/ "./src/ts/global.ts":
-/*!**************************!*\
-  !*** ./src/ts/global.ts ***!
-  \**************************/
+/***/ "./src/ts/data/storage.ts":
+/*!********************************!*\
+  !*** ./src/ts/data/storage.ts ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -71046,71 +71074,642 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const greasemonkey_1 = __importDefault(__webpack_require__(/*! greasemonkey */ "./node_modules/greasemonkey/index.js"));
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const template_html_1 = __importDefault(__webpack_require__(/*! @src/html/template.html */ "./src/html/template.html"));
+const greasemonkey_1 = __importDefault(__webpack_require__(/*! greasemonkey */ "./node_modules/greasemonkey/index.js"));
 const core_scss_1 = __importDefault(__webpack_require__(/*! @src/scss/core.scss */ "./src/scss/core.scss"));
-const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
-const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
-const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
-const ui_adjust_1 = __webpack_require__(/*! @src/ts/ui_adjust */ "./src/ts/ui_adjust.ts");
-const ui_events_1 = __webpack_require__(/*! @src/ts/ui_events */ "./src/ts/ui_events.ts");
-const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+const github_1 = __webpack_require__(/*! @src/ts/ui/github */ "./src/ts/ui/github.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+const sidebar_1 = __webpack_require__(/*! @src/ts/ui/sidebar */ "./src/ts/ui/sidebar.ts");
+const ui_events_1 = __webpack_require__(/*! @src/ts/ui/ui_events */ "./src/ts/ui/ui_events.ts");
 function adjustGitHubUI() {
-    ui_adjust_1.adjustGlobalUI();
-    function handleObservably() {
-        if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
-            ui_adjust_1.adjustUserUIObservably();
-        }
-        if (global_1.Global.urlInfo.type == model_1.URLType.REPO) {
-            ui_adjust_1.adjustRepoUIObservably();
-        }
-        if (global_1.Global.urlInfo.type == model_1.URLType.ORG) {
-        }
-    }
-    handleObservably();
+    github_1.adjustGitHubUiObservably();
     utils_1.observeChildChanged(jquery_1.default('html')[0], (record) => {
-        if (record.removedNodes && utils_1.handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0])) {
-            const urlInfo = utils_1.checkURL();
-            if (urlInfo) {
-                var oldUrlInfo = global_1.Global.urlInfo;
-                global_1.Global.urlInfo = urlInfo;
-                handleObservably();
-                if (!global_1.Global.urlInfo.equals(oldUrlInfo)) {
-                    injectSidebar();
-                }
+        if (!record.removedNodes) {
+            return;
+        }
+        if (!utils_1.handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0])) {
+            return;
+        }
+        const urlInfo = utils_1.checkURL();
+        if (urlInfo) {
+            var oldUrlInfo = storage_1.Global.urlInfo;
+            storage_1.Global.urlInfo = urlInfo;
+            github_1.adjustGitHubUiObservably();
+            if (!storage_1.Global.urlInfo.equals(oldUrlInfo)) {
+                injectSidebar();
             }
         }
     });
 }
 exports.adjustGitHubUI = adjustGitHubUI;
 function injectSidebar() {
-    if (jquery_1.default('div#ahid-toggle').length) {
-        jquery_1.default('div#ahid-toggle').remove();
-        jquery_1.default('nav#ahid-nav').remove();
-        global_1.Global.page = 1;
-    }
-    const info = global_1.Global.urlInfo;
+    sidebar_1.resetSidebar();
+    const info = storage_1.Global.urlInfo;
     if (info.type === model_1.URLType.OTHER) {
         return;
     }
-    jquery_1.default('body').append(getSidebarHtml());
-    if (!global_1.Global.useBlankTarget) {
-        jquery_1.default('nav#ahid-nav a[target="_blank"]').removeAttr('target');
+    jquery_1.default('body').append(sidebar_1.getSidebarHtml());
+    if (!storage_1.Global.useBlankTarget) {
+        sidebar_1.disableBlankTargetForSidebar();
     }
     greasemonkey_1.default.GM_addStyle(core_scss_1.default);
-    ui_events_1.registerUIEvents();
+    ui_events_1.registerUIEvents(github_1.adjustGitHubUiObservably);
     ui_events_1.loadGitHubEvents();
 }
 exports.injectSidebar = injectSidebar;
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/github.ts":
+/*!*****************************!*\
+  !*** ./src/ts/ui/github.ts ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+const global_ui_1 = __webpack_require__(/*! @src/ts/ui/github/global_ui */ "./src/ts/ui/github/global_ui.ts");
+const user_ui_1 = __webpack_require__(/*! @src/ts/ui/github/user_ui */ "./src/ts/ui/github/user_ui.ts");
+const repo_ui_1 = __webpack_require__(/*! @src/ts/ui/github/repo_ui */ "./src/ts/ui/github/repo_ui.ts");
+function adjustGitHubUiObservably() {
+    global_ui_1.adjustGlobalUIObservably();
+    if (storage_1.Global.urlInfo.type == model_1.URLType.USER) {
+        user_ui_1.adjustUserUIObservably();
+    }
+    if (storage_1.Global.urlInfo.type == model_1.URLType.REPO) {
+        repo_ui_1.adjustRepoUIObservably();
+    }
+    if (storage_1.Global.urlInfo.type == model_1.URLType.ORG) {
+    }
+}
+exports.adjustGitHubUiObservably = adjustGitHubUiObservably;
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/github/global_ui.ts":
+/*!***************************************!*\
+  !*** ./src/ts/ui/github/global_ui.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+function adjustGlobalUIObservably() {
+    adjustHovercardZindex();
+    adjustGlobalModalDialogLayout();
+    var menuLoaded = adjustUserModalDialogLayout();
+    menuLoaded.then((ok) => {
+        if (ok && storage_1.Global.showFollowMenuItem) {
+            showFollowAvatarMenuItem();
+        }
+    });
+}
+exports.adjustGlobalUIObservably = adjustGlobalUIObservably;
+function adjustHovercardZindex() {
+    const hovercard = jquery_1.default('div.Popover.js-hovercard-content');
+    const mainDiv = jquery_1.default('div[data-turbo-body]');
+    mainDiv.after(hovercard);
+}
+function adjustModalDialogLayout(headerClassName, ifAddedChecker, adjustOverlayLayout) {
+    const completer = new utils_1.Completer();
+    const headerDiv = jquery_1.default(`div.${headerClassName}`);
+    const sidePanel = headerDiv.find('deferred-side-panel');
+    if (!sidePanel.length) {
+        completer.complete(false);
+        return completer.future();
+    }
+    const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+    const modalDialog = headerDiv.find('modal-dialog');
+    if (!modalDialog.length || !modalDialogOverlay.length) {
+        completer.complete(false);
+        return completer.future();
+    }
+    if (headerDiv.find('include-fragment').length) {
+        observeTempNode();
+    }
+    else {
+        observeRealNode();
+        completer.complete(true);
+    }
+    return completer.future();
+    function observeTempNode() {
+        adjustOverlayLayout(modalDialogOverlay, false);
+        var tempObserver = utils_1.observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                adjustOverlayLayout(modalDialogOverlay, opened);
+                if (!opened) {
+                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
+                }
+            }
+        });
+        var observer = utils_1.observeChildChanged(sidePanel[0], (record) => {
+            if (!record.addedNodes) {
+                return;
+            }
+            var added = false;
+            for (var node of record.addedNodes) {
+                if (ifAddedChecker(node) === true) {
+                    added = true;
+                    tempObserver.disconnect();
+                    observer.disconnect();
+                    break;
+                }
+            }
+            if (!added) {
+                return;
+            }
+            observeRealNode();
+            completer.complete(true);
+        });
+    }
+    function observeRealNode() {
+        const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
+        const modalDialog = headerDiv.find('modal-dialog');
+        if (!modalDialog.length || !modalDialogOverlay.length) {
+            return;
+        }
+        adjustOverlayLayout(modalDialogOverlay, true);
+        utils_1.observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                adjustOverlayLayout(modalDialogOverlay, opened);
+                if (!opened) {
+                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
+                }
+            }
+        });
+    }
+}
+function adjustGlobalModalDialogLayout() {
+    adjustModalDialogLayout('AppHeader-globalBar-start', (element) => { var _a, _b, _c; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'div' && ((_c = element) === null || _c === void 0 ? void 0 : _c.classList.contains('Overlay-backdrop--side')) === true; }, (element, _) => {
+        const showOctotree = jquery_1.default('html').hasClass('octotree-show');
+        const octotree = jquery_1.default('nav.octotree-sidebar.octotree-github-sidebar');
+        if (showOctotree && octotree.length) {
+            element.css('margin-left', `${octotree.width()}px`);
+        }
+        else {
+            element.css('margin-left', '0');
+        }
+        jquery_1.default('body').css('padding-right', '0');
+        jquery_1.default('body').css('overflow', 'initial');
+    });
+}
+function adjustUserModalDialogLayout() {
+    return adjustModalDialogLayout('AppHeader-user', (element) => { var _a, _b; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'user-drawer-side-panel'; }, (element, _) => {
+        if (storage_1.Global.urlInfo.type !== model_1.URLType.OTHER && storage_1.Global.pinned) {
+            element.css('margin-right', `${storage_1.Global.width}px`);
+        }
+        else {
+            element.css('margin-right', '0');
+        }
+        jquery_1.default('body').css('padding-right', '0');
+        jquery_1.default('body').css('overflow', 'initial');
+    });
+}
+function showFollowAvatarMenuItem() {
+    var _a, _b;
+    var modalDialog = jquery_1.default('div.AppHeader-user modal-dialog');
+    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
+    if (!avatarMenuUl.length) {
+        return;
+    }
+    function generateMenuItem(id, text, href, svgPath) {
+        return `<li data-item-id="${id}" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
+            <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
+                <span class="ActionListItem-visual ActionListItem-visual--leading">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
+                        ${svgPath}
+                    </svg>
+                </span>
+                <span data-view-component="true" class="ActionListItem-label">
+                    ${text}
+                </span>
+            </a>
+        </li>`;
+    }
+    const username = (_b = (_a = modalDialog.find('div.Overlay-header span:first-child')[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
+    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
+    if (!jquery_1.default('li[data-item-id="ah-avatar-followers"]').length) {
+        jquery_1.default(generateMenuItem('ah-avatar-followers', 'Your followers', `/${username}?tab=followers`, svg_tag_1.getPathTag('people'))).insertAfter(starsMenuItem);
+    }
+    if (!jquery_1.default('li[data-item-id="ah-avatar-following"]').length) {
+        jquery_1.default(generateMenuItem('ah-avatar-following', 'Your following', `/${username}?tab=following`, svg_tag_1.getPathTag('people'))).insertAfter(starsMenuItem);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/github/repo_ui.ts":
+/*!*************************************!*\
+  !*** ./src/ts/ui/github/repo_ui.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+function adjustRepoUIObservably() {
+    return __awaiter(this, void 0, void 0, function* () {
+        adjustRepoStuckHeader();
+        fixOctotreePageMargin();
+        if (storage_1.Global.showRepoActionCounter) {
+            showRepoActionCounters();
+        }
+        if (storage_1.Global.showRepoAndContentsSize) {
+            try {
+                const repo = yield utils_1.requestRepoInfo(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, storage_1.Global.token);
+                showRepoContentsSize(repo);
+            }
+            catch (_) { }
+        }
+    });
+}
+exports.adjustRepoUIObservably = adjustRepoUIObservably;
+function adjustRepoStuckHeader() {
+    const stuckHeader = jquery_1.default("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
+    const headerShadow = jquery_1.default("div#partial-discussion-header div.gh-header-shadow");
+    if (stuckHeader.length && headerShadow.length) {
+        stuckHeader.css('z-index', '89');
+        headerShadow.css('z-index', '88');
+    }
+}
+function fixOctotreePageMargin() {
+    if (jquery_1.default('nav.octotree-sidebar').length) {
+        jquery_1.default('div#repo-content-pjax-container>div.clearfix.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
+    }
+}
+function showRepoActionCounters() {
+    const repoName = `${storage_1.Global.urlInfo.author}/${storage_1.Global.urlInfo.repo}`;
+    const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
+    watchCounterSpan.attr('style', 'display: inline-block;');
+    watchCounterSpan.addClass('ah-hover-underline');
+    if (!jquery_1.default('#repo-notifications-counter-a').length) {
+        watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
+    }
+    const forkCounterSpan = jquery_1.default('#repo-network-counter');
+    forkCounterSpan.attr('style', 'display: inline-block;');
+    forkCounterSpan.addClass('ah-hover-underline');
+    if (!jquery_1.default('#repo-network-counter-a').length) {
+        forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
+        const forkSummary = jquery_1.default('summary.BtnGroup-item[aria-label="See your forks of this repository"]');
+        forkSummary.removeClass('px-2');
+        forkSummary.addClass('px-1');
+    }
+    const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
+    starCounterSpan.attr('style', 'display: inline-block;');
+    starCounterSpan.addClass('ah-hover-underline');
+    const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
+    unstarCounterSpan.addClass('ah-hover-underline');
+    unstarCounterSpan.attr('style', 'display: inline-block;');
+    if (!jquery_1.default('#repo-stars-counter-a').length) {
+        const aTag = `
+            <a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent">
+                <span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);">
+                </span>
+            </a>
+        `;
+        starCounterSpan.wrap(aTag);
+        unstarCounterSpan.wrap(aTag);
+        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.unstarred.BtnGroup.flex-1>form'));
+        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.starred.BtnGroup.flex-1>form'));
+        const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
+        starSummary.removeClass('px-2');
+        starSummary.addClass('px-1');
+    }
+    ;
+}
+function showRepoContentsSize(repoInfo) {
+    var _a, _b, _c, _d, _e, _f;
+    return __awaiter(this, void 0, void 0, function* () {
+        const repoExtra = storage_1.Global.urlInfo.extra.repo;
+        const sizeFormatted = utils_1.formatBytes(repoInfo.size);
+        let tabTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
+        if (!storage_1.Global.contentsSizeCache) {
+            tabTitle += ' (click here to load directories size)';
+        }
+        else if (storage_1.Global.contentsSizeTruncated) {
+            tabTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
+        }
+        else {
+            tabTitle += ' (directories size have been loaded successfully)';
+        }
+        const sizeTab = jquery_1.default('#ahid-contents-size');
+        if (sizeTab.length) {
+            sizeTab.attr('title', tabTitle);
+        }
+        else {
+            jquery_1.default(`<li id="ahid-contents-size" title="${tabTitle}" style="cursor: pointer;" data-view-component="true" class="d-inline-flex">
+            <a class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
+                <svg width="12" height="16" viewBox="0 0 12 16" version="1.1" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
+                    ${svg_tag_1.getPathTag('database')}
+                </svg>
+                ${sizeFormatted}
+            </a>
+        </li>`).insertAfter(jquery_1.default('nav.js-repo-nav ul li:last-child'));
+            jquery_1.default('#ahid-contents-size').on('click', () => __awaiter(this, void 0, void 0, function* () {
+                const progressBar = utils_1.handleGithubTurboProgressBar();
+                progressBar.startLoading();
+                yield updateSizeCache();
+                progressBar.finishLoading();
+            }));
+        }
+        function updateSizeCache() {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const treeInfo = yield utils_1.requestRepoTreeInfo(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, repoExtra.ref, storage_1.Global.token);
+                    const cache = new Map();
+                    const [files, dirs] = [treeInfo.tree.filter(i => i.type === 'blob'), treeInfo.tree.filter(i => i.type === 'tree')];
+                    files.forEach(f => cache.set(f.path, f.size));
+                    dirs.forEach(d => cache.set(d.path, files.filter(f => f.path.startsWith(d.path)).reduce((accumulate, f) => accumulate + f.size, 0)));
+                    storage_1.Global.contentsSizeCache = cache;
+                    storage_1.Global.contentsSizeCachedRef = repoExtra.ref;
+                    storage_1.Global.contentsSizeTruncated = treeInfo.truncated;
+                }
+                catch (_) { }
+            });
+        }
+        if (storage_1.Global.contentsSizeCache && storage_1.Global.contentsSizeCachedRef !== repoExtra.ref) {
+            yield updateSizeCache();
+        }
+        let contentsSize = new Map();
+        if (storage_1.Global.contentsSizeCache) {
+            contentsSize = storage_1.Global.contentsSizeCache;
+        }
+        else {
+            try {
+                const contents = yield utils_1.requestRepoContents(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, repoExtra.ref, repoExtra.path, storage_1.Global.token);
+                contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size));
+            }
+            catch (_) { }
+        }
+        yield new Promise((resolve, _) => {
+            const skeleton = () => jquery_1.default('div.Box div[role="grid"] div[role="row"] div[role="gridcell"] div.Skeleton');
+            if (!skeleton().length) {
+                resolve();
+                return;
+            }
+            const interval = setInterval(() => {
+                if (!skeleton().length) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 50);
+        });
+        function renderSizeAndTitle(filename) {
+            let [sizeFormatted, gridTitle] = ['', ''];
+            let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+            if (storage_1.Global.contentsSizeCache && !fileSize) {
+                fileSize = 0;
+            }
+            if (fileSize !== undefined) {
+                sizeFormatted = utils_1.formatBytes(fileSize);
+                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+            }
+            return [sizeFormatted, gridTitle];
+        }
+        for (const row of jquery_1.default('div.Box div[role="grid"] div[role="row"]')) {
+            if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
+                continue;
+            }
+            let [sizeFormatted, gridTitle] = ['', ''];
+            const filename = (_c = (_b = (_a = row.querySelector('div[role="rowheader"]')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
+            if (filename) {
+                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
+            }
+            const sizeDiv = row.querySelector('div.ah-file-size');
+            if (!sizeDiv) {
+                jquery_1.default('<div>', {
+                    role: 'gridcell', class: 'mr-3 text-right color-fg-muted ah-file-size', style: 'width: 80px;',
+                    text: sizeFormatted, title: gridTitle,
+                }).insertBefore(row.querySelector('div[role="gridcell"]:last-child'));
+            }
+            else {
+                sizeDiv.textContent = sizeFormatted;
+                sizeDiv.setAttribute('title', gridTitle);
+            }
+        }
+        yield new Promise((resolve, _) => {
+            const unloadedRows = () => {
+                var _a;
+                var emptyRows = [];
+                for (var td of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row td:last-child')) {
+                    if ((_a = td.textContent, (_a !== null && _a !== void 0 ? _a : '')).trim().length === 0) {
+                        emptyRows.push(td);
+                    }
+                }
+                return emptyRows;
+            };
+            if (unloadedRows().length) {
+                resolve();
+                return;
+            }
+            const interval = setInterval(() => {
+                if (unloadedRows().length) {
+                    clearInterval(interval);
+                    resolve();
+                }
+            }, 50);
+        });
+        yield new Promise((resolve, _) => {
+            setTimeout(() => resolve(null), 200);
+        });
+        if (!jquery_1.default('th#ah-file-size-header').length) {
+            const headLastTh = jquery_1.default('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
+            jquery_1.default(`<th id="ah-file-size-header" style="width: 80px">
+            <div title="Item size">
+                Item size
+            </div>
+        </th>`).insertBefore(headLastTh);
+        }
+        var firstRow = jquery_1.default('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
+        if (firstRow.length) {
+            firstRow[0].setAttribute('colspan', '4');
+        }
+        for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
+            let [sizeFormatted, gridTitle] = ['', ''];
+            const filename = (_f = (_e = (_d = row.querySelector('div.react-directory-filename-column h3')) === null || _d === void 0 ? void 0 : _d.textContent) === null || _e === void 0 ? void 0 : _e.trim(), (_f !== null && _f !== void 0 ? _f : ''));
+            if (filename) {
+                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
+            }
+            const sizeTd = row.querySelector('td.ah-file-size');
+            if (!sizeTd) {
+                jquery_1.default('<td>', {
+                    class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
+                    text: sizeFormatted, title: gridTitle,
+                }).insertBefore(row.querySelector('td:last-child'));
+            }
+            else {
+                sizeTd.textContent = sizeFormatted;
+                sizeTd.setAttribute('title', gridTitle);
+            }
+        }
+    });
+}
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/github/user_ui.ts":
+/*!*************************************!*\
+  !*** ./src/ts/ui/github/user_ui.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+function adjustUserUIObservably() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (storage_1.Global.centerFollowText) {
+            centerUserFollowText();
+        }
+        let info;
+        if (storage_1.Global.showJoinedTime || storage_1.Global.showUserPrivateCounter) {
+            try {
+                info = yield utils_1.requestUserInfo(storage_1.Global.urlInfo.author, storage_1.Global.token);
+            }
+            catch (_) { }
+        }
+        if (storage_1.Global.showJoinedTime && info) {
+            showUserJoinedTime(info);
+        }
+        if (storage_1.Global.showUserPrivateCounter && info) {
+            addUserPrivateCounters(info);
+        }
+        ;
+    });
+}
+exports.adjustUserUIObservably = adjustUserUIObservably;
+function centerUserFollowText() {
+    jquery_1.default('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
+}
+function showUserJoinedTime(info) {
+    if (!info.createdAt || jquery_1.default('ul.vcard-details li[itemprop="join time"]').length) {
+        return;
+    }
+    const time = moment_1.default(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
+    jquery_1.default('ul.vcard-details').append(`<li class="vcard-detail pt-1" itemprop="join time">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
+                ${svg_tag_1.getPathTag('rocket')}
+            </svg>
+            <span>Joined at ${time}</span>
+        </li>`);
+}
+function addUserPrivateCounters(info) {
+    var _a;
+    if (!storage_1.Global.token || !storage_1.Global.urlInfo.extra.user.isMe) {
+        return;
+    }
+    const repoCounterA = jquery_1.default('header.AppHeader nav a#repositories-tab');
+    if (repoCounterA.length) {
+        const title = `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`;
+        repoCounterA[0].setAttribute('title', title);
+        const repoCounterSpan = jquery_1.default('nav a#repositories-tab span:last-child');
+        if (repoCounterSpan.length) {
+            repoCounterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+            repoCounterSpan[0].setAttribute('title', title);
+        }
+    }
+    const gistCounterA = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child');
+    if (gistCounterA.length && ((_a = gistCounterA[0].textContent) === null || _a === void 0 ? void 0 : _a.includes('Gists')) == true) {
+        const title = `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`;
+        gistCounterA[0].setAttribute('title', title);
+        let gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
+        if (!gistCounterSpan.length) {
+            gistCounterA.append('<span data-view-component="true" class="Counter" />');
+            gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
+        }
+        if (gistCounterSpan.length) {
+            gistCounterSpan[0].textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
+            gistCounterSpan[0].setAttribute('title', title);
+        }
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/sidebar.ts":
+/*!******************************!*\
+  !*** ./src/ts/ui/sidebar.ts ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const template_html_1 = __importDefault(__webpack_require__(/*! @src/html/template.html */ "./src/html/template.html"));
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 function getSidebarHtml() {
-    const info = global_1.Global.urlInfo;
+    const info = storage_1.Global.urlInfo;
     let renderedTemplate = template_html_1.default
         .replaceAll(/<!--[\s\S]+?-->/, '')
         .replaceAll('${urlType}', info.type.toString())
         .replaceAll('${apiUrl}', info.eventAPI)
-        .replaceAll('${checkedPath}', sidebar_ui_1.getPathTag('checked'))
-        .replaceAll('${feedbackUrl}', global_1.Global.FEEDBACK_URL);
+        .replaceAll('${checkedPath}', svg_tag_1.getPathTag('checked'))
+        .replaceAll('${feedbackUrl}', storage_1.Global.FEEDBACK_URL);
     const reAuthor = /\$\{if isAuthor\}([\s\S]+?)\$\{endif\}/m;
     const reRepo = /\$\{if isRepo\}([\s\S]+?)\$\{endif\}/m;
     if (info.type === model_1.URLType.REPO) {
@@ -71131,75 +71730,27 @@ function getSidebarHtml() {
     }
     return renderedTemplate;
 }
-
-
-/***/ }),
-
-/***/ "./src/ts/model.ts":
-/*!*************************!*\
-  !*** ./src/ts/model.ts ***!
-  \*************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var URLType;
-(function (URLType) {
-    URLType["USER"] = "user";
-    URLType["ORG"] = "org";
-    URLType["REPO"] = "repo";
-    URLType["OTHER"] = "other";
-})(URLType = exports.URLType || (exports.URLType = {}));
-class URLInfo {
-    constructor(type, author = '', repo = '') {
-        this.type = type;
-        this.author = author;
-        this.repo = repo;
-        this.authorURL = '';
-        this.repoURL = '';
-        this.eventAPI = '';
-        this.extra = {};
-        switch (type) {
-            case URLType.OTHER:
-                return;
-            case URLType.USER:
-                this.authorURL = `https://github.com/${author}`;
-                this.eventAPI = `https://api.github.com/users/${author}/events`;
-                return;
-            case URLType.ORG:
-                this.authorURL = `https://github.com/${author}`;
-                this.eventAPI = `https://api.github.com/orgs/${author}/events`;
-                return;
-            case URLType.REPO:
-                this.authorURL = `https://github.com/${author}`;
-                this.repoURL = `https://github.com/${author}/${repo}`;
-                this.eventAPI = `https://api.github.com/repos/${author}/${repo}/events`;
-                return;
-        }
-    }
-    equals(o) {
-        return o.type == this.type && o.author == this.author && o.repo == this.repo;
+exports.getSidebarHtml = getSidebarHtml;
+function resetSidebar() {
+    if (jquery_1.default('div#ahid-toggle').length) {
+        jquery_1.default('div#ahid-toggle').remove();
+        jquery_1.default('nav#ahid-nav').remove();
+        storage_1.Global.page = 1;
     }
 }
-exports.URLInfo = URLInfo;
-var HoverCardType;
-(function (HoverCardType) {
-    HoverCardType["USER"] = "user";
-    HoverCardType["REPO"] = "repository";
-    HoverCardType["COMMIT"] = "commit";
-    HoverCardType["ISSUE"] = "issue";
-    HoverCardType["PULL"] = "pull_request";
-})(HoverCardType = exports.HoverCardType || (exports.HoverCardType = {}));
+exports.resetSidebar = resetSidebar;
+function disableBlankTargetForSidebar() {
+    jquery_1.default('nav#ahid-nav a[target="_blank"]').removeAttr('target');
+}
+exports.disableBlankTargetForSidebar = disableBlankTargetForSidebar;
 
 
 /***/ }),
 
-/***/ "./src/ts/sidebar_ui.ts":
-/*!******************************!*\
-  !*** ./src/ts/sidebar_ui.ts ***!
-  \******************************/
+/***/ "./src/ts/ui/sidebar/li_tag.ts":
+/*!*************************************!*\
+  !*** ./src/ts/ui/sidebar/li_tag.ts ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -71210,8 +71761,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
-const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
-function formatInfoToLi(item) {
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+function formatInfoToLiTag(item) {
     const body = formatInfoToBody(item);
     if (!body) {
         return "";
@@ -71235,7 +71787,7 @@ function formatInfoToLi(item) {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${getSvgTag(item.type)}</span>
+                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${svg_tag_1.getSvgTag(item.type)}</span>
                 </div>
                 <!-- ////// Date time | Private badge ////// -->
                 <div class="ah-content-header-info">
@@ -71250,7 +71802,7 @@ function formatInfoToLi(item) {
     `;
     return html.replaceAll(/<!--[\s\S]+?-->/, '');
 }
-exports.formatInfoToLi = formatInfoToLi;
+exports.formatInfoToLiTag = formatInfoToLiTag;
 function formatInfoToBody(data) {
     const pl = data.payload;
     const repoUrl = `http://github.com/${data.repo.name}`;
@@ -71348,6 +71900,20 @@ function subContent(content) {
     content = escape(content);
     return `<div class="ah-content-body-sub ah-content-body-subcontent" title="${content}">${content}</div>`;
 }
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/sidebar/svg_tag.ts":
+/*!**************************************!*\
+  !*** ./src/ts/ui/sidebar/svg_tag.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
 function getSvgTag(type) {
     let svgClass = '', svgPath = '', svgHeight = 0, svgWidth = 0;
     switch (type) {
@@ -71434,6 +72000,7 @@ function getSvgTag(type) {
         </svg>
     `;
 }
+exports.getSvgTag = getSvgTag;
 function getPathTag(type) {
     switch (type) {
         case 'rocket':
@@ -71467,473 +72034,10 @@ exports.getPathTag = getPathTag;
 
 /***/ }),
 
-/***/ "./src/ts/ui_adjust.ts":
-/*!*****************************!*\
-  !*** ./src/ts/ui_adjust.ts ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
-const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
-const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
-const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
-const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
-function adjustGlobalUI() {
-    adjustHovercardZindex();
-    adjustGlobalModalDialogLayout();
-    var menuLoaded = adjustUserModalDialogLayout();
-    menuLoaded.then((ok) => {
-        if (ok && global_1.Global.showFollowMenuItem) {
-            showFollowAvatarMenuItem();
-        }
-    });
-}
-exports.adjustGlobalUI = adjustGlobalUI;
-function adjustHovercardZindex() {
-    const hovercard = jquery_1.default('div.Popover.js-hovercard-content');
-    const mainDiv = jquery_1.default('div[data-turbo-body]');
-    mainDiv.after(hovercard);
-}
-function adjustModalDialogLayout(headerClassName, ifAddedChecker, adjustOverlayLayout) {
-    const completer = new utils_1.Completer();
-    const headerDiv = jquery_1.default(`div.${headerClassName}`);
-    const sidePanel = headerDiv.find('deferred-side-panel');
-    if (!sidePanel.length) {
-        completer.complete(false);
-        return completer.future();
-    }
-    const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
-    const modalDialog = headerDiv.find('modal-dialog');
-    if (!modalDialog.length || !modalDialogOverlay.length) {
-        completer.complete(false);
-        return completer.future();
-    }
-    adjustOverlayLayout(modalDialogOverlay, false);
-    var tempObserver = utils_1.observeAttributes(modalDialog[0], (record, el) => {
-        if (record.attributeName === 'open') {
-            var opened = el.hasAttribute('open');
-            adjustOverlayLayout(modalDialogOverlay, opened);
-            if (!opened) {
-                document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
-            }
-        }
-    });
-    var observer = utils_1.observeChildChanged(sidePanel[0], (record) => {
-        if (!record.addedNodes) {
-            return;
-        }
-        var added = false;
-        for (var node of record.addedNodes) {
-            if (ifAddedChecker(node) === true) {
-                added = true;
-                tempObserver.disconnect();
-                observer.disconnect();
-                break;
-            }
-        }
-        if (!added) {
-            return;
-        }
-        const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
-        const modalDialog = headerDiv.find('modal-dialog');
-        if (!modalDialog.length || !modalDialogOverlay.length) {
-            return;
-        }
-        adjustOverlayLayout(modalDialogOverlay, true);
-        utils_1.observeAttributes(modalDialog[0], (record, el) => {
-            if (record.attributeName === 'open') {
-                var opened = el.hasAttribute('open');
-                adjustOverlayLayout(modalDialogOverlay, opened);
-                if (!opened) {
-                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
-                }
-            }
-        });
-        completer.complete(true);
-    });
-    return completer.future();
-}
-function adjustGlobalModalDialogLayout() {
-    adjustModalDialogLayout('AppHeader-globalBar-start', (element) => { var _a, _b, _c; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'div' && ((_c = element) === null || _c === void 0 ? void 0 : _c.classList.contains('Overlay-backdrop--side')) === true; }, (element, _) => {
-        const showOctotree = jquery_1.default('html').hasClass('octotree-show');
-        const octotree = jquery_1.default('nav.octotree-sidebar.octotree-github-sidebar');
-        if (showOctotree && octotree.length) {
-            element.css('margin-left', `${octotree.width()}px`);
-        }
-        else {
-            element.css('margin-left', '0');
-        }
-        jquery_1.default('body').css('padding-right', '0');
-        jquery_1.default('body').css('overflow', 'initial');
-    });
-}
-function adjustUserModalDialogLayout() {
-    return adjustModalDialogLayout('AppHeader-user', (element) => { var _a, _b; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'user-drawer-side-panel'; }, (element, _) => {
-        if (global_1.Global.urlInfo.type !== model_1.URLType.OTHER && global_1.Global.pinned) {
-            element.css('margin-right', `${global_1.Global.width}px`);
-        }
-        else {
-            element.css('margin-right', '0');
-        }
-        jquery_1.default('body').css('padding-right', '0');
-        jquery_1.default('body').css('overflow', 'initial');
-    });
-}
-function showFollowAvatarMenuItem() {
-    var _a, _b;
-    var modalDialog = jquery_1.default('div.AppHeader-user modal-dialog');
-    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
-    if (!avatarMenuUl.length) {
-        return;
-    }
-    function generateMenuItem(text, href, svgPath) {
-        return `<li data-item-id="" data-targets="nav-list.items" data-view-component="true" class="ActionListItem">
-            <a data-analytics-event="" test-data="${text}" href="${href}" data-view-component="true" class="ActionListContent ActionListContent--visual16">
-                <span class="ActionListItem-visual ActionListItem-visual--leading">
-                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon">
-                        ${svgPath}
-                    </svg>
-                </span>
-                <span data-view-component="true" class="ActionListItem-label">
-                    ${text}
-                </span>
-            </a>
-        </li>`;
-    }
-    const username = (_b = (_a = modalDialog.find('div.Overlay-header span:first-child')[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
-    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
-    jquery_1.default(generateMenuItem('Your followers', `/${username}?tab=followers`, sidebar_ui_1.getPathTag('people'))).insertAfter(starsMenuItem);
-    jquery_1.default(generateMenuItem('Your following', `/${username}?tab=following`, sidebar_ui_1.getPathTag('people'))).insertAfter(starsMenuItem);
-}
-function adjustUserUIObservably() {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (global_1.Global.centerFollowText) {
-            centerUserFollowText();
-        }
-        let info;
-        if (global_1.Global.showJoinedTime || global_1.Global.showUserPrivateCounter) {
-            try {
-                info = yield utils_1.requestUserInfo(global_1.Global.urlInfo.author, global_1.Global.token);
-            }
-            catch (_) { }
-        }
-        if (global_1.Global.showJoinedTime && info) {
-            showUserJoinedTime(info);
-        }
-        if (global_1.Global.showUserPrivateCounter && info) {
-            addUserPrivateCounters(info);
-        }
-        ;
-    });
-}
-exports.adjustUserUIObservably = adjustUserUIObservably;
-function centerUserFollowText() {
-    jquery_1.default('div.js-profile-editable-area div.flex-md-order-none').css('text-align', 'center');
-}
-function showUserJoinedTime(info) {
-    if (!info.createdAt || jquery_1.default('ul.vcard-details li[itemprop="join time"]').length) {
-        return;
-    }
-    const time = moment_1.default(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
-    jquery_1.default('ul.vcard-details').append(`<li class="vcard-detail pt-1" itemprop="join time">
-            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
-                ${sidebar_ui_1.getPathTag('rocket')}
-            </svg>
-            <span>Joined at ${time}</span>
-        </li>`);
-}
-function addUserPrivateCounters(info) {
-    var _a;
-    if (!global_1.Global.token || !global_1.Global.urlInfo.extra.user.isMe) {
-        return;
-    }
-    const repoCounterA = jquery_1.default('header.AppHeader nav a#repositories-tab');
-    if (repoCounterA.length) {
-        const title = `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`;
-        repoCounterA[0].setAttribute('title', title);
-        const repoCounterSpan = jquery_1.default('nav a#repositories-tab span:last-child');
-        if (repoCounterSpan.length) {
-            repoCounterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
-            repoCounterSpan[0].setAttribute('title', title);
-        }
-    }
-    const gistCounterA = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child');
-    if (gistCounterA.length && ((_a = gistCounterA[0].textContent) === null || _a === void 0 ? void 0 : _a.includes('Gists')) == true) {
-        const title = `Public: ${info.publicGists}, private: ${info.privateGists}, total: ${info.publicGists + info.privateGists}`;
-        gistCounterA[0].setAttribute('title', title);
-        let gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
-        if (!gistCounterSpan.length) {
-            gistCounterA.append('<span data-view-component="true" class="Counter" />');
-            gistCounterSpan = jquery_1.default('header.AppHeader nav ul.UnderlineNav-body>a.UnderlineNav-item:last-child span:last-child');
-        }
-        if (gistCounterSpan.length) {
-            gistCounterSpan[0].textContent = `${info.publicGists} / ${info.publicGists + info.privateGists}`;
-            gistCounterSpan[0].setAttribute('title', title);
-        }
-    }
-}
-function adjustRepoUIObservably() {
-    return __awaiter(this, void 0, void 0, function* () {
-        adjustRepoStuckHeader();
-        fixOctotreePageMargin();
-        if (global_1.Global.showRepoActionCounter) {
-            showRepoActionCounters();
-        }
-        if (global_1.Global.showRepoAndContentsSize) {
-            try {
-                const repo = yield utils_1.requestRepoInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, global_1.Global.token);
-                showRepoContentsSize(repo);
-            }
-            catch (_) { }
-        }
-    });
-}
-exports.adjustRepoUIObservably = adjustRepoUIObservably;
-function adjustRepoStuckHeader() {
-    const stuckHeader = jquery_1.default("div#partial-discussion-header div.js-sticky.js-sticky-offset-scroll.gh-header-sticky");
-    const headerShadow = jquery_1.default("div#partial-discussion-header div.gh-header-shadow");
-    if (stuckHeader.length && headerShadow.length) {
-        stuckHeader.css('z-index', '89');
-        headerShadow.css('z-index', '88');
-    }
-}
-function fixOctotreePageMargin() {
-    if (jquery_1.default('nav.octotree-sidebar').length) {
-        jquery_1.default('div#repo-content-pjax-container>div.clearfix.container-xl').attr('style', 'margin-left: auto !important; margin-right: auto !important;');
-    }
-}
-function showRepoActionCounters() {
-    const repoName = `${global_1.Global.urlInfo.author}/${global_1.Global.urlInfo.repo}`;
-    const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
-    watchCounterSpan.attr('style', 'display: inline-block;');
-    watchCounterSpan.addClass('ah-hover-underline');
-    if (!jquery_1.default('#repo-notifications-counter-a').length) {
-        watchCounterSpan.wrap(`<a href="/${repoName}/watchers" id="repo-notifications-counter-a"></a>`);
-    }
-    const forkCounterSpan = jquery_1.default('#repo-network-counter');
-    forkCounterSpan.attr('style', 'display: inline-block;');
-    forkCounterSpan.addClass('ah-hover-underline');
-    if (!jquery_1.default('#repo-network-counter-a').length) {
-        forkCounterSpan.wrap(`<a href="/${repoName}/network/members" id="repo-network-counter-a"></a>`);
-        const forkSummary = jquery_1.default('summary.BtnGroup-item[aria-label="See your forks of this repository"]');
-        forkSummary.removeClass('px-2');
-        forkSummary.addClass('px-1');
-    }
-    const starCounterSpan = jquery_1.default('#repo-stars-counter-star');
-    starCounterSpan.attr('style', 'display: inline-block;');
-    starCounterSpan.addClass('ah-hover-underline');
-    const unstarCounterSpan = jquery_1.default('#repo-stars-counter-unstar');
-    unstarCounterSpan.addClass('ah-hover-underline');
-    unstarCounterSpan.attr('style', 'display: inline-block;');
-    if (!jquery_1.default('#repo-stars-counter-a').length) {
-        const aTag = `
-            <a href="/${repoName}/stargazers" id="repo-stars-counter-a" class="BtnGroup-parent">
-                <span class="btn-sm btn BtnGroup-item px-1" style="color: var(--color-accent-fg);">
-                </span>
-            </a>
-        `;
-        starCounterSpan.wrap(aTag);
-        unstarCounterSpan.wrap(aTag);
-        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.unstarred.BtnGroup.flex-1>form'));
-        jquery_1.default('#repo-stars-counter-a').insertAfter(jquery_1.default('div.starred.BtnGroup.flex-1>form'));
-        const starSummary = jquery_1.default('summary.BtnGroup-item[aria-label="Add this repository to a list"]');
-        starSummary.removeClass('px-2');
-        starSummary.addClass('px-1');
-    }
-    ;
-}
-function showRepoContentsSize(repoInfo) {
-    var _a, _b, _c, _d, _e, _f;
-    return __awaiter(this, void 0, void 0, function* () {
-        const repoExtra = global_1.Global.urlInfo.extra.repo;
-        const sizeFormatted = utils_1.formatBytes(repoInfo.size);
-        let tabTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
-        if (!global_1.Global.contentsSizeCache) {
-            tabTitle += ' (click here to load directories size)';
-        }
-        else if (global_1.Global.contentsSizeTruncated) {
-            tabTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
-        }
-        else {
-            tabTitle += ' (directories size have been loaded successfully)';
-        }
-        const sizeTab = jquery_1.default('#ahid-contents-size');
-        if (sizeTab.length) {
-            sizeTab.attr('title', tabTitle);
-        }
-        else {
-            jquery_1.default(`<li id="ahid-contents-size" title="${tabTitle}" style="cursor: pointer;" data-view-component="true" class="d-inline-flex">
-            <a class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
-                <svg width="12" height="16" viewBox="0 0 12 16" version="1.1" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
-                    ${sidebar_ui_1.getPathTag('database')}
-                </svg>
-                ${sizeFormatted}
-            </a>
-        </li>`).insertAfter(jquery_1.default('nav.js-repo-nav ul li:last-child'));
-            jquery_1.default('#ahid-contents-size').on('click', () => __awaiter(this, void 0, void 0, function* () {
-                const progressBar = utils_1.handleGithubTurboProgressBar();
-                progressBar.startLoading();
-                yield updateSizeCache();
-                progressBar.finishLoading();
-            }));
-        }
-        function updateSizeCache() {
-            return __awaiter(this, void 0, void 0, function* () {
-                try {
-                    const treeInfo = yield utils_1.requestRepoTreeInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, global_1.Global.token);
-                    const cache = new Map();
-                    const [files, dirs] = [treeInfo.tree.filter(i => i.type === 'blob'), treeInfo.tree.filter(i => i.type === 'tree')];
-                    files.forEach(f => cache.set(f.path, f.size));
-                    dirs.forEach(d => cache.set(d.path, files.filter(f => f.path.startsWith(d.path)).reduce((accumulate, f) => accumulate + f.size, 0)));
-                    global_1.Global.contentsSizeCache = cache;
-                    global_1.Global.contentsSizeCachedRef = repoExtra.ref;
-                    global_1.Global.contentsSizeTruncated = treeInfo.truncated;
-                }
-                catch (_) { }
-            });
-        }
-        if (global_1.Global.contentsSizeCache && global_1.Global.contentsSizeCachedRef !== repoExtra.ref) {
-            yield updateSizeCache();
-        }
-        let contentsSize = new Map();
-        if (global_1.Global.contentsSizeCache) {
-            contentsSize = global_1.Global.contentsSizeCache;
-        }
-        else {
-            try {
-                const contents = yield utils_1.requestRepoContents(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, repoExtra.path, global_1.Global.token);
-                contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size));
-            }
-            catch (_) { }
-        }
-        yield new Promise((resolve, _) => {
-            const skeleton = () => jquery_1.default('div.Box div[role="grid"] div[role="row"] div[role="gridcell"] div.Skeleton');
-            if (!skeleton().length) {
-                resolve();
-                return;
-            }
-            const interval = setInterval(() => {
-                if (!skeleton().length) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, 50);
-        });
-        function renderSizeAndTitle(filename) {
-            let [sizeFormatted, gridTitle] = ['', ''];
-            let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-            if (global_1.Global.contentsSizeCache && !fileSize) {
-                fileSize = 0;
-            }
-            if (fileSize !== undefined) {
-                sizeFormatted = utils_1.formatBytes(fileSize);
-                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
-            }
-            return [sizeFormatted, gridTitle];
-        }
-        for (const row of jquery_1.default('div.Box div[role="grid"] div[role="row"]')) {
-            if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
-                continue;
-            }
-            let [sizeFormatted, gridTitle] = ['', ''];
-            const filename = (_c = (_b = (_a = row.querySelector('div[role="rowheader"]')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
-            if (filename) {
-                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
-            }
-            const sizeDiv = row.querySelector('div.ah-file-size');
-            if (!sizeDiv) {
-                jquery_1.default('<div>', {
-                    role: 'gridcell', class: 'mr-3 text-right color-fg-muted ah-file-size', style: 'width: 80px;',
-                    text: sizeFormatted, title: gridTitle,
-                }).insertBefore(row.querySelector('div[role="gridcell"]:last-child'));
-            }
-            else {
-                sizeDiv.textContent = sizeFormatted;
-                sizeDiv.setAttribute('title', gridTitle);
-            }
-        }
-        yield new Promise((resolve, _) => {
-            const unloadedRows = () => {
-                var _a;
-                var emptyRows = [];
-                for (var td of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row td:last-child')) {
-                    if ((_a = td.textContent, (_a !== null && _a !== void 0 ? _a : '')).trim().length === 0) {
-                        emptyRows.push(td);
-                    }
-                }
-                return emptyRows;
-            };
-            if (unloadedRows().length) {
-                resolve();
-                return;
-            }
-            const interval = setInterval(() => {
-                if (unloadedRows().length) {
-                    clearInterval(interval);
-                    resolve();
-                }
-            }, 50);
-        });
-        yield new Promise((resolve, _) => {
-            setTimeout(() => resolve(null), 200);
-        });
-        if (!jquery_1.default('th#ah-file-size-header').length) {
-            const headLastTh = jquery_1.default('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
-            jquery_1.default(`<th id="ah-file-size-header" style="width: 80px">
-            <div title="Item size">
-                Item size
-            </div>
-        </th>`).insertBefore(headLastTh);
-        }
-        var firstRow = jquery_1.default('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
-        if (firstRow.length) {
-            firstRow[0].setAttribute('colspan', '4');
-        }
-        for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
-            let [sizeFormatted, gridTitle] = ['', ''];
-            const filename = (_f = (_e = (_d = row.querySelector('div.react-directory-filename-column h3')) === null || _d === void 0 ? void 0 : _d.textContent) === null || _e === void 0 ? void 0 : _e.trim(), (_f !== null && _f !== void 0 ? _f : ''));
-            if (filename) {
-                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
-            }
-            const sizeTd = row.querySelector('td.ah-file-size');
-            if (!sizeTd) {
-                jquery_1.default('<td>', {
-                    class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
-                    text: sizeFormatted, title: gridTitle,
-                }).insertBefore(row.querySelector('td:last-child'));
-            }
-            else {
-                sizeTd.textContent = sizeFormatted;
-                sizeTd.setAttribute('title', gridTitle);
-            }
-        }
-    });
-}
-
-
-/***/ }),
-
-/***/ "./src/ts/ui_events.ts":
-/*!*****************************!*\
-  !*** ./src/ts/ui_events.ts ***!
-  \*****************************/
+/***/ "./src/ts/ui/ui_events.ts":
+/*!********************************!*\
+  !*** ./src/ts/ui/ui_events.ts ***!
+  \********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -71954,30 +72058,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 __webpack_require__(/*! jquery-ui-dist/jquery-ui */ "./node_modules/jquery-ui-dist/jquery-ui.js");
-const global_1 = __webpack_require__(/*! @src/ts/global */ "./src/ts/global.ts");
-const sidebar_ui_1 = __webpack_require__(/*! @src/ts/sidebar_ui */ "./src/ts/sidebar_ui.ts");
-const utils_1 = __webpack_require__(/*! @src/ts/utils */ "./src/ts/utils.ts");
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const li_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/li_tag */ "./src/ts/ui/sidebar/li_tag.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
 function loadGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         const ulTag = jquery_1.default('#ahid-list');
-        if (global_1.Global.page == 1) {
+        if (storage_1.Global.page == 1) {
             ulTag.html('');
         }
         switchDisplayMode({ isLoading: true, isError: false });
         var infos;
         try {
-            infos = yield utils_1.requestGitHubEvents(global_1.Global.urlInfo.eventAPI, global_1.Global.page, global_1.Global.token);
+            infos = yield utils_1.requestGitHubEvents(storage_1.Global.urlInfo.eventAPI, storage_1.Global.page, storage_1.Global.token);
         }
         catch (ex) {
-            if (global_1.Global.page === 1) {
+            if (storage_1.Global.page === 1) {
                 switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex });
             }
             return;
         }
         switchDisplayMode({ isLoading: false, isError: false });
         infos.forEach(info => {
-            const li = sidebar_ui_1.formatInfoToLi(info);
+            const li = li_tag_1.formatInfoToLiTag(info);
             if (!li) {
                 return;
             }
@@ -71986,7 +72090,7 @@ function loadGitHubEvents() {
             }
             ulTag.append(li);
         });
-        if (!global_1.Global.useBlankTarget) {
+        if (!storage_1.Global.useBlankTarget) {
             jquery_1.default('nav#ahid-nav a[target="_blank"]').removeAttr('target');
         }
     });
@@ -71994,7 +72098,7 @@ function loadGitHubEvents() {
 exports.loadGitHubEvents = loadGitHubEvents;
 function loadNextGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
-        ++global_1.Global.page;
+        ++storage_1.Global.page;
         yield loadGitHubEvents();
     });
 }
@@ -72026,31 +72130,31 @@ function switchDisplayMode(arg) {
         show(moreTag);
     }
 }
-function registerUIEvents() {
+function registerUIEvents(extraRefreshHandler) {
     jquery_1.default('#ahid-toggle').on('mouseenter', () => showSidebar(true));
     jquery_1.default('#ahid-toggle').on('click', () => showSidebar(true));
-    jquery_1.default('#ahid-nav').on('mouseenter', () => global_1.Global.isHovering = true);
+    jquery_1.default('#ahid-nav').on('mouseenter', () => storage_1.Global.isHovering = true);
     jquery_1.default('#ahid-nav').on('mouseleave', () => {
-        global_1.Global.isHovering = false;
-        if (!global_1.Global.pinned) {
-            setTimeout(() => (!global_1.Global.pinned && !global_1.Global.isHovering) ? showSidebar(false) : null, 1000);
+        storage_1.Global.isHovering = false;
+        if (!storage_1.Global.pinned) {
+            setTimeout(() => (!storage_1.Global.pinned && !storage_1.Global.isHovering) ? showSidebar(false) : null, 1000);
         }
     });
-    jquery_1.default('#ahid-pin').on('click', () => pinSidebar(!global_1.Global.pinned));
-    jquery_1.default('#ahid-refresh').on('click', () => refreshSidebar());
+    jquery_1.default('#ahid-pin').on('click', () => pinSidebar(!storage_1.Global.pinned));
+    jquery_1.default('#ahid-refresh').on('click', () => refreshSidebar(extraRefreshHandler));
     jquery_1.default('#ahid-more').on('click', () => loadNextGitHubEvents());
-    jquery_1.default('#ahid-retry').on('click', () => { global_1.Global.page = 1; loadGitHubEvents(); });
-    jquery_1.default('#ahid-setup-token').on('click', () => setTimeout(() => global_1.askToSetupToken(), 30));
+    jquery_1.default('#ahid-retry').on('click', () => { storage_1.Global.page = 1; loadGitHubEvents(); });
+    jquery_1.default('#ahid-setup-token').on('click', () => setTimeout(() => storage_1.askToSetupToken(), 30));
     processMenuSwitchers();
     registerResizeEvent();
-    showSidebar(global_1.Global.pinned);
-    pinSidebar(global_1.Global.pinned);
+    showSidebar(storage_1.Global.pinned);
+    pinSidebar(storage_1.Global.pinned);
 }
 exports.registerUIEvents = registerUIEvents;
 function showSidebar(needShow) {
     const navTag = jquery_1.default('#ahid-nav');
     const toggleTag = jquery_1.default('#ahid-toggle');
-    navTag.css('width', `${global_1.Global.width}px`);
+    navTag.css('width', `${storage_1.Global.width}px`);
     if (needShow) {
         toggleTag.addClass('ah-toggle-hide');
         navTag.addClass('ah-nav-open');
@@ -72060,7 +72164,7 @@ function showSidebar(needShow) {
     else {
         toggleTag.removeClass('ah-toggle-hide');
         navTag.removeClass('ah-nav-open');
-        navTag.css('right', `-${global_1.Global.width}px`);
+        navTag.css('right', `-${storage_1.Global.width}px`);
         enableResizing(false);
     }
 }
@@ -72075,22 +72179,24 @@ function pinSidebar(needPin) {
         navTag.removeClass('ah-shadow');
         pinTag.removeClass('ah-pined');
     }
-    global_1.Global.pinned = needPin;
-    global_1.setStorage(global_1.StorageFlag.PINNED, global_1.Global.pinned);
+    storage_1.Global.pinned = needPin;
+    storage_1.setStorage(storage_1.StorageFlag.PINNED, storage_1.Global.pinned);
     adjustBodyLayout();
 }
-function refreshSidebar() {
+function refreshSidebar(extraRefreshHandler) {
+    var _a;
     adjustBodyLayout();
-    var oldUrlInfo = global_1.Global.urlInfo;
+    (_a = extraRefreshHandler) === null || _a === void 0 ? void 0 : _a();
+    var oldUrlInfo = storage_1.Global.urlInfo;
     const urlInfo = utils_1.checkURL();
     if (urlInfo) {
-        global_1.Global.urlInfo = urlInfo;
+        storage_1.Global.urlInfo = urlInfo;
     }
-    if (!global_1.Global.urlInfo.equals(oldUrlInfo)) {
+    if (!storage_1.Global.urlInfo.equals(oldUrlInfo)) {
         main_1.injectSidebar();
     }
     else {
-        global_1.Global.page = 1;
+        storage_1.Global.page = 1;
         loadGitHubEvents();
     }
 }
@@ -72100,37 +72206,37 @@ function processMenuSwitchers() {
             if (!el.hasClass('ah-checkable')) {
                 return;
             }
-            if (yield global_1.getStorage(flag, true)) {
+            if (yield storage_1.getStorage(flag, true)) {
                 el.addClass('ah-enabled');
             }
             else {
                 el.removeClass('ah-enabled');
             }
             el.on('click', () => setTimeout(() => __awaiter(this, void 0, void 0, function* () {
-                if (yield global_1.getStorage(flag, true)) {
-                    yield global_1.setStorage(flag, false);
+                if (yield storage_1.getStorage(flag, true)) {
+                    yield storage_1.setStorage(flag, false);
                     el.removeClass('ah-enabled');
                 }
                 else {
-                    yield global_1.setStorage(flag, true);
+                    yield storage_1.setStorage(flag, true);
                     el.addClass('ah-enabled');
                 }
             }), 30));
         });
     }
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), global_1.StorageFlag.CENTER_FOLLOW_TEXT);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), global_1.StorageFlag.SHOW_JOINED_TIME);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), global_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), global_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), global_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), global_1.StorageFlag.USE_BLANK_TARGET);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), storage_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), storage_1.StorageFlag.CENTER_FOLLOW_TEXT);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), storage_1.StorageFlag.SHOW_JOINED_TIME);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), storage_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), storage_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), storage_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), storage_1.StorageFlag.USE_BLANK_TARGET);
 }
 function adjustBodyLayout(resizing = false) {
     const navTag = jquery_1.default('#ahid-nav');
     navTag.css('left', '');
-    if (global_1.Global.pinned) {
-        const to = resizing ? navTag.width() : global_1.Global.width;
+    if (storage_1.Global.pinned) {
+        const to = resizing ? navTag.width() : storage_1.Global.width;
         jquery_1.default('body').css('margin-right', `${to}px`);
     }
     else {
@@ -72141,9 +72247,9 @@ function registerResizeEvent() {
     const navTag = jquery_1.default('#ahid-nav');
     const hdlTag = jquery_1.default('.ui-resizable-handle');
     const event = () => {
-        if (global_1.Global.width !== navTag.width()) {
-            global_1.Global.width = navTag.width();
-            global_1.setStorage(global_1.StorageFlag.WIDTH, global_1.Global.width);
+        if (storage_1.Global.width !== navTag.width()) {
+            storage_1.Global.width = navTag.width();
+            storage_1.setStorage(storage_1.StorageFlag.WIDTH, storage_1.Global.width);
         }
         adjustBodyLayout(false);
     };
@@ -72173,10 +72279,39 @@ function enableResizing(enable) {
 
 /***/ }),
 
-/***/ "./src/ts/utils.ts":
-/*!*************************!*\
-  !*** ./src/ts/utils.ts ***!
-  \*************************/
+/***/ "./src/ts/utils/extensions.ts":
+/*!************************************!*\
+  !*** ./src/ts/utils/extensions.ts ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+String.prototype.replaceAll = function (from, to) {
+    if (from instanceof RegExp) {
+        const re = new RegExp(from, 'g');
+        return String(this).replace(re, to);
+    }
+    else {
+        let result = String(this);
+        while (result.indexOf(from) !== -1) {
+            result = result.replace(from, to);
+        }
+        return result;
+    }
+};
+String.prototype.capital = function () {
+    return String(this).replace(String(this)[0], String(this)[0].toUpperCase());
+};
+
+
+/***/ }),
+
+/***/ "./src/ts/utils/utils.ts":
+/*!*******************************!*\
+  !*** ./src/ts/utils/utils.ts ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -72198,7 +72333,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js"));
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-const model_1 = __webpack_require__(/*! @src/ts/model */ "./src/ts/model.ts");
+const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
 function checkURL() {
     var _a, _b;
     const result = /https?:\/\/github\.com(.*)?/.exec(document.URL);
