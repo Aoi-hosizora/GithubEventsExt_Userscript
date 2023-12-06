@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import $ from 'jquery';
 import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
-import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo } from '@src/ts/model';
+import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo } from '@src/ts/data/model';
 
 /**
  * Check the document.URL, return null if current page is not a GitHub page.

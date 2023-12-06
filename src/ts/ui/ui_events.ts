@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/global';
-import { EventInfo } from '@src/ts/model';
-import { formatInfoToLi } from '@src/ts/sidebar_ui';
-import { requestGitHubEvents, checkURL } from '@src/ts/utils';
+import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/data/storage';
+import { EventInfo } from '@src/ts/data/model';
+import { formatInfoToLi } from '@src/ts/ui/sidebar';
+import { requestGitHubEvents, checkURL } from '@src/ts/utils/utils';
 import { injectSidebar } from '@src/ts/main';
 
 // ===============

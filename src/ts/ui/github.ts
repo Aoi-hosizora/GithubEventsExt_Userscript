@@ -1,9 +1,12 @@
 import $ from 'jquery';
 import moment from "moment";
-import { Global } from "@src/ts/global";
-import { RepoInfo, UserInfo, URLType } from "@src/ts/model";
-import { getPathTag } from "@src/ts/sidebar_ui";
-import { Completer, formatBytes, handleGithubTurboProgressBar, observeAttributes, requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo, observeChildChanged, getDocumentScrollYOffset } from "@src/ts/utils";
+import { Global } from "@src/ts/data/storage";
+import { RepoInfo, UserInfo, URLType } from "@src/ts/data/model";
+import { getPathTag } from "@src/ts/ui/sidebar";
+import {
+    Completer, formatBytes, handleGithubTurboProgressBar, observeAttributes,
+    requestRepoContents, requestRepoInfo, requestRepoTreeInfo, requestUserInfo, observeChildChanged, getDocumentScrollYOffset
+} from "@src/ts/utils/utils";
 
 // =================
 // global ui related

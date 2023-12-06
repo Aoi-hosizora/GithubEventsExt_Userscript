@@ -1,13 +1,12 @@
 import GMApi from 'greasemonkey';
 import $ from 'jquery';
-import template from '@src/html/template.html';
 import style from '@src/scss/core.scss';
-import { Global } from '@src/ts/global';
-import { URLType } from '@src/ts/model';
-import { getPathTag } from '@src/ts/sidebar_ui';
-import { adjustGlobalUI, adjustRepoUIObservably, adjustUserUIObservably } from '@src/ts/ui_adjust';
-import { loadGitHubEvents, registerUIEvents } from '@src/ts/ui_events';
-import { checkURL, handleGithubTurboProgressBar, observeChildChanged } from '@src/ts/utils';
+import { Global } from '@src/ts/data/storage';
+import { URLType } from '@src/ts/data/model';
+import { adjustGlobalUI, adjustUserUIObservably, adjustRepoUIObservably } from '@src/ts/ui/github';
+import { observeChildChanged, handleGithubTurboProgressBar, checkURL } from '@src/ts/utils/utils';
+import { resetSidebar, getSidebarHtml, disableBlankTargetForSidebar } from '@src/ts/ui/sidebar';
+import { registerUIEvents, loadGitHubEvents } from '@src/ts/ui/ui_events';
 
 /**
  * Adjust GitHub UI !!!
@@ -34,6 +33,8 @@ export function adjustGitHubUI() {
     }
 
     handleObservably();
+
+    // !!! observe progress bar
     observeChildChanged($('html')[0], (record) => {
         if (record.removedNodes && handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
             const urlInfo = checkURL();
@@ -58,11 +59,7 @@ export function adjustGitHubUI() {
  */
 export function injectSidebar() {
     // 1. remove previous elements and reset status
-    if ($('div#ahid-toggle').length) {
-        $('div#ahid-toggle').remove();
-        $('nav#ahid-nav').remove();
-        Global.page = 1;
-    }
+    resetSidebar();
 
     // 2. inject html into GitHub page
     const info = Global.urlInfo;
@@ -71,7 +68,7 @@ export function injectSidebar() {
     }
     $('body').append(getSidebarHtml());
     if (!Global.useBlankTarget) {
-        $('nav#ahid-nav a[target="_blank"]').removeAttr('target');
+        disableBlankTargetForSidebar();
     }
     GMApi.GM_addStyle(style);
 
@@ -80,37 +77,4 @@ export function injectSidebar() {
 
     // 4. start loading GitHub events
     loadGitHubEvents();
-}
-
-/**
- * Get and format sidebar html from template.
- */
-function getSidebarHtml(): string {
-    const info = Global.urlInfo;
-    let renderedTemplate = template
-        .replaceAll(/<!--[\s\S]+?-->/, '')
-        .replaceAll('${urlType}', info.type.toString())
-        .replaceAll('${apiUrl}', info.eventAPI)
-        .replaceAll('${checkedPath}', getPathTag('checked'))
-        .replaceAll('${feedbackUrl}', Global.FEEDBACK_URL);
-
-    const reAuthor = /\$\{if isAuthor\}([\s\S]+?)\$\{endif\}/m;
-    const reRepo = /\$\{if isRepo\}([\s\S]+?)\$\{endif\}/m;
-    if (info.type === URLType.REPO) {
-        renderedTemplate = renderedTemplate
-            .replaceAll(reAuthor, '')
-            .replaceAll(reRepo, reRepo.exec(renderedTemplate)![1])
-            .replaceAll('${info.authorUrl}', info.authorURL)
-            .replaceAll('${info.author}', info.author)
-            .replaceAll('${info.repoUrl}', info.repoURL)
-            .replaceAll('${info.repo}', info.repo);
-    } else {
-        renderedTemplate = renderedTemplate
-            .replaceAll(reRepo, '')
-            .replaceAll(reAuthor, reAuthor.exec(renderedTemplate)![1])
-            .replaceAll('${info.authorUrl}', info.authorURL)
-            .replaceAll('${info.author}', info.author);
-    }
-
-    return renderedTemplate;
 }

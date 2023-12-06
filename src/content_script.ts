@@ -1,8 +1,7 @@
-import '@src/ts/extensions';
-import $ from 'jquery';
-import { Global, readStorageToGlobal } from '@src/ts/global';
+import '@src/ts/utils/extensions';
+import { Global, readStorageToGlobal } from '@src/ts/data/storage';
 import { adjustGitHubUI, injectSidebar } from '@src/ts/main';
-import { checkURL } from '@src/ts/utils';
+import { checkURL } from '@src/ts/utils/utils';
 
 // python -m http.server 5000
 // http://localhost:5000/dist/github-events.user.js
