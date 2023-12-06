@@ -1,54 +1,40 @@
-import GMApi from 'greasemonkey';
 import $ from 'jquery';
+import GMApi from 'greasemonkey';
 import style from '@src/scss/core.scss';
 import { Global } from '@src/ts/data/storage';
 import { URLType } from '@src/ts/data/model';
-import { adjustGlobalUIObservably, adjustUserUIObservably, adjustRepoUIObservably } from '@src/ts/ui/github';
+import { adjustGitHubUiObservably } from '@src/ts/ui/github';
 import { observeChildChanged, handleGithubTurboProgressBar, checkURL } from '@src/ts/utils/utils';
 import { resetSidebar, getSidebarHtml, disableBlankTargetForSidebar } from '@src/ts/ui/sidebar';
 import { registerUIEvents, loadGitHubEvents } from '@src/ts/ui/ui_events';
 
 /**
- * Adjust GitHub UI !!!
+ * Adjust GitHub UI, observably !!!
  */
 export function adjustGitHubUI() {
-    function handleObservably() {
-        // 1. global UI (in observation)
-        adjustGlobalUIObservably();
-
-        // 2. user UI (in observation)
-        if (Global.urlInfo.type == URLType.USER) {
-            adjustUserUIObservably();
-        }
-
-        // 3. repo UI (in observation)
-        if (Global.urlInfo.type == URLType.REPO) {
-            adjustRepoUIObservably();
-        }
-
-        // 4. org UI (in observation)
-        if (Global.urlInfo.type == URLType.ORG) {
-            // None currently
-        }
-    }
-
-    handleObservably();
+    adjustGitHubUiObservably(); // adjust ui firstly
 
     // !!! observe progress bar
     observeChildChanged($('html')[0], (record) => {
-        if (record.removedNodes && handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
-            const urlInfo = checkURL();
-            if (urlInfo) {
-                var oldUrlInfo = Global.urlInfo;
-                Global.urlInfo = urlInfo;
+        if (!record.removedNodes) {
+            return;
+        }
+        if (!handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
+            return;
+        }
 
-                // adjust github ui
-                handleObservably();
+        // update user info, re-adjust and re-inject
+        const urlInfo = checkURL();
+        if (urlInfo) {
+            var oldUrlInfo = Global.urlInfo;
+            Global.urlInfo = urlInfo;
 
-                // re-inject sidebar
-                if (!Global.urlInfo.equals(oldUrlInfo)) {
-                    injectSidebar();
-                }
+            // re-adjust github ui
+            adjustGitHubUiObservably();
+
+            // re-inject sidebar
+            if (!Global.urlInfo.equals(oldUrlInfo)) {
+                injectSidebar();
             }
         }
     });
@@ -73,7 +59,9 @@ export function injectSidebar() {
     GMApi.GM_addStyle(style);
 
     // 3. register sidebar's UI events
-    registerUIEvents();
+    registerUIEvents(
+        /* extraRefreshHandler */ adjustGitHubUiObservably,
+    );
 
     // 4. start loading GitHub events
     loadGitHubEvents();

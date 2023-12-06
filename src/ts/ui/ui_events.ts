@@ -2,7 +2,7 @@ import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
 import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/data/storage';
 import { EventInfo } from '@src/ts/data/model';
-import { formatInfoToLi } from '@src/ts/ui/sidebar';
+import { formatInfoToLiTag } from '@src/ts/ui/sidebar/li_tag';
 import { requestGitHubEvents, checkURL } from '@src/ts/utils/utils';
 import { injectSidebar } from '@src/ts/main';
 
@@ -34,7 +34,7 @@ export async function loadGitHubEvents() {
     // data got
     switchDisplayMode({ isLoading: false, isError: false });
     infos.forEach(info => {
-        const li = formatInfoToLi(info);
+        const li = formatInfoToLiTag(info);
         if (!li) {
             return;
         }
