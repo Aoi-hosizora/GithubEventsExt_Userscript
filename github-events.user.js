@@ -70794,12 +70794,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! @src/ts/utils/extensions */ "./src/ts/utils/extensions.ts");
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
-document.addEventListener('DOMContentLoaded', () => {
+jquery_1.default(() => {
     onLoaded();
 });
 function onLoaded() {
