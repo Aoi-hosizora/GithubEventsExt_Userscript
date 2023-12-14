@@ -25,6 +25,20 @@
     <img src="./assets/screenshot-setting.jpg" alt="screenshot-setting" />
 </p>
 
+### Tip
+
++ If following exception is raised in Chrome Console, just modify the `Modify existing content security policy (CSP) headers` setting to of `Tampermonkey` / `Greasemonkey` extension `Yes`.
+
+```
+Uncaught (in promise) EvalError:
+Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of script in the following Content Security Policy directive:
+"script-src github.githubassets.com".
+```
+
+<p align="center">
+    <img src="./assets/tampermonkey-security.jpg" alt="tampermonkey-security" />
+</p>
+
 ### License
 
 + GithubEventsExt is a free and open-source software, and is released under the **MIT License**.
