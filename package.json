@@ -1,7 +1,7 @@
 {
     "name": "github-events-ext-userscript",
     "title": "Github events",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "description": "A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.",
     "main": "index.js",
     "scripts": {

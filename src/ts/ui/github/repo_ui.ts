@@ -190,7 +190,7 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         return [sizeFormatted, gridTitle];
     }
 
-    // 3. wait for loading finishing (new style)
+    // 3. wait for loading finishing
     await new Promise<void>((resolve, _) => {
         const unloadedRows = () => {
             var emptyRows = [];
