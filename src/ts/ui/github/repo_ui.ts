@@ -190,29 +190,7 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         return [sizeFormatted, gridTitle];
     }
 
-    // 3. show / update each content size grid
-    for (const row of $('div.Box div[role="grid"] div[role="row"]')) {
-        if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
-            continue; // ".." line
-        }
-        let [sizeFormatted, gridTitle] = ['', ''];
-        const filename = row.querySelector('div[role="rowheader"]')?.textContent?.trim() ?? '';
-        if (filename) {
-            [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
-        }
-        const sizeDiv = row.querySelector('div.ah-file-size');
-        if (!sizeDiv) {
-            $('<div>', {
-                role: 'gridcell', class: 'mr-3 text-right color-fg-muted ah-file-size', style: 'width: 80px;',
-                text: sizeFormatted, title: gridTitle,
-            }).insertBefore(row.querySelector('div[role="gridcell"]:last-child')!);
-        } else {
-            sizeDiv.textContent = sizeFormatted;
-            sizeDiv.setAttribute('title', gridTitle);
-        }
-    }
-
-    // 4. wait for loading finishing (new style)
+    // 3. wait for loading finishing (new style)
     await new Promise<void>((resolve, _) => {
         const unloadedRows = () => {
             var emptyRows = [];
@@ -235,10 +213,12 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
         }, 50);
     });
 
-    // 5. show / update each content size grid (new style)
+    // 4. show / update each content size grid
     await new Promise((resolve, _) => {
         setTimeout(() => resolve(null), 200);
     });
+    const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
+    firstLineTd[0].setAttribute('colspan', '4');
     if (!$('th#ah-file-size-header').length) {
         const headLastTh = $('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
         $(`<th id="ah-file-size-header" style="width: 80px">
