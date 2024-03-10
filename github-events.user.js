@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.17
+// @version      1.0.18
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -71420,7 +71420,7 @@ function showRepoActionCounters() {
     ;
 }
 function showRepoContentsSize(repoInfo) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const repoExtra = storage_1.Global.urlInfo.extra.repo;
         const sizeFormatted = utils_1.formatBytes(repoInfo.size);
@@ -71508,27 +71508,6 @@ function showRepoContentsSize(repoInfo) {
             }
             return [sizeFormatted, gridTitle];
         }
-        for (const row of jquery_1.default('div.Box div[role="grid"] div[role="row"]')) {
-            if (row.querySelector('div[role="rowheader"]>a[rel="nofollow"]')) {
-                continue;
-            }
-            let [sizeFormatted, gridTitle] = ['', ''];
-            const filename = (_c = (_b = (_a = row.querySelector('div[role="rowheader"]')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
-            if (filename) {
-                [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
-            }
-            const sizeDiv = row.querySelector('div.ah-file-size');
-            if (!sizeDiv) {
-                jquery_1.default('<div>', {
-                    role: 'gridcell', class: 'mr-3 text-right color-fg-muted ah-file-size', style: 'width: 80px;',
-                    text: sizeFormatted, title: gridTitle,
-                }).insertBefore(row.querySelector('div[role="gridcell"]:last-child'));
-            }
-            else {
-                sizeDiv.textContent = sizeFormatted;
-                sizeDiv.setAttribute('title', gridTitle);
-            }
-        }
         yield new Promise((resolve, _) => {
             const unloadedRows = () => {
                 var _a;
@@ -71554,6 +71533,8 @@ function showRepoContentsSize(repoInfo) {
         yield new Promise((resolve, _) => {
             setTimeout(() => resolve(null), 200);
         });
+        const firstLineTd = jquery_1.default('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
+        firstLineTd[0].setAttribute('colspan', '4');
         if (!jquery_1.default('th#ah-file-size-header').length) {
             const headLastTh = jquery_1.default('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
             jquery_1.default(`<th id="ah-file-size-header" style="width: 80px">
@@ -71568,7 +71549,7 @@ function showRepoContentsSize(repoInfo) {
         }
         for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
             let [sizeFormatted, gridTitle] = ['', ''];
-            const filename = (_f = (_e = (_d = row.querySelector('div.react-directory-filename-column h3')) === null || _d === void 0 ? void 0 : _d.textContent) === null || _e === void 0 ? void 0 : _e.trim(), (_f !== null && _f !== void 0 ? _f : ''));
+            const filename = (_c = (_b = (_a = row.querySelector('div.react-directory-filename-column h3')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
             if (filename) {
                 [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
             }
