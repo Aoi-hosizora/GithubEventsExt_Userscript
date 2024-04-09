@@ -55,15 +55,21 @@ function adjustModalDialogLayout(headerClassName: string): Promise<boolean> {
     }
 
     // 2. observe dialog opening, and adjust body's scrollbar
+    function addOverflowYToBody() {
+        const body = $('body');
+        if (body.attr('style')?.includes('overflow-y: initial') !== true) {
+            body.attr('style', (_, s) => {
+                let orig = s || '';
+                return orig + ' overflow-y: initial !important;';
+            });
+        }
+    }
+    addOverflowYToBody(); // add first
     observeAttributes(modalDialog[0], (record, el) => {
         if (record.attributeName === 'open') {
             var opened = el.hasAttribute('open');
             if (opened) {
-                // $('body').css('overflow-y', 'initial !important'); // !important no working
-                $('body').attr('style', (_, s) => {
-                    let orig = s || '';
-                    return orig + ' overflow-y: initial !important;';
-                });
+                addOverflowYToBody(); // add when dialog is opened
             }
         }
     });
