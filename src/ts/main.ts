@@ -6,7 +6,7 @@ import { URLType } from '@src/ts/data/model';
 import { adjustGitHubUiObservably } from '@src/ts/ui/github';
 import { observeChildChanged, handleGithubTurboProgressBar, checkURL } from '@src/ts/utils/utils';
 import { resetSidebar, getSidebarHtml, disableBlankTargetForSidebar } from '@src/ts/ui/sidebar';
-import { registerUIEvents, loadGitHubEvents } from '@src/ts/ui/ui_events';
+import { registerUIEvents, loadGitHubEvents, adjustBodyLayout } from '@src/ts/ui/ui_events';
 
 /**
  * Adjust GitHub UI, observably !!!
@@ -19,24 +19,33 @@ export function adjustGitHubUI() {
         if (!record.removedNodes) {
             return;
         }
-        if (!handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0] as Element)) {
+        const progressBar = handleGithubTurboProgressBar();
+        if (!progressBar.isTurboProgressBar(record.removedNodes[0] as Element)) {
             return;
         }
 
-        // update user info, re-adjust and re-inject
-        const urlInfo = checkURL();
-        if (urlInfo) {
-            var oldUrlInfo = Global.urlInfo;
-            Global.urlInfo = urlInfo;
+        // update user info, re-adjust, and re-inject
+        function action() {
+            const urlInfo = checkURL();
+            if (urlInfo) {
+                var oldUrlInfo = Global.urlInfo;
+                Global.urlInfo = urlInfo;
 
-            // re-adjust github ui
-            adjustGitHubUiObservably();
+                // refresh sidebar layout
+                adjustBodyLayout();
 
-            // re-inject sidebar
-            if (!Global.urlInfo.equals(oldUrlInfo)) {
-                injectSidebar();
+                // re-adjust github ui
+                adjustGitHubUiObservably();
+
+                // re-inject sidebar
+                if (!Global.urlInfo.equals(oldUrlInfo)) {
+                    injectSidebar();
+                }
             }
         }
+
+        action();
+        setTimeout(() => action(), 1000);
     });
 }
 

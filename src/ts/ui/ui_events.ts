@@ -230,7 +230,7 @@ function processMenuSwitchers() {
 /**
  * Adjust body's layout (margin-right), used when pin/refresh button is clicked or user is resizing.
  */
-function adjustBodyLayout(resizing: boolean = false) {
+export function adjustBodyLayout(resizing: boolean = false) {
     const navTag = $('#ahid-nav');
     navTag.css('left', '');
     if (Global.pinned) {
