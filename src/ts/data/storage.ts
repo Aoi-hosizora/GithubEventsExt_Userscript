@@ -38,12 +38,12 @@ export enum StorageFlag {
     WIDTH = 'ah-width',
 
     SHOW_FOLLOW_MENU_ITEM = 'ah-show-follow-menu-item',
+    USE_BLANK_TARGET = 'ah-use-blank-target',
     CENTER_FOLLOW_TEXT = 'ah-center-follow-text',
     SHOW_JOINED_TIME = 'ah-show-joined-time',
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
     SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter',
     SHOW_REPO_AND_CONTENTS_SIZE = 'ah-show-repo-contents-size',
-    USE_BLANK_TARGET = 'ah-use-blank-target',
 }
 
 export async function readStorageToGlobal(): Promise<void> {
@@ -52,12 +52,12 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.width = await getStorage<number>(StorageFlag.WIDTH, 250, { alsoInit: true });
 
     Global.showFollowMenuItem = await getStorage<boolean>(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
+    Global.useBlankTarget = await getStorage<boolean>(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
     Global.centerFollowText = await getStorage<boolean>(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
     Global.showJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
     Global.showRepoAndContentsSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
-    Global.useBlankTarget = await getStorage<boolean>(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
 }
 
 // ===============
