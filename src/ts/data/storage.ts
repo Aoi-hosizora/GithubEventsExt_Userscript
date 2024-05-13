@@ -1,4 +1,4 @@
-import { GMApi } from 'greasemonkey';
+import { getStorage, removeStorage, setStorage } from '@src/ts/data/api';
 import { URLInfo } from '@src/ts/data/model';
 
 // ==============
@@ -58,38 +58,6 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
     Global.showRepoAndContentsSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
-}
-
-// ===============
-// storage related
-// ===============
-
-export function setStorage(flag: StorageFlag, value: string | number | boolean): Promise<void> {
-    return new Promise((resolve, _) => {
-        GMApi.GM_setValue(flag.toString(), value);
-        resolve();
-    });
-}
-
-export function getStorage<T extends string | number | boolean>(flag: StorageFlag, defaultValue: T, etc: { alsoInit?: boolean } = {}): Promise<T> {
-    return new Promise((resolve, _) => {
-        var value = GMApi.GM_getValue(flag.toString());
-        if (value === undefined || value === null || typeof value !== typeof defaultValue) {
-            if (etc.alsoInit) {
-                GMApi.GM_setValue(flag.toString(), defaultValue);
-            }
-            resolve(defaultValue);
-        } else {
-            resolve(value as T);
-        }
-    });
-}
-
-export function removeStorage(flag: StorageFlag): Promise<void> {
-    return new Promise((resolve, _) => {
-        GMApi.GM_deleteValue(flag.toString());
-        resolve();
-    })
 }
 
 // =============

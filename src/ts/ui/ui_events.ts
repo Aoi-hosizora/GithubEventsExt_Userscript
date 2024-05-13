@@ -1,10 +1,11 @@
 import $ from 'jquery';
 import 'jquery-ui-dist/jquery-ui';
-import { askToSetupToken, getStorage, Global, setStorage, StorageFlag } from '@src/ts/data/storage';
+import { askToSetupToken, Global, StorageFlag } from '@src/ts/data/storage';
 import { EventInfo } from '@src/ts/data/model';
 import { formatInfoToLiTag } from '@src/ts/ui/sidebar/li_tag';
 import { requestGitHubEvents, checkURL } from '@src/ts/utils/utils';
 import { injectSidebar } from '@src/ts/main';
+import { getStorage, setStorage } from '@src/ts/data/api';
 
 // ===============
 // request related
