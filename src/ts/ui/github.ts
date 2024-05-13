@@ -1,4 +1,4 @@
-import { Global } from "@src/ts/data/storage";
+import { Global } from "@src/ts/data/global";
 import { URLType } from "@src/ts/data/model";
 import { adjustGlobalUIObservably } from "@src/ts/ui/github/global_ui";
 import { adjustUserUIObservably } from "@src/ts/ui/github/user_ui";

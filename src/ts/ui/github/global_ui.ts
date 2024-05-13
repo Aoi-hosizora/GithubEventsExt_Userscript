@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { Global } from "@src/ts/data/storage";
+import { Global } from "@src/ts/data/global";
 import { getPathTag } from "@src/ts/ui/sidebar/svg_tag";
 import { Completer, observeAttributes } from "@src/ts/utils/utils";
 

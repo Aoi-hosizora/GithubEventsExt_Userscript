@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import template from '@src/html/template.html';
 import { URLType } from '@src/ts/data/model';
-import { Global } from '@src/ts/data/storage';
+import { Global } from '@src/ts/data/global';
 import { getPathTag } from '@src/ts/ui/sidebar/svg_tag';
 
 // ======================

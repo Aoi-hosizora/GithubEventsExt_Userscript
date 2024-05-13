@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import GMApi from 'greasemonkey';
 import style from '@src/scss/core.scss';
-import { Global } from '@src/ts/data/storage';
+import { Global } from '@src/ts/data/global';
 import { URLType } from '@src/ts/data/model';
 import { adjustGitHubUiObservably } from '@src/ts/ui/github';
 import { observeChildChanged, handleGithubTurboProgressBar, checkURL } from '@src/ts/utils/utils';

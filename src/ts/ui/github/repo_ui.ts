@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { Global } from "@src/ts/data/storage";
+import { Global } from "@src/ts/data/global";
 import { RepoInfo } from "@src/ts/data/model";
 import { getPathTag } from "@src/ts/ui/sidebar/svg_tag";
 import { formatBytes, handleGithubTurboProgressBar, requestRepoContents, requestRepoInfo, requestRepoTreeInfo } from "@src/ts/utils/utils";
