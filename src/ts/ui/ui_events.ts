@@ -245,6 +245,13 @@ export function adjustBodyLayout(resizing: boolean = false) {
 }
 
 /**
+ * Reset body's layout (margin-right), used when open a no-sidebar page.
+ */
+export function resetBodyLayout() {
+    $('body').css('margin-right', '');
+}
+
+/**
  * Register resize event.
  */
 function registerResizeEvent() {
