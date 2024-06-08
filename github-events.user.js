@@ -71173,7 +71173,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
-const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 function adjustGlobalUIObservably() {
@@ -71192,106 +71191,51 @@ function adjustHovercardZindex() {
     const mainDiv = jquery_1.default('div[data-turbo-body]');
     mainDiv.after(hovercard);
 }
-function adjustModalDialogLayout(headerClassName, ifAddedChecker, adjustOverlayLayout) {
+function adjustModalDialogLayout(headerClassName) {
     const completer = new utils_1.Completer();
     const headerDiv = jquery_1.default(`div.${headerClassName}`);
-    const sidePanel = headerDiv.find('deferred-side-panel');
-    if (!sidePanel.length) {
+    if (!headerDiv.length) {
         completer.complete(false);
         return completer.future();
     }
-    const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
-    const modalDialog = headerDiv.find('modal-dialog');
-    if (!modalDialog.length || !modalDialogOverlay.length) {
+    const fragment = headerDiv.find('include-fragment');
+    const modalDialog = headerDiv.find('dialog');
+    if (!fragment.length || !modalDialog.length) {
         completer.complete(false);
         return completer.future();
     }
-    if (headerDiv.find('include-fragment').length) {
-        observeTempNode();
+    utils_1.observeAttributes(modalDialog[0], (record, el) => {
+        if (record.attributeName === 'open') {
+            var opened = el.hasAttribute('open');
+            if (opened) {
+                jquery_1.default('body').attr('style', (_, s) => {
+                    let orig = s || '';
+                    return orig + ' overflow-y: initial !important;';
+                });
+            }
+        }
+    });
+    if (!fragment[0].hasAttribute('data-loaded')) {
+        utils_1.observeAttributes(fragment[0], (record, _) => {
+            if (record.attributeName === 'data-loaded') {
+                completer.complete(true);
+            }
+        });
     }
     else {
-        observeRealNode();
         completer.complete(true);
     }
     return completer.future();
-    function observeTempNode() {
-        adjustOverlayLayout(modalDialogOverlay, false);
-        var tempObserver = utils_1.observeAttributes(modalDialog[0], (record, el) => {
-            if (record.attributeName === 'open') {
-                var opened = el.hasAttribute('open');
-                adjustOverlayLayout(modalDialogOverlay, opened);
-                if (!opened) {
-                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
-                }
-            }
-        });
-        var observer = utils_1.observeChildChanged(sidePanel[0], (record) => {
-            if (!record.addedNodes) {
-                return;
-            }
-            var added = false;
-            for (var node of record.addedNodes) {
-                if (ifAddedChecker(node) === true) {
-                    added = true;
-                    tempObserver.disconnect();
-                    observer.disconnect();
-                    break;
-                }
-            }
-            if (!added) {
-                return;
-            }
-            observeRealNode();
-            completer.complete(true);
-        });
-    }
-    function observeRealNode() {
-        const modalDialogOverlay = headerDiv.find('div.Overlay-backdrop--side');
-        const modalDialog = headerDiv.find('modal-dialog');
-        if (!modalDialog.length || !modalDialogOverlay.length) {
-            return;
-        }
-        adjustOverlayLayout(modalDialogOverlay, true);
-        utils_1.observeAttributes(modalDialog[0], (record, el) => {
-            if (record.attributeName === 'open') {
-                var opened = el.hasAttribute('open');
-                adjustOverlayLayout(modalDialogOverlay, opened);
-                if (!opened) {
-                    document.documentElement.scrollTo({ top: utils_1.getDocumentScrollYOffset() });
-                }
-            }
-        });
-    }
 }
 function adjustGlobalModalDialogLayout() {
-    adjustModalDialogLayout('AppHeader-globalBar-start', (element) => { var _a, _b, _c; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'div' && ((_c = element) === null || _c === void 0 ? void 0 : _c.classList.contains('Overlay-backdrop--side')) === true; }, (element, _) => {
-        const showOctotree = jquery_1.default('html').hasClass('octotree-show');
-        const octotree = jquery_1.default('nav.octotree-sidebar.octotree-github-sidebar');
-        if (showOctotree && octotree.length) {
-            element.css('margin-left', `${octotree.width()}px`);
-        }
-        else {
-            element.css('margin-left', '0');
-        }
-        jquery_1.default('body').css('padding-right', '0');
-        jquery_1.default('body').css('overflow', 'initial');
-    });
+    adjustModalDialogLayout('AppHeader-globalBar-start');
 }
 function adjustUserModalDialogLayout() {
-    return adjustModalDialogLayout('AppHeader-user', (element) => { var _a, _b; return ((_b = (_a = element) === null || _a === void 0 ? void 0 : _a.tagName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) === 'user-drawer-side-panel'; }, (element, _) => {
-        if (storage_1.Global.urlInfo.type !== model_1.URLType.OTHER && storage_1.Global.pinned) {
-            element.css('margin-right', `${storage_1.Global.width}px`);
-        }
-        else {
-            element.css('margin-right', '0');
-        }
-        jquery_1.default('body').css('padding-right', '0');
-        jquery_1.default('body').css('overflow', 'initial');
-    });
+    return adjustModalDialogLayout('AppHeader-user');
 }
 function showFollowAvatarMenuItem() {
     var _a, _b;
-    var modalDialog = jquery_1.default('div.AppHeader-user modal-dialog');
+    var modalDialog = jquery_1.default('div.AppHeader-user dialog');
     var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
     if (!avatarMenuUl.length) {
         return;
