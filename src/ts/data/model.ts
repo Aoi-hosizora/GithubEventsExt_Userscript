@@ -64,6 +64,15 @@ export enum HoverCardType {
     PULL = 'pull_request'
 }
 
+/**
+ * Repo contents size related data.
+ */
+export interface RepoSizeData {
+    cache: Map<string, number> | undefined;
+    ref: string;
+    truncated: boolean;
+}
+
 // ==================
 // GitHub api related
 // ==================

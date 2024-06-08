@@ -108,9 +108,9 @@ async function showRepoContentsSizeNavButton(repoInfo: RepoInfo) {
     const repoExtra = Global.urlInfo.extra.repo!;
     const sizeFormatted = formatBytes(repoInfo.size);
     let buttonTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
-    if (!Global.contentsSizeCache) { // has not been loaded yet
+    if (!Global.repoSize.cache) { // has not been loaded yet
         buttonTitle += ' (click here to load directories size)';
-    } else if (Global.contentsSizeTruncated) {
+    } else if (Global.repoSize.truncated) {
         buttonTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
     } else {
         buttonTitle += ' (directories size have been loaded successfully)';
@@ -150,7 +150,7 @@ async function showRepoContentsSizeNavButton(repoInfo: RepoInfo) {
     }
 
     // 3. update contents size cache if ref is changed
-    if (Global.contentsSizeCache && Global.contentsSizeCachedRef !== repoExtra.ref) {
+    if (Global.repoSize.cache && Global.repoSize.ref !== repoExtra.ref) {
         // ref has been changed, need to update size cache
         await updateSizeCache();
     }
@@ -171,9 +171,9 @@ async function showRepoContentsSizeNavButton(repoInfo: RepoInfo) {
             const [files, dirs] = [treeInfo.tree.filter(i => i.type === 'blob'), treeInfo.tree.filter(i => i.type === 'tree')];
             files.forEach(f => cache.set(f.path, f.size));
             dirs.forEach(d => cache.set(d.path, files.filter(f => f.path.startsWith(d.path)).reduce((accumulate, f) => accumulate + f.size, 0)));
-            Global.contentsSizeCache = cache; // only set once if ref unchanged
-            Global.contentsSizeCachedRef = repoExtra.ref;
-            Global.contentsSizeTruncated = treeInfo.truncated;
+            Global.repoSize.cache = cache; // only set once if ref unchanged
+            Global.repoSize.ref = repoExtra.ref;
+            Global.repoSize.truncated = treeInfo.truncated;
         } catch (_) { }
     }
 }
@@ -183,14 +183,14 @@ async function showRepoContentsSizeNavButton(repoInfo: RepoInfo) {
  */
 async function showRepoContentsSizeInTree() {
     // 1. get contents size and wait for loading finishing
-    let contentsSize = new Map<string /* fullName */, number>();
+    let sizeMap = new Map<string /* fullName */, number>();
     const repoExtra = Global.urlInfo.extra.repo!;
-    if (Global.contentsSizeCache) {
-        contentsSize = Global.contentsSizeCache; // file + dir
+    if (Global.repoSize.cache) {
+        sizeMap = Global.repoSize.cache; // file + dir
     } else {
         try {
             const contents = await requestRepoContents(Global.urlInfo.author, Global.urlInfo.repo, repoExtra.ref, repoExtra.path, Global.token);
-            contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size)); // file only
+            contents.filter(c => c.type === 'file').forEach(c => sizeMap.set(c.path, c.size)); // file only
         } catch (_) { }
     }
 
@@ -233,8 +233,8 @@ async function showRepoContentsSizeInTree() {
     // *. render size string and grid title
     function renderSizeAndTitle(filename: string): string[] {
         let [sizeFormatted, gridTitle] = ['', ''];
-        let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-        if (Global.contentsSizeCache && !fileSize) {
+        let fileSize = sizeMap.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+        if (Global.repoSize.cache && !fileSize) {
             fileSize = 0;
         }
         if (fileSize || fileSize === 0) {
