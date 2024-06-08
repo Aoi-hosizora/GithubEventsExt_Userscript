@@ -25,7 +25,8 @@ export async function adjustRepoUIObservably() {
     if (Global.showRepoAndContentsSize) {
         try {
             const repo = await requestRepoInfo(Global.urlInfo.author, Global.urlInfo.repo, Global.token);
-            showRepoContentsSize(repo);
+            showRepoContentsSizeNavButton(repo);
+            showRepoContentsSizeInTree();
         } catch (_) { }
     }
 }
@@ -100,38 +101,66 @@ function showRepoActionCounters() {
 }
 
 /**
- * Add repo and its contents (including files and directories) size in repo page.
+ * Get repo size and show repo size nav button.
  */
-async function showRepoContentsSize(repoInfo: RepoInfo) {
-    // 1. get repo size, show / update this tab
+async function showRepoContentsSizeNavButton(repoInfo: RepoInfo) {
+    // 1. get repo size
     const repoExtra = Global.urlInfo.extra.repo!;
     const sizeFormatted = formatBytes(repoInfo.size);
-    let tabTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
+    let buttonTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
     if (!Global.contentsSizeCache) { // has not been loaded yet
-        tabTitle += ' (click here to load directories size)';
+        buttonTitle += ' (click here to load directories size)';
     } else if (Global.contentsSizeTruncated) {
-        tabTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
+        buttonTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
     } else {
-        tabTitle += ' (directories size have been loaded successfully)';
+        buttonTitle += ' (directories size have been loaded successfully)';
     }
-    const sizeTab = $('#ahid-contents-size');
-    if (sizeTab.length) {
-        sizeTab.attr('title', tabTitle);
-    } else {
-        $(`<li id="ahid-contents-size" title="${tabTitle}" style="cursor: pointer;" data-view-component="true" class="d-inline-flex">
+
+    // 2. show or update repo size button
+    const sizeButton = $('#ahid-contents-size');
+    const sizeInsideButton = $('#ahid-contents-size-inside');
+    if (!sizeButton.length) {
+        $(`<li data-view-component="true" class="d-inline-flex" id="ahid-contents-size" title="${buttonTitle}">
             <a class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
                 <svg width="12" height="16" viewBox="0 0 12 16" version="1.1" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
                     ${getPathTag('database')}
                 </svg>
                 ${sizeFormatted}
             </a>
-        </li>`).insertAfter($('nav.js-repo-nav ul li:last-child'));
-        $('#ahid-contents-size').on('click', async () => {
-            const progressBar = handleGithubTurboProgressBar();
-            progressBar.startLoading();
-            await updateSizeCache();
-            progressBar.finishLoading();
-        });
+        </li>`).insertAfter($('div.AppHeader-localBar nav ul.UnderlineNav-body li:last-child'));
+
+        $(`<li data-view-component="true" class="ActionListItem" id="ahid-contents-size-inside" title="${buttonTitle}">
+            <a class="ActionListContent ActionListContent--visual16">
+                <span class="ActionListItem-visual ActionListItem-visual--leading">
+                    <svg class="octicon octicon-git-compare" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" role="img" aria-hidden="true">
+                        ${getPathTag('database')}
+                    </svg>
+                </span>
+                <span data-view-component="true" class="ActionListItem-label">
+                    ${sizeFormatted}
+                </span>
+            </a>
+        </li>`).insertBefore($('div.AppHeader-localBar nav action-menu ul.ActionListWrap--inset li.dropdown-divider'));
+
+        $('#ahid-contents-size').on('click', () => action());
+        $('#ahid-contents-size-inside').on('click', () => action());
+    } else {
+        sizeButton.attr('title', buttonTitle);
+        sizeInsideButton.attr('title', buttonTitle);
+    }
+
+    // 3. update contents size cache if ref is changed
+    if (Global.contentsSizeCache && Global.contentsSizeCachedRef !== repoExtra.ref) {
+        // ref has been changed, need to update size cache
+        await updateSizeCache();
+    }
+
+    // *. button click callback with progress bar
+    async function action() {
+        const progressBar = handleGithubTurboProgressBar();
+        progressBar.startLoading();
+        await updateSizeCache();
+        progressBar.finishLoading();
     }
 
     // *. generate contents size cache using repo tree info
@@ -147,13 +176,15 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
             Global.contentsSizeTruncated = treeInfo.truncated;
         } catch (_) { }
     }
-    if (Global.contentsSizeCache && Global.contentsSizeCachedRef !== repoExtra.ref) {
-        // ref has been changed, need to update size cache
-        await updateSizeCache();
-    }
+}
 
-    // 2. get contents size and wait for loading finishing
+/**
+ * Show files, directories size in repo file tree.
+ */
+async function showRepoContentsSizeInTree() {
+    // 1. get contents size and wait for loading finishing
     let contentsSize = new Map<string /* fullName */, number>();
+    const repoExtra = Global.urlInfo.extra.repo!;
     if (Global.contentsSizeCache) {
         contentsSize = Global.contentsSizeCache; // file + dir
     } else {
@@ -162,6 +193,8 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
             contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size)); // file only
         } catch (_) { }
     }
+
+    // 2. wait for loading finishing
     await new Promise<void>((resolve, _) => {
         const skeleton = () => $('div.Box div[role="grid"] div[role="row"] div[role="gridcell"] div.Skeleton');
         if (!skeleton().length) {
@@ -175,22 +208,6 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
             }
         }, 50);
     });
-
-    // *. render size string and grid title
-    function renderSizeAndTitle(filename: string): string[] {
-        let [sizeFormatted, gridTitle] = ['', ''];
-        let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-        if (Global.contentsSizeCache && !fileSize) {
-            fileSize = 0;
-        }
-        if (fileSize !== undefined) {
-            sizeFormatted = formatBytes(fileSize);
-            gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
-        }
-        return [sizeFormatted, gridTitle];
-    }
-
-    // 3. wait for loading finishing
     await new Promise<void>((resolve, _) => {
         const unloadedRows = () => {
             var emptyRows = [];
@@ -201,48 +218,68 @@ async function showRepoContentsSize(repoInfo: RepoInfo) {
             }
             return emptyRows;
         };
-        if (unloadedRows().length) {
+        if (!unloadedRows().length) {
             resolve();
             return;
         }
         const interval = setInterval(() => {
-            if (unloadedRows().length) {
+            if (!unloadedRows().length) {
                 clearInterval(interval);
                 resolve();
             }
         }, 50);
     });
 
-    // 4. show / update each content size grid
+    // *. render size string and grid title
+    function renderSizeAndTitle(filename: string): string[] {
+        let [sizeFormatted, gridTitle] = ['', ''];
+        let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+        if (Global.contentsSizeCache && !fileSize) {
+            fileSize = 0;
+        }
+        if (fileSize || fileSize === 0) {
+            sizeFormatted = formatBytes(fileSize);
+            gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+        }
+        return [sizeFormatted, gridTitle];
+    }
+
+    // 3. update table head line
     await new Promise((resolve, _) => {
         setTimeout(() => resolve(null), 200);
     });
-    const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
-    firstLineTd[0].setAttribute('colspan', '4');
-    if (!$('th#ah-file-size-header').length) {
+    if (!$('#ah-file-size-header').length) {
         const headLastTh = $('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
-        $(`<th id="ah-file-size-header" style="width: 80px">
-            <div title="Item size">
+        $(`<th colspan="1" id="ah-file-size-header" style="text-align: right; width: 100px;">
+            <div title="Item size" class="text-bold">
                 Item size
             </div>
         </th>`).insertBefore(headLastTh);
     }
-    var firstRow = $('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
-    if (firstRow.length) {
-        firstRow[0].setAttribute('colspan', '4');
+    if (!$('react-app').length) { // repo homepage
+        const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
+        firstLineTd[0].setAttribute('colspan', '4');
+        const lastLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-last-of-type(1) td');
+        lastLineTd[0].setAttribute('colspan', '4');
+    } else {  // repo file tree page
+        const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr#folder-row-0 td');
+        firstLineTd[0].setAttribute('colspan', '4');
     }
+
+    // 4. show or update each content size grid
     for (const row of $('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
         let [sizeFormatted, gridTitle] = ['', ''];
         const filename = row.querySelector('div.react-directory-filename-column h3')?.textContent?.trim() ?? '';
         if (filename) {
             [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
         }
-        const sizeTd = row.querySelector('td.ah-file-size');
+        const sizeTd = row.querySelector('td.ah-file-size span');
         if (!sizeTd) {
-            $('<td>', {
-                class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
-                text: sizeFormatted, title: gridTitle,
-            }).insertBefore(row.querySelector('td:last-child')!);
+            $(`<td class="ah-file-size color-fg-muted" style="text-align: right;">
+                <span title="${gridTitle.replaceAll('"', '&quot;')}">
+                    ${sizeFormatted}
+                </span>
+            </td>`).insertBefore(row.querySelector('td:last-child')!);
         } else {
             sizeTd.textContent = sizeFormatted;
             sizeTd.setAttribute('title', gridTitle);
