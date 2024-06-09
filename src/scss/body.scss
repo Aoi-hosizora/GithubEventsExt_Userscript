@@ -97,10 +97,14 @@ hr.ah-hr {
             align-items: center;
             justify-content: center;
 
-            background: #e1e4e8;
+            background: #eaeef2; // #e1e4e8
             height: 26px;
             width: 26px;
             margin: -2px -2px 0 3px;
+        }
+
+        #{$g}-old-icon {
+            background: #e1e4e8 !important;
         }
     }
 

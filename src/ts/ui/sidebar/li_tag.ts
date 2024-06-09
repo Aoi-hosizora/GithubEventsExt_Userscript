@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { EventInfo, HoverCardType } from '@src/ts/data/model';
 import { getSvgTag } from '@src/ts/ui/sidebar/svg_tag';
+import { Global } from '@src/ts/data/global';
 
 // ===================
 // format info related
@@ -33,7 +34,9 @@ export function formatInfoToLiTag(item: EventInfo): string {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${getSvgTag(item.type)}</span>
+                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}" style="${Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
+                        ${getSvgTag(item.type)}
+                    </span>
                 </div>
                 <!-- ////// Date time | Private badge ////// -->
                 <div class="ah-content-header-info">
