@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.18
+// @version      1.0.20
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -1934,7 +1934,7 @@ module.exports = {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#ahid-header {\n  padding: 10px 12px;\n  background: #373e43;\n  color: white;\n}\n\n#ahid-title,\n#ahid-subtitle {\n  display: block;\n  text-align: right;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n#ahid-title svg,\n#ahid-subtitle svg {\n  display: inline-block;\n  vertical-align: middle;\n}\n\n#ahid-title {\n  margin-top: 4.5px;\n  font-size: 12px;\n}\n#ahid-title a:-webkit-any-link {\n  color: white;\n}\n#ahid-title svg {\n  margin-top: -5px;\n  margin-right: -3px;\n  color: white;\n}\n\n#ahid-subtitle {\n  margin-top: 6px;\n  font-size: 8px;\n}\n#ahid-subtitle a:-webkit-any-link {\n  color: #acacac;\n}\n#ahid-subtitle svg {\n  margin-top: -2px;\n  margin-right: 1px;\n  fill: #acacac;\n}\n\n#ahid-commands {\n  position: absolute;\n  top: 39px;\n  left: 12px;\n}\n#ahid-commands a,\n#ahid-commands details {\n  display: inline;\n  position: relative;\n  text-decoration: none;\n}\n#ahid-commands svg {\n  fill: #999999;\n}\n#ahid-commands svg:hover {\n  fill: white;\n}\n\n#ahid-commands details summary {\n  list-style: none;\n}\n#ahid-commands details details-menu {\n  top: 24px;\n  right: -11.8px;\n  z-index: 99;\n  width: 460px;\n}\n#ahid-commands details details-menu label,\n#ahid-commands details details-menu a,\n#ahid-commands details details-menu button {\n  display: block;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-weight: 400 !important;\n}\n#ahid-commands details details-menu label svg,\n#ahid-commands details details-menu a svg,\n#ahid-commands details details-menu button svg {\n  margin-right: 5px;\n  fill: currentColor;\n}\n#ahid-commands details details-menu .ah-checkable svg {\n  display: none;\n}\n#ahid-commands details details-menu .ah-checkable.ah-enabled svg {\n  display: inline-block;\n}\n#ahid-commands details details-menu .dropdown-divider {\n  margin: 4px 0;\n}\n\n#ahid-pin {\n  left: 0;\n}\n#ahid-pin.ah-pined svg {\n  fill: white;\n  transform: rotate(0);\n}\n#ahid-pin svg {\n  transform-origin: center;\n  transform: rotate(45deg);\n}\n\n#ahid-refresh {\n  left: 1px;\n}\n\n#ahid-setting {\n  left: 1px;\n  top: -2px;\n}\n\n.ah-hover-underline {\n  text-decoration: none;\n}\n.ah-hover-underline:hover {\n  text-decoration: underline !important;\n  color: #79b7ff;\n}\n\n#ahid-body {\n  padding: 0;\n  background: #fafbfc;\n  color: black;\n  border-left: 1px solid #dfe2e0;\n  overflow: auto;\n}\n#ahid-body::-webkit-scrollbar {\n  width: 8px;\n}\n#ahid-body::-webkit-scrollbar-track {\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb {\n  background-color: #a8a8a8;\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb:hover {\n  background-color: gray;\n}\n\n#ahid-message,\n#ahid-list {\n  padding: 10px 10px 7px 10px;\n}\n\n#ahid-message {\n  word-break: break-word;\n}\n\n#ahid-list {\n  list-style-type: none;\n}\n#ahid-list li {\n  word-break: break-all;\n}\n\nhr.ah-hr {\n  margin: 7px 0;\n}\n\n.ah-body-hide {\n  display: none !important;\n}\n\n.ah-content-header-user {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 13px;\n  color: black;\n}\n.ah-content-header-user .ah-content-header-left {\n  flex: 1 1 auto;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.ah-content-header-user .ah-content-header-icon {\n  vertical-align: middle;\n  border-radius: 50%;\n}\n.ah-content-header-user .ah-content-header-avatar {\n  display: inline-block;\n  height: 24px;\n}\n.ah-content-header-user .ah-content-header-link {\n  margin-left: 3px;\n}\n.ah-content-header-user .ah-content-header-event {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #e1e4e8;\n  height: 26px;\n  width: 26px;\n  margin: -2px -2px 0 3px;\n}\n.ah-content-header-info {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 10.5px;\n  margin: 5px 0px 5px 0px;\n  color: gray;\n}\n.ah-content-header-info .ah-content-header-time {\n  flex: 1;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: inline;\n  padding-top: 1px;\n  line-height: 1;\n}\n.ah-content-header-info .ah-content-header-private {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: transparent;\n  padding: 3px 4px 1px 4px;\n  margin-left: 4px;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 2px;\n  line-height: 1;\n}\n\n.ah-content-body-title {\n  font-size: 13px;\n}\n.ah-content-body-sub {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  -webkit-line-clamp: 1;\n  font-size: 11px;\n  color: gray;\n}\n.ah-content-body-subtitle {\n  margin: 2px 0 4px 0;\n  padding-left: 5px;\n  padding-top: 1px;\n  border-left: 3px solid rgb(197, 197, 197);\n}\n.ah-content-body-subcontent {\n  -webkit-line-clamp: 2 !important;\n}\n.ah-content-body-commit-wiki {\n  margin-left: 1px;\n}\n\n#ahid-footer {\n  margin-bottom: -1px;\n  padding: 6px 0 4px 0;\n  background: #f1f8ff;\n  border: 1px solid #c8e1ff;\n}\n#ahid-footer a {\n  display: block;\n  text-align: center;\n}\n\n#ahid-loading {\n  color: currentColor;\n  cursor: not-allowed;\n  opacity: 0.5;\n  text-decoration: none;\n}\n#ahid-loading:hover {\n  text-decoration: none;\n}\n\n#ahid-toggle {\n  width: 30px;\n  height: 80px;\n  position: fixed;\n  top: calc(50% - 45px);\n  left: calc(100% - 27px);\n  z-index: 91;\n}\n#ahid-toggle.ah-toggle-hide {\n  left: 100%;\n}\n\n#ahid-nav {\n  width: 180px;\n  min-width: 180px;\n  max-width: 750px;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  right: -180px;\n  z-index: 90;\n}\n#ahid-nav.ah-nav-open {\n  right: 0px;\n}\n\n#ahid-header {\n  height: 64px;\n}\n\n#ahid-footer {\n  height: 30px;\n}\n\n#ahid-body {\n  height: calc(100% - 65px);\n}\n#ahid-body div,\n#ahid-body ul {\n  min-height: calc(100% - 30px);\n}\n\n#ahid-nav {\n  background: #fafbfc;\n  font-family: sans-serif;\n  font-size: 13px;\n  font-style: normal;\n}\n#ahid-nav.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 5px 3px;\n}\n\n#ahid-toggle {\n  padding: 6px;\n  background: #f2f5f7;\n  border: 1px solid #e0e4e7;\n  border-right: none;\n  border-radius: 5px;\n  cursor: pointer;\n  text-align: center;\n  line-height: 1;\n}\n#ahid-toggle.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;\n}\n#ahid-toggle svg,\n#ahid-toggle span {\n  display: inline-block;\n  position: relative;\n}\n#ahid-toggle svg {\n  top: 3px;\n  left: -1px;\n}\n#ahid-toggle span {\n  top: 19px;\n  left: -14px;\n  font-family: sans-serif;\n  font-size: 13px;\n  transform: rotate(90deg);\n}\n\n.ah-animated {\n  -webkit-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n}\n\n.ui-resizable-handle {\n  width: 8px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  cursor: col-resize;\n}", ""]);
+exports.push([module.i, "#ahid-header {\n  padding: 10px 12px;\n  background: #373e43;\n  color: white;\n}\n\n#ahid-title,\n#ahid-subtitle {\n  display: block;\n  text-align: right;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n#ahid-title svg,\n#ahid-subtitle svg {\n  display: inline-block;\n  vertical-align: middle;\n}\n\n#ahid-title {\n  margin-top: 4px;\n  font-size: 12.5px;\n}\n#ahid-title a:-webkit-any-link {\n  color: white;\n}\n#ahid-title svg {\n  margin-top: -5px;\n  margin-right: -3px;\n  color: white;\n}\n\n#ahid-subtitle {\n  margin-top: 6px;\n  font-size: 9.5px;\n}\n#ahid-subtitle a:-webkit-any-link {\n  color: #acacac;\n}\n#ahid-subtitle svg {\n  margin-top: -2px;\n  margin-right: 1px;\n  fill: #acacac;\n}\n\n#ahid-commands {\n  position: absolute;\n  top: 39px;\n  left: 12px;\n}\n#ahid-commands a,\n#ahid-commands details {\n  display: inline;\n  position: relative;\n  text-decoration: none;\n}\n#ahid-commands svg {\n  fill: #999999;\n}\n#ahid-commands svg:hover {\n  fill: white;\n}\n\n#ahid-commands details summary {\n  list-style: none;\n}\n#ahid-commands details details-menu {\n  top: 24px;\n  right: -11.8px;\n  z-index: 99;\n  width: 460px;\n}\n#ahid-commands details details-menu label,\n#ahid-commands details details-menu a,\n#ahid-commands details details-menu button {\n  display: block;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-weight: 400 !important;\n}\n#ahid-commands details details-menu label svg,\n#ahid-commands details details-menu a svg,\n#ahid-commands details details-menu button svg {\n  margin-right: 5px;\n  fill: currentColor;\n}\n#ahid-commands details details-menu .ah-checkable svg {\n  display: none;\n}\n#ahid-commands details details-menu .ah-checkable.ah-enabled svg {\n  display: inline-block;\n}\n#ahid-commands details details-menu .dropdown-divider {\n  margin: 4px 0;\n}\n\n#ahid-pin {\n  left: 0;\n}\n#ahid-pin.ah-pined svg {\n  fill: white;\n  transform: rotate(0);\n}\n#ahid-pin svg {\n  transform-origin: center;\n  transform: rotate(45deg);\n}\n\n#ahid-refresh {\n  left: 1px;\n}\n\n#ahid-setting {\n  left: 1px;\n  top: -2px;\n}\n\n.ah-hover-underline {\n  text-decoration: none;\n}\n.ah-hover-underline:hover {\n  text-decoration: underline !important;\n  color: #79b7ff;\n}\n\n#ahid-body {\n  padding: 0;\n  background: #fafbfc;\n  color: black;\n  border-left: 1px solid #dfe2e0;\n  overflow: auto;\n}\n#ahid-body::-webkit-scrollbar {\n  width: 8px;\n}\n#ahid-body::-webkit-scrollbar-track {\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb {\n  background-color: #a8a8a8;\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb:hover {\n  background-color: gray;\n}\n\n#ahid-message,\n#ahid-list {\n  padding: 10px 10px 7px 10px;\n}\n\n#ahid-message {\n  word-break: break-word;\n}\n\n#ahid-list {\n  list-style-type: none;\n}\n#ahid-list li {\n  word-break: break-all;\n}\n\nhr.ah-hr {\n  margin: 7px 0;\n}\n\n.ah-body-hide {\n  display: none !important;\n}\n\n.ah-content-header-user {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 13px;\n  color: black;\n}\n.ah-content-header-user .ah-content-header-left {\n  flex: 1 1 auto;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.ah-content-header-user .ah-content-header-icon {\n  vertical-align: middle;\n  border-radius: 50%;\n}\n.ah-content-header-user .ah-content-header-avatar {\n  display: inline-block;\n  height: 24px;\n}\n.ah-content-header-user .ah-content-header-link {\n  margin-left: 3px;\n}\n.ah-content-header-user .ah-content-header-event {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #eaeef2;\n  height: 26px;\n  width: 26px;\n  margin: -2px -2px 0 3px;\n}\n.ah-content-header-user .ah-content-header-old-icon {\n  background: #e1e4e8 !important;\n}\n.ah-content-header-info {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 10.5px;\n  margin: 5px 0px 5px 0px;\n  color: gray;\n}\n.ah-content-header-info .ah-content-header-time {\n  flex: 1;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: inline;\n  padding-top: 1px;\n  line-height: 1;\n}\n.ah-content-header-info .ah-content-header-private {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: transparent;\n  padding: 3px 4px 1px 4px;\n  margin-left: 4px;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 2px;\n  line-height: 1;\n}\n\n.ah-content-body-title {\n  font-size: 13px;\n}\n.ah-content-body-sub {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  -webkit-line-clamp: 1;\n  font-size: 11px;\n  color: gray;\n}\n.ah-content-body-subtitle {\n  margin: 2px 0 4px 0;\n  padding-left: 5px;\n  padding-top: 1px;\n  border-left: 3px solid rgb(197, 197, 197);\n}\n.ah-content-body-subcontent {\n  -webkit-line-clamp: 2 !important;\n}\n.ah-content-body-commit-wiki {\n  margin-left: 1px;\n}\n\n#ahid-footer {\n  margin-bottom: -1px;\n  padding: 6px 0 4px 0;\n  background: #f1f8ff;\n  border: 1px solid #c8e1ff;\n}\n#ahid-footer a {\n  display: block;\n  text-align: center;\n}\n\n#ahid-loading {\n  color: currentColor;\n  cursor: not-allowed;\n  opacity: 0.5;\n  text-decoration: none;\n}\n#ahid-loading:hover {\n  text-decoration: none;\n}\n\n#ahid-toggle {\n  width: 30px;\n  height: 80px;\n  position: fixed;\n  top: calc(50% - 45px);\n  left: calc(100% - 27px);\n  z-index: 91;\n}\n#ahid-toggle.ah-toggle-hide {\n  left: calc(100% + 2px);\n}\n\n#ahid-nav {\n  width: 180px;\n  min-width: 180px;\n  max-width: 750px;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  right: -180px;\n  z-index: 90;\n}\n#ahid-nav.ah-nav-open {\n  right: 0px;\n}\n\n#ahid-header {\n  height: 64px;\n}\n\n#ahid-footer {\n  height: 30px;\n}\n\n#ahid-body {\n  height: calc(100% - 65px);\n}\n#ahid-body div,\n#ahid-body ul {\n  min-height: calc(100% - 30px);\n}\n\n#ahid-nav {\n  background: #fafbfc;\n  font-family: sans-serif;\n  font-size: 13px;\n  font-style: normal;\n}\n#ahid-nav.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 5px 3px;\n}\n\n#ahid-toggle {\n  padding: 6px;\n  background: #f2f5f7;\n  border: 1px solid #e0e4e7;\n  border-right: none;\n  border-radius: 5px;\n  cursor: pointer;\n  text-align: center;\n  line-height: 1;\n}\n#ahid-toggle.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;\n}\n#ahid-toggle svg,\n#ahid-toggle span {\n  display: inline-block;\n  position: relative;\n}\n#ahid-toggle svg {\n  top: 3px;\n  left: -1px;\n}\n#ahid-toggle span {\n  top: 19px;\n  left: -14px;\n  font-family: sans-serif;\n  font-size: 13px;\n  transform: rotate(90deg);\n}\n\n.ah-animated {\n  -webkit-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n}\n\n.ui-resizable-handle {\n  width: 8px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  cursor: col-resize;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -70800,7 +70800,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! @src/ts/utils/extensions */ "./src/ts/utils/extensions.ts");
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 jquery_1.default(() => {
@@ -70812,8 +70812,8 @@ function onLoaded() {
         if (!info) {
             return;
         }
-        storage_1.Global.urlInfo = info;
-        yield storage_1.readStorageToGlobal();
+        global_1.Global.urlInfo = info;
+        yield global_1.readStorageToGlobal();
         main_1.adjustGitHubUI();
         main_1.injectSidebar();
     });
@@ -70829,7 +70829,7 @@ function onLoaded() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        Setup access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" / \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"followers\" / \"following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of the whole repository and contents in repository page\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Click the link in sidebar and open a new browser window to show\n                    </label>\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <div class=\"dropdown-divider\" />\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 24 24\" class=\"octicon ml-n4\">\n                            <path d=\"M20,2L4,2c-1.1,0 -1.99,0.9 -1.99,2L2,22l4,-4h14c1.1,0 2,-0.9 2,-2L22,4c0,-1.1 -0.9,-2 -2,-2zM13,14h-2v-2h2v2zM13,10h-2L11,6h2v4z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
+module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} Events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z\">\n                            </path>\n                        </svg>\n                        Setup GitHub access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" and \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Open a new browser tab to show links in sidebar\n                    </label>\n                    <label id=\"ahid-setup-old-icon\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Display old GitHub icons in sidebar\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"Followers\" and \"Following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of repository and files in repository page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
 
 /***/ }),
 
@@ -70861,6 +70861,119 @@ var exported = content.locals ? content.locals : {};
 
 
 module.exports = exported;
+
+/***/ }),
+
+/***/ "./src/ts/data/global.ts":
+/*!*******************************!*\
+  !*** ./src/ts/data/global.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+class Global {
+}
+exports.Global = Global;
+Global.token = '';
+Global.pinned = false;
+Global.width = 250;
+Global.showFollowMenuItem = true;
+Global.useBlankTarget = true;
+Global.useOldIcon = false;
+Global.centerFollowText = true;
+Global.showJoinedTime = true;
+Global.showUserPrivateCounter = true;
+Global.showRepoActionCounter = true;
+Global.showRepoAndContentsSize = true;
+Global.page = 1;
+Global.isHovering = false;
+Global.repoSize = { cache: undefined, ref: '', truncated: false };
+Global.FEEDBACK_URL = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
+var StorageFlag;
+(function (StorageFlag) {
+    StorageFlag["TOKEN"] = "ah-token";
+    StorageFlag["PINNED"] = "ah-pinned";
+    StorageFlag["WIDTH"] = "ah-width";
+    StorageFlag["SHOW_FOLLOW_MENU_ITEM"] = "ah-show-follow-menu-item";
+    StorageFlag["USE_BLANK_TARGET"] = "ah-use-blank-target";
+    StorageFlag["USE_OLD_ICON"] = "ah-use-old-icon";
+    StorageFlag["CENTER_FOLLOW_TEXT"] = "ah-center-follow-text";
+    StorageFlag["SHOW_JOINED_TIME"] = "ah-show-joined-time";
+    StorageFlag["SHOW_USER_PRIVATE_COUNTER"] = "ah-show-user-private-counter";
+    StorageFlag["SHOW_REPO_ACTION_COUNTER"] = "ah-show-repo-action-counter";
+    StorageFlag["SHOW_REPO_AND_CONTENTS_SIZE"] = "ah-show-repo-contents-size";
+})(StorageFlag = exports.StorageFlag || (exports.StorageFlag = {}));
+function readStorageToGlobal() {
+    return __awaiter(this, void 0, void 0, function* () {
+        Global.token = yield storage_1.getStorage(StorageFlag.TOKEN, '', { alsoInit: false });
+        Global.pinned = yield storage_1.getStorage(StorageFlag.PINNED, false, { alsoInit: true });
+        Global.width = yield storage_1.getStorage(StorageFlag.WIDTH, 250, { alsoInit: true });
+        Global.showFollowMenuItem = yield storage_1.getStorage(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
+        Global.useBlankTarget = yield storage_1.getStorage(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
+        Global.useOldIcon = yield storage_1.getStorage(StorageFlag.USE_OLD_ICON, false, { alsoInit: true });
+        Global.centerFollowText = yield storage_1.getStorage(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
+        Global.showJoinedTime = yield storage_1.getStorage(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
+        Global.showUserPrivateCounter = yield storage_1.getStorage(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
+        Global.showRepoActionCounter = yield storage_1.getStorage(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
+        Global.showRepoAndContentsSize = yield storage_1.getStorage(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
+    });
+}
+exports.readStorageToGlobal = readStorageToGlobal;
+function askToSetupToken() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const token = yield storage_1.getStorage(StorageFlag.TOKEN, '');
+        if (!token) {
+            if (confirm('Do you want to setup a GitHub token to access the private repos and user information?')) {
+                yield addToken();
+            }
+        }
+        else {
+            yield removeToken(token);
+        }
+    });
+}
+exports.askToSetupToken = askToSetupToken;
+function addToken() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const msg = 'Please enter your GitHub personal access token: \n' +
+            '(Token should be defined in repo scope and have read:user permission. You can visit https://github.com/settings/token to generate token.)';
+        var token = prompt(msg);
+        if (token === null) {
+            return;
+        }
+        token = token.trim();
+        if (!token) {
+            alert('Oops! You have entered an empty token.');
+        }
+        else {
+            yield storage_1.setStorage(StorageFlag.TOKEN, token);
+            alert('Done! Your GitHub token has been set successfully, reload this page to see changes.');
+        }
+    });
+}
+function removeToken(token) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const ok = confirm(`You have already set a GitHub token (${token}), do you want to remove it?`);
+        if (ok) {
+            yield storage_1.removeStorage(StorageFlag.TOKEN);
+            alert('You have removed GitHub token successfully.');
+        }
+    });
+}
+
 
 /***/ }),
 
@@ -70934,63 +71047,8 @@ var HoverCardType;
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const greasemonkey_1 = __webpack_require__(/*! greasemonkey */ "./node_modules/greasemonkey/index.js");
-class Global {
-}
-exports.Global = Global;
-Global.token = '';
-Global.pinned = false;
-Global.width = 250;
-Global.showFollowMenuItem = true;
-Global.centerFollowText = true;
-Global.showJoinedTime = true;
-Global.showUserPrivateCounter = true;
-Global.showRepoActionCounter = true;
-Global.showRepoAndContentsSize = true;
-Global.useBlankTarget = true;
-Global.page = 1;
-Global.isHovering = false;
-Global.contentsSizeCachedRef = '';
-Global.contentsSizeTruncated = false;
-Global.FEEDBACK_URL = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
-var StorageFlag;
-(function (StorageFlag) {
-    StorageFlag["TOKEN"] = "ah-token";
-    StorageFlag["PINNED"] = "ah-pinned";
-    StorageFlag["WIDTH"] = "ah-width";
-    StorageFlag["SHOW_FOLLOW_MENU_ITEM"] = "ah-show-follow-menu-item";
-    StorageFlag["CENTER_FOLLOW_TEXT"] = "ah-center-follow-text";
-    StorageFlag["SHOW_JOINED_TIME"] = "ah-show-joined-time";
-    StorageFlag["SHOW_USER_PRIVATE_COUNTER"] = "ah-show-user-private-counter";
-    StorageFlag["SHOW_REPO_ACTION_COUNTER"] = "ah-show-repo-action-counter";
-    StorageFlag["SHOW_REPO_AND_CONTENTS_SIZE"] = "ah-show-repo-contents-size";
-    StorageFlag["USE_BLANK_TARGET"] = "ah-use-blank-target";
-})(StorageFlag = exports.StorageFlag || (exports.StorageFlag = {}));
-function readStorageToGlobal() {
-    return __awaiter(this, void 0, void 0, function* () {
-        Global.token = yield getStorage(StorageFlag.TOKEN, '', { alsoInit: false });
-        Global.pinned = yield getStorage(StorageFlag.PINNED, false, { alsoInit: true });
-        Global.width = yield getStorage(StorageFlag.WIDTH, 250, { alsoInit: true });
-        Global.showFollowMenuItem = yield getStorage(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
-        Global.centerFollowText = yield getStorage(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
-        Global.showJoinedTime = yield getStorage(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
-        Global.showUserPrivateCounter = yield getStorage(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
-        Global.showRepoActionCounter = yield getStorage(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
-        Global.showRepoAndContentsSize = yield getStorage(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
-        Global.useBlankTarget = yield getStorage(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
-    });
-}
-exports.readStorageToGlobal = readStorageToGlobal;
 function setStorage(flag, value) {
     return new Promise((resolve, _) => {
         greasemonkey_1.GMApi.GM_setValue(flag.toString(), value);
@@ -71020,47 +71078,6 @@ function removeStorage(flag) {
     });
 }
 exports.removeStorage = removeStorage;
-function askToSetupToken() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const token = yield getStorage(StorageFlag.TOKEN, '');
-        if (!token) {
-            if (confirm('Do you want to setup a GitHub token to access the private repos and user information?')) {
-                yield addToken();
-            }
-        }
-        else {
-            yield removeToken(token);
-        }
-    });
-}
-exports.askToSetupToken = askToSetupToken;
-function addToken() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const msg = 'Please enter your GitHub personal access token: \n' +
-            '(Token should be defined in repo scope and have read:user permission. You can visit https://github.com/settings/token to generate token.)';
-        var token = prompt(msg);
-        if (token === null) {
-            return;
-        }
-        token = token.trim();
-        if (!token) {
-            alert('Oops! You have entered an empty token.');
-        }
-        else {
-            yield setStorage(StorageFlag.TOKEN, token);
-            alert('Done! Your GitHub token has been set successfully, reload this page to see changes.');
-        }
-    });
-}
-function removeToken(token) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const ok = confirm(`You have already set a GitHub token (${token}), do you want to remove it?`);
-        if (ok) {
-            yield removeStorage(StorageFlag.TOKEN);
-            alert('You have removed GitHub token successfully.');
-        }
-    });
-}
 
 
 /***/ }),
@@ -71081,7 +71098,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const greasemonkey_1 = __importDefault(__webpack_require__(/*! greasemonkey */ "./node_modules/greasemonkey/index.js"));
 const core_scss_1 = __importDefault(__webpack_require__(/*! @src/scss/core.scss */ "./src/scss/core.scss"));
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
 const github_1 = __webpack_require__(/*! @src/ts/ui/github */ "./src/ts/ui/github.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
@@ -71093,29 +71110,40 @@ function adjustGitHubUI() {
         if (!record.removedNodes) {
             return;
         }
-        if (!utils_1.handleGithubTurboProgressBar().isTurboProgressBar(record.removedNodes[0])) {
+        const progressBar = utils_1.handleGithubTurboProgressBar();
+        if (!progressBar.isTurboProgressBar(record.removedNodes[0])) {
             return;
         }
-        const urlInfo = utils_1.checkURL();
-        if (urlInfo) {
-            var oldUrlInfo = storage_1.Global.urlInfo;
-            storage_1.Global.urlInfo = urlInfo;
-            github_1.adjustGitHubUiObservably();
-            if (!storage_1.Global.urlInfo.equals(oldUrlInfo)) {
-                injectSidebar();
+        function action() {
+            const urlInfo = utils_1.checkURL();
+            if (urlInfo) {
+                var oldUrlInfo = global_1.Global.urlInfo;
+                global_1.Global.urlInfo = urlInfo;
+                if (urlInfo.type !== model_1.URLType.OTHER) {
+                    ui_events_1.adjustBodyLayout();
+                    github_1.adjustGitHubUiObservably();
+                }
+                else {
+                    ui_events_1.resetBodyLayout();
+                }
+                if (!global_1.Global.urlInfo.equals(oldUrlInfo)) {
+                    injectSidebar();
+                }
             }
         }
+        action();
+        setTimeout(() => action(), 1000);
     });
 }
 exports.adjustGitHubUI = adjustGitHubUI;
 function injectSidebar() {
     sidebar_1.resetSidebar();
-    const info = storage_1.Global.urlInfo;
+    const info = global_1.Global.urlInfo;
     if (info.type === model_1.URLType.OTHER) {
         return;
     }
     jquery_1.default('body').append(sidebar_1.getSidebarHtml());
-    if (!storage_1.Global.useBlankTarget) {
+    if (!global_1.Global.useBlankTarget) {
         sidebar_1.disableBlankTargetForSidebar();
     }
     greasemonkey_1.default.GM_addStyle(core_scss_1.default);
@@ -71137,20 +71165,20 @@ exports.injectSidebar = injectSidebar;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
 const global_ui_1 = __webpack_require__(/*! @src/ts/ui/github/global_ui */ "./src/ts/ui/github/global_ui.ts");
 const user_ui_1 = __webpack_require__(/*! @src/ts/ui/github/user_ui */ "./src/ts/ui/github/user_ui.ts");
 const repo_ui_1 = __webpack_require__(/*! @src/ts/ui/github/repo_ui */ "./src/ts/ui/github/repo_ui.ts");
 function adjustGitHubUiObservably() {
     global_ui_1.adjustGlobalUIObservably();
-    if (storage_1.Global.urlInfo.type == model_1.URLType.USER) {
+    if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
         user_ui_1.adjustUserUIObservably();
     }
-    if (storage_1.Global.urlInfo.type == model_1.URLType.REPO) {
+    if (global_1.Global.urlInfo.type == model_1.URLType.REPO) {
         repo_ui_1.adjustRepoUIObservably();
     }
-    if (storage_1.Global.urlInfo.type == model_1.URLType.ORG) {
+    if (global_1.Global.urlInfo.type == model_1.URLType.ORG) {
     }
 }
 exports.adjustGitHubUiObservably = adjustGitHubUiObservably;
@@ -71172,7 +71200,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 function adjustGlobalUIObservably() {
@@ -71180,7 +71208,7 @@ function adjustGlobalUIObservably() {
     adjustGlobalModalDialogLayout();
     var menuLoaded = adjustUserModalDialogLayout();
     menuLoaded.then((ok) => {
-        if (ok && storage_1.Global.showFollowMenuItem) {
+        if (ok && global_1.Global.showFollowMenuItem) {
             showFollowAvatarMenuItem();
         }
     });
@@ -71204,14 +71232,22 @@ function adjustModalDialogLayout(headerClassName) {
         completer.complete(false);
         return completer.future();
     }
+    function addOverflowYToBody() {
+        var _a;
+        const body = jquery_1.default('body');
+        if (((_a = body.attr('style')) === null || _a === void 0 ? void 0 : _a.includes('overflow-y: initial')) !== true) {
+            body.attr('style', (_, s) => {
+                let orig = s || '';
+                return orig + ' overflow-y: initial !important;';
+            });
+        }
+    }
+    addOverflowYToBody();
     utils_1.observeAttributes(modalDialog[0], (record, el) => {
         if (record.attributeName === 'open') {
             var opened = el.hasAttribute('open');
             if (opened) {
-                jquery_1.default('body').attr('style', (_, s) => {
-                    let orig = s || '';
-                    return orig + ' overflow-y: initial !important;';
-                });
+                addOverflowYToBody();
             }
         }
     });
@@ -71290,20 +71326,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 function adjustRepoUIObservably() {
     return __awaiter(this, void 0, void 0, function* () {
         adjustRepoStuckHeader();
         fixOctotreePageMargin();
-        if (storage_1.Global.showRepoActionCounter) {
+        if (global_1.Global.showRepoActionCounter) {
             showRepoActionCounters();
         }
-        if (storage_1.Global.showRepoAndContentsSize) {
+        if (global_1.Global.showRepoAndContentsSize) {
             try {
-                const repo = yield utils_1.requestRepoInfo(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, storage_1.Global.token);
-                showRepoContentsSize(repo);
+                const repo = yield utils_1.requestRepoInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, global_1.Global.token);
+                showRepoContentsSizeNavButton(repo);
+                showRepoContentsSizeInTree();
             }
             catch (_) { }
         }
@@ -71324,7 +71361,7 @@ function fixOctotreePageMargin() {
     }
 }
 function showRepoActionCounters() {
-    const repoName = `${storage_1.Global.urlInfo.author}/${storage_1.Global.urlInfo.repo}`;
+    const repoName = `${global_1.Global.urlInfo.author}/${global_1.Global.urlInfo.repo}`;
     const watchCounterSpan = jquery_1.default('#repo-notifications-counter');
     watchCounterSpan.attr('style', 'display: inline-block;');
     watchCounterSpan.addClass('ah-hover-underline');
@@ -71363,67 +71400,90 @@ function showRepoActionCounters() {
     }
     ;
 }
-function showRepoContentsSize(repoInfo) {
-    var _a, _b, _c;
+function showRepoContentsSizeNavButton(repoInfo) {
     return __awaiter(this, void 0, void 0, function* () {
-        const repoExtra = storage_1.Global.urlInfo.extra.repo;
+        const repoExtra = global_1.Global.urlInfo.extra.repo;
         const sizeFormatted = utils_1.formatBytes(repoInfo.size);
-        let tabTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
-        if (!storage_1.Global.contentsSizeCache) {
-            tabTitle += ' (click here to load directories size)';
+        let buttonTitle = `repository size: ${sizeFormatted} / ${repoInfo.size} bytes`;
+        if (!global_1.Global.repoSize.cache) {
+            buttonTitle += ' (click here to load directories size)';
         }
-        else if (storage_1.Global.contentsSizeTruncated) {
-            tabTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
-        }
-        else {
-            tabTitle += ' (directories size have been loaded successfully)';
-        }
-        const sizeTab = jquery_1.default('#ahid-contents-size');
-        if (sizeTab.length) {
-            sizeTab.attr('title', tabTitle);
+        else if (global_1.Global.repoSize.truncated) {
+            buttonTitle += ' (directories size have been loaded, but data truncated, size information may be incompleted)';
         }
         else {
-            jquery_1.default(`<li id="ahid-contents-size" title="${tabTitle}" style="cursor: pointer;" data-view-component="true" class="d-inline-flex">
+            buttonTitle += ' (directories size have been loaded successfully)';
+        }
+        const sizeButton = jquery_1.default('#ahid-contents-size');
+        const sizeInsideButton = jquery_1.default('#ahid-contents-size-inside');
+        if (!sizeButton.length) {
+            jquery_1.default(`<li data-view-component="true" class="d-inline-flex" id="ahid-contents-size" title="${buttonTitle}">
             <a class="UnderlineNav-item hx_underlinenav-item no-wrap js-responsive-underlinenav-item js-selected-navigation-item">
                 <svg width="12" height="16" viewBox="0 0 12 16" version="1.1" class="octicon octicon-data UnderlineNav-octicon d-none d-sm-inline">
                     ${svg_tag_1.getPathTag('database')}
                 </svg>
                 ${sizeFormatted}
             </a>
-        </li>`).insertAfter(jquery_1.default('nav.js-repo-nav ul li:last-child'));
-            jquery_1.default('#ahid-contents-size').on('click', () => __awaiter(this, void 0, void 0, function* () {
+        </li>`).insertAfter(jquery_1.default('div.AppHeader-localBar nav ul.UnderlineNav-body li:last-child'));
+            jquery_1.default(`<li data-view-component="true" class="ActionListItem" id="ahid-contents-size-inside" title="${buttonTitle}">
+            <a class="ActionListContent ActionListContent--visual16">
+                <span class="ActionListItem-visual ActionListItem-visual--leading">
+                    <svg class="octicon octicon-git-compare" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" role="img" aria-hidden="true">
+                        ${svg_tag_1.getPathTag('database')}
+                    </svg>
+                </span>
+                <span data-view-component="true" class="ActionListItem-label">
+                    ${sizeFormatted}
+                </span>
+            </a>
+        </li>`).insertBefore(jquery_1.default('div.AppHeader-localBar nav action-menu ul.ActionListWrap--inset li.dropdown-divider'));
+            jquery_1.default('#ahid-contents-size').on('click', () => action());
+            jquery_1.default('#ahid-contents-size-inside').on('click', () => action());
+        }
+        else {
+            sizeButton.attr('title', buttonTitle);
+            sizeInsideButton.attr('title', buttonTitle);
+        }
+        if (global_1.Global.repoSize.cache && global_1.Global.repoSize.ref !== repoExtra.ref) {
+            yield updateSizeCache();
+        }
+        function action() {
+            return __awaiter(this, void 0, void 0, function* () {
                 const progressBar = utils_1.handleGithubTurboProgressBar();
                 progressBar.startLoading();
                 yield updateSizeCache();
                 progressBar.finishLoading();
-            }));
+            });
         }
         function updateSizeCache() {
             return __awaiter(this, void 0, void 0, function* () {
                 try {
-                    const treeInfo = yield utils_1.requestRepoTreeInfo(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, repoExtra.ref, storage_1.Global.token);
+                    const treeInfo = yield utils_1.requestRepoTreeInfo(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, global_1.Global.token);
                     const cache = new Map();
                     const [files, dirs] = [treeInfo.tree.filter(i => i.type === 'blob'), treeInfo.tree.filter(i => i.type === 'tree')];
                     files.forEach(f => cache.set(f.path, f.size));
                     dirs.forEach(d => cache.set(d.path, files.filter(f => f.path.startsWith(d.path)).reduce((accumulate, f) => accumulate + f.size, 0)));
-                    storage_1.Global.contentsSizeCache = cache;
-                    storage_1.Global.contentsSizeCachedRef = repoExtra.ref;
-                    storage_1.Global.contentsSizeTruncated = treeInfo.truncated;
+                    global_1.Global.repoSize.cache = cache;
+                    global_1.Global.repoSize.ref = repoExtra.ref;
+                    global_1.Global.repoSize.truncated = treeInfo.truncated;
                 }
                 catch (_) { }
             });
         }
-        if (storage_1.Global.contentsSizeCache && storage_1.Global.contentsSizeCachedRef !== repoExtra.ref) {
-            yield updateSizeCache();
-        }
-        let contentsSize = new Map();
-        if (storage_1.Global.contentsSizeCache) {
-            contentsSize = storage_1.Global.contentsSizeCache;
+    });
+}
+function showRepoContentsSizeInTree() {
+    var _a, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        let sizeMap = new Map();
+        const repoExtra = global_1.Global.urlInfo.extra.repo;
+        if (global_1.Global.repoSize.cache) {
+            sizeMap = global_1.Global.repoSize.cache;
         }
         else {
             try {
-                const contents = yield utils_1.requestRepoContents(storage_1.Global.urlInfo.author, storage_1.Global.urlInfo.repo, repoExtra.ref, repoExtra.path, storage_1.Global.token);
-                contents.filter(c => c.type === 'file').forEach(c => contentsSize.set(c.path, c.size));
+                const contents = yield utils_1.requestRepoContents(global_1.Global.urlInfo.author, global_1.Global.urlInfo.repo, repoExtra.ref, repoExtra.path, global_1.Global.token);
+                contents.filter(c => c.type === 'file').forEach(c => sizeMap.set(c.path, c.size));
             }
             catch (_) { }
         }
@@ -71440,18 +71500,6 @@ function showRepoContentsSize(repoInfo) {
                 }
             }, 50);
         });
-        function renderSizeAndTitle(filename) {
-            let [sizeFormatted, gridTitle] = ['', ''];
-            let fileSize = contentsSize.get([repoExtra.path, filename].filter(p => !!p).join('/'));
-            if (storage_1.Global.contentsSizeCache && !fileSize) {
-                fileSize = 0;
-            }
-            if (fileSize !== undefined) {
-                sizeFormatted = utils_1.formatBytes(fileSize);
-                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
-            }
-            return [sizeFormatted, gridTitle];
-        }
         yield new Promise((resolve, _) => {
             const unloadedRows = () => {
                 var _a;
@@ -71463,33 +71511,55 @@ function showRepoContentsSize(repoInfo) {
                 }
                 return emptyRows;
             };
-            if (unloadedRows().length) {
+            if (!unloadedRows().length) {
                 resolve();
                 return;
             }
             const interval = setInterval(() => {
-                if (unloadedRows().length) {
+                if (!unloadedRows().length) {
                     clearInterval(interval);
                     resolve();
                 }
             }, 50);
         });
+        function renderSizeAndTitle(filename) {
+            let [sizeFormatted, gridTitle] = ['', ''];
+            let fileSize = sizeMap.get([repoExtra.path, filename].filter(p => !!p).join('/'));
+            if (global_1.Global.repoSize.cache && !fileSize) {
+                fileSize = 0;
+            }
+            if (fileSize || fileSize === 0) {
+                sizeFormatted = utils_1.formatBytes(fileSize);
+                gridTitle = `"${filename}" size: ${sizeFormatted} / ${fileSize} bytes`;
+            }
+            return [sizeFormatted, gridTitle];
+        }
         yield new Promise((resolve, _) => {
             setTimeout(() => resolve(null), 200);
         });
-        const firstLineTd = jquery_1.default('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
-        firstLineTd[0].setAttribute('colspan', '4');
-        if (!jquery_1.default('th#ah-file-size-header').length) {
+        if (!jquery_1.default('#ah-file-size-header').length) {
             const headLastTh = jquery_1.default('table[aria-labelledby="folders-and-files"] thead tr th:last-child');
-            jquery_1.default(`<th id="ah-file-size-header" style="width: 80px">
-            <div title="Item size">
+            jquery_1.default(`<th colspan="1" id="ah-file-size-header" style="text-align: right; width: 100px;">
+            <div title="Item size" class="text-bold">
                 Item size
             </div>
         </th>`).insertBefore(headLastTh);
         }
-        var firstRow = jquery_1.default('table[aria-labelledby="folders-and-files"] tr#folder-row-0>td');
-        if (firstRow.length) {
-            firstRow[0].setAttribute('colspan', '4');
+        if (!jquery_1.default('react-app').length) {
+            const firstLineTd = jquery_1.default('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
+            if (firstLineTd.length) {
+                firstLineTd[0].setAttribute('colspan', '4');
+            }
+            const lastLineTd = jquery_1.default('table[aria-labelledby="folders-and-files"] tr:nth-last-of-type(1) td');
+            if (lastLineTd.length) {
+                lastLineTd[0].setAttribute('colspan', '4');
+            }
+        }
+        else {
+            const firstLineTd = jquery_1.default('table[aria-labelledby="folders-and-files"] tr#folder-row-0 td');
+            if (firstLineTd.length) {
+                firstLineTd[0].setAttribute('colspan', '4');
+            }
         }
         for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
             let [sizeFormatted, gridTitle] = ['', ''];
@@ -71497,12 +71567,13 @@ function showRepoContentsSize(repoInfo) {
             if (filename) {
                 [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
             }
-            const sizeTd = row.querySelector('td.ah-file-size');
+            const sizeTd = row.querySelector('td.ah-file-size span');
             if (!sizeTd) {
-                jquery_1.default('<td>', {
-                    class: 'ah-file-size color-fg-muted', style: 'width: 80px;',
-                    text: sizeFormatted, title: gridTitle,
-                }).insertBefore(row.querySelector('td:last-child'));
+                jquery_1.default(`<td class="ah-file-size color-fg-muted" style="text-align: right;">
+                <span title="${gridTitle.replaceAll('"', '&quot;')}">
+                    ${sizeFormatted}
+                </span>
+            </td>`).insertBefore(row.querySelector('td:last-child'));
             }
             else {
                 sizeTd.textContent = sizeFormatted;
@@ -71539,25 +71610,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 function adjustUserUIObservably() {
     return __awaiter(this, void 0, void 0, function* () {
-        if (storage_1.Global.centerFollowText) {
+        if (global_1.Global.centerFollowText) {
             centerUserFollowText();
         }
         let info;
-        if (storage_1.Global.showJoinedTime || storage_1.Global.showUserPrivateCounter) {
+        if (global_1.Global.showJoinedTime || global_1.Global.showUserPrivateCounter) {
             try {
-                info = yield utils_1.requestUserInfo(storage_1.Global.urlInfo.author, storage_1.Global.token);
+                info = yield utils_1.requestUserInfo(global_1.Global.urlInfo.author, global_1.Global.token);
             }
             catch (_) { }
         }
-        if (storage_1.Global.showJoinedTime && info) {
+        if (global_1.Global.showJoinedTime && info) {
             showUserJoinedTime(info);
         }
-        if (storage_1.Global.showUserPrivateCounter && info) {
+        if (global_1.Global.showUserPrivateCounter && info) {
             addUserPrivateCounters(info);
         }
         ;
@@ -71581,7 +71652,7 @@ function showUserJoinedTime(info) {
 }
 function addUserPrivateCounters(info) {
     var _a;
-    if (!storage_1.Global.token || !storage_1.Global.urlInfo.extra.user.isMe) {
+    if (!global_1.Global.token || !global_1.Global.urlInfo.extra.user.isMe) {
         return;
     }
     const repoCounterA = jquery_1.default('header.AppHeader nav a#repositories-tab');
@@ -71629,16 +71700,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const template_html_1 = __importDefault(__webpack_require__(/*! @src/html/template.html */ "./src/html/template.html"));
 const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 function getSidebarHtml() {
-    const info = storage_1.Global.urlInfo;
+    const info = global_1.Global.urlInfo;
     let renderedTemplate = template_html_1.default
         .replaceAll(/<!--[\s\S]+?-->/, '')
-        .replaceAll('${urlType}', info.type.toString())
+        .replaceAll('${urlType}', info.type.toString().capital())
         .replaceAll('${apiUrl}', info.eventAPI)
         .replaceAll('${checkedPath}', svg_tag_1.getPathTag('checked'))
-        .replaceAll('${feedbackUrl}', storage_1.Global.FEEDBACK_URL);
+        .replaceAll('${feedbackUrl}', global_1.Global.FEEDBACK_URL);
     const reAuthor = /\$\{if isAuthor\}([\s\S]+?)\$\{endif\}/m;
     const reRepo = /\$\{if isRepo\}([\s\S]+?)\$\{endif\}/m;
     if (info.type === model_1.URLType.REPO) {
@@ -71664,7 +71735,7 @@ function resetSidebar() {
     if (jquery_1.default('div#ahid-toggle').length) {
         jquery_1.default('div#ahid-toggle').remove();
         jquery_1.default('nav#ahid-nav').remove();
-        storage_1.Global.page = 1;
+        global_1.Global.page = 1;
     }
 }
 exports.resetSidebar = resetSidebar;
@@ -71692,6 +71763,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
 const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 function formatInfoToLiTag(item) {
     const body = formatInfoToBody(item);
     if (!body) {
@@ -71716,7 +71788,11 @@ function formatInfoToLiTag(item) {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}">${svg_tag_1.getSvgTag(item.type)}</span>
+                    <span 
+                        class="ah-content-header-event ah-content-header-icon ${global_1.Global.useOldIcon ? 'ah-content-header-old-icon' : ''}"
+                        title="${item.type}" style="${global_1.Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
+                        ${svg_tag_1.getSvgTag(item.type)}
+                    </span>
                 </div>
                 <!-- ////// Date time | Private badge ////// -->
                 <div class="ah-content-header-info">
@@ -71843,89 +71919,125 @@ function subContent(content) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 function getSvgTag(type) {
-    let svgClass = '', svgPath = '', svgHeight = 0, svgWidth = 0;
+    let svgClass = '', svgPath = '', svgNewPath = '', svgHeight = 0, svgWidth = 0, svgNewHeight = 0, svgNewWidth = 0;
     switch (type) {
         case 'PushEvent':
             svgClass = 'octicon-repo-push';
             svgPath = 'M4 3H3V2h1v1zM3 5h1V4H3v1zm4 0L4 9h2v7h2V9h2L7 5zm4-5H1C.45 0 0 .45 0 1v12c0 .55.45 1 1 1h4v-1H1v-2h4v-1H2V1h9.02L11 10H9v1h2v2H9v1h2c.55 0 1-.45 1-1V1c0-.55-.45-1-1-1z';
+            svgNewPath = 'M1 2.5A2.5 2.5 0 0 1 3.5 0h8.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V1.5h-8a1 1 0 0 0-1 1v6.708A2.493 2.493 0 0 1 3.5 9h3.25a.75.75 0 0 1 0 1.5H3.5a1 1 0 0 0 0 2h5.75a.75.75 0 0 1 0 1.5H3.5A2.5 2.5 0 0 1 1 11.5Zm13.23 7.79h-.001l-1.224-1.224v6.184a.75.75 0 0 1-1.5 0V9.066L10.28 10.29a.75.75 0 0 1-1.06-1.061l2.505-2.504a.75.75 0 0 1 1.06 0L15.29 9.23a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018Z';
             [svgHeight, svgWidth] = [16, 12];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'CreateEvent':
             svgClass = 'octicon-repo';
             svgPath = 'M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z';
+            svgNewPath = 'M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h3.5a.25.25 0 0 1 .25.25v3.25a.25.25 0 0 1-.4.2l-1.45-1.087a.249.249 0 0 0-.3 0L5.4 15.7a.25.25 0 0 1-.4-.2Z';
             [svgHeight, svgWidth] = [16, 12];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'CreateBranchEvent':
             svgClass = 'octicon-git-branch';
             svgPath = 'M10 5c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v.3c-.02.52-.23.98-.63 1.38-.4.4-.86.61-1.38.63-.83.02-1.48.16-2 .45V4.72a1.993 1.993 0 0 0-1-3.72C.88 1 0 1.89 0 3a2 2 0 0 0 1 1.72v6.56c-.59.35-1 .99-1 1.72 0 1.11.89 2 2 2 1.11 0 2-.89 2-2 0-.53-.2-1-.53-1.36.09-.06.48-.41.59-.47.25-.11.56-.17.94-.17 1.05-.05 1.95-.45 2.75-1.25S8.95 7.77 9 6.73h-.02C9.59 6.37 10 5.73 10 5zM2 1.8c.66 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2C1.35 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2zm0 12.41c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm6-8c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z';
+            svgNewPath = 'M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm8.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z';
             [svgHeight, svgWidth] = [16, 10];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'CreateTagEvent':
         case 'ReleaseEvent':
             svgClass = 'octicon-tag';
             svgPath = 'M7.73 1.73C7.26 1.26 6.62 1 5.96 1H3.5C2.13 1 1 2.13 1 3.5v2.47c0 .66.27 1.3.73 1.77l6.06 6.06c.39.39 1.02.39 1.41 0l4.59-4.59a.996.996 0 0 0 0-1.41L7.73 1.73zM2.38 7.09c-.31-.3-.47-.7-.47-1.13V3.5c0-.88.72-1.59 1.59-1.59h2.47c.42 0 .83.16 1.13.47l6.14 6.13-4.73 4.73-6.13-6.15zM3.01 3h2v2H3V3h.01z';
+            svgNewPath = 'M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775Zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z';
             [svgHeight, svgWidth] = [16, 14];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'WatchEvent':
             svgClass = 'octicon-star';
             svgPath = 'M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z';
+            svgNewPath = 'M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z';
             [svgHeight, svgWidth] = [16, 14];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'MemberEvent':
-            svgClass = 'octicon-organization';
+            svgClass = 'octicon-people';
             svgPath = 'M16 12.999c0 .439-.45 1-1 1H7.995c-.539 0-.994-.447-.995-.999H1c-.54 0-1-.561-1-1 0-2.634 3-4 3-4s.229-.409 0-1c-.841-.621-1.058-.59-1-3 .058-2.419 1.367-3 2.5-3s2.442.58 2.5 3c.058 2.41-.159 2.379-1 3-.229.59 0 1 0 1s1.549.711 2.42 2.088C9.196 9.369 10 8.999 10 8.999s.229-.409 0-1c-.841-.62-1.058-.59-1-3 .058-2.419 1.367-3 2.5-3s2.437.581 2.495 3c.059 2.41-.158 2.38-1 3-.229.59 0 1 0 1s3.005 1.366 3.005 4z';
+            svgNewPath = 'M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4 4 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5ZM11 4a3.001 3.001 0 0 1 2.22 5.018 5.01 5.01 0 0 1 2.56 3.012.749.749 0 0 1-.885.954.752.752 0 0 1-.549-.514 3.507 3.507 0 0 0-2.522-2.372.75.75 0 0 1-.574-.73v-.352a.75.75 0 0 1 .416-.672A1.5 1.5 0 0 0 11 5.5.75.75 0 0 1 11 4Zm-5.5-.5a2 2 0 1 0-.001 3.999A2 2 0 0 0 5.5 3.5Z';
             [svgHeight, svgWidth] = [16, 16];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'IssuesEvent':
             svgClass = 'octicon-issue-opened';
             svgPath = 'M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z';
+            svgNewPath = 'M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z';
             [svgHeight, svgWidth] = [16, 14];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'IssueCommentEvent':
         case 'CommitCommentEvent':
             svgClass = 'octicon-comment';
             svgPath = 'M14 1H2c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1h2v3.5L7.5 11H14c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm0 9H7l-2 2v-2H2V2h12v8z';
+            svgNewPath = 'M1 2.75C1 1.784 1.784 1 2.75 1h10.5c.966 0 1.75.784 1.75 1.75v7.5A1.75 1.75 0 0 1 13.25 12H9.06l-2.573 2.573A1.458 1.458 0 0 1 4 13.543V12H2.75A1.75 1.75 0 0 1 1 10.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h4.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z';
             [svgHeight, svgWidth] = [16, 16];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'ForkEvent':
             svgClass = 'octicon-repo-forked';
             svgPath = 'M8 1a1.993 1.993 0 0 0-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 0 0 2 1a1.993 1.993 0 0 0-1 3.72V6.5l3 3v1.78A1.993 1.993 0 0 0 5 15a1.993 1.993 0 0 0 1-3.72V9.5l3-3V4.72A1.993 1.993 0 0 0 8 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z';
+            svgNewPath = 'M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z';
             [svgHeight, svgWidth] = [16, 10];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'PullRequestEvent':
             svgClass = 'octicon-git-pull-request';
             svgPath = 'M11 11.28V5c-.03-.78-.34-1.47-.94-2.06C9.46 2.35 8.78 2.03 8 2H7V0L4 3l3 3V4h1c.27.02.48.11.69.31.21.2.3.42.31.69v6.28A1.993 1.993 0 0 0 10 15a1.993 1.993 0 0 0 1-3.72zm-1 2.92c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zM4 3c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v6.56A1.993 1.993 0 0 0 2 15a1.993 1.993 0 0 0 1-3.72V4.72c.59-.34 1-.98 1-1.72zm-.8 10c0 .66-.55 1.2-1.2 1.2-.65 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z';
+            svgNewPath = 'M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z';
             [svgHeight, svgWidth] = [16, 12];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'PullRequestReviewEvent':
         case 'PullRequestReviewCommentEvent':
             svgClass = 'octicon-eye';
             svgPath = 'M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z';
+            svgNewPath = 'M8 2c1.981 0 3.671.992 4.933 2.078 1.27 1.091 2.187 2.345 2.637 3.023a1.62 1.62 0 0 1 0 1.798c-.45.678-1.367 1.932-2.637 3.023C11.67 13.008 9.981 14 8 14c-1.981 0-3.671-.992-4.933-2.078C1.797 10.83.88 9.576.43 8.898a1.62 1.62 0 0 1 0-1.798c.45-.677 1.367-1.931 2.637-3.022C4.33 2.992 6.019 2 8 2ZM1.679 7.932a.12.12 0 0 0 0 .136c.411.622 1.241 1.75 2.366 2.717C5.176 11.758 6.527 12.5 8 12.5c1.473 0 2.825-.742 3.955-1.715 1.124-.967 1.954-2.096 2.366-2.717a.12.12 0 0 0 0-.136c-.412-.621-1.242-1.75-2.366-2.717C10.824 4.242 9.473 3.5 8 3.5c-1.473 0-2.825.742-3.955 1.715-1.124.967-1.954 2.096-2.366 2.717ZM8 10a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 10Z';
             [svgHeight, svgWidth] = [16, 16];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'DeleteEvent':
             svgClass = 'octicon-x';
             svgPath = 'M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z';
+            svgNewPath = 'M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z';
             [svgHeight, svgWidth] = [16, 12];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'PublicEvent':
             svgClass = 'octicon-lock';
             svgPath = 'M4 13H3v-1h1v1zm8-6v7c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V7c0-.55.45-1 1-1h1V4c0-2.2 1.8-4 4-4s4 1.8 4 4v2h1c.55 0 1 .45 1 1zM3.8 6h4.41V4c0-1.22-.98-2.2-2.2-2.2-1.22 0-2.2.98-2.2 2.2v2H3.8zM11 7H2v7h9V7zM4 8H3v1h1V8zm0 2H3v1h1v-1z';
+            svgNewPath = 'M4 4a4 4 0 0 1 8 0v2h.25c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25v-5.5C2 6.784 2.784 6 3.75 6H4Zm8.25 3.5h-8.5a.25.25 0 0 0-.25.25v5.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25ZM10.5 6V4a2.5 2.5 0 1 0-5 0v2Z';
             [svgHeight, svgWidth] = [16, 12];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
         case 'GollumEvent':
             svgClass = 'octicon-book';
             svgPath = 'M3 5h4v1H3V5zm0 3h4V7H3v1zm0 2h4V9H3v1zm11-5h-4v1h4V5zm0 2h-4v1h4V7zm0 2h-4v1h4V9zm2-6v9c0 .55-.45 1-1 1H9.5l-1 1-1-1H2c-.55 0-1-.45-1-1V3c0-.55.45-1 1-1h5.5l1 1 1-1H15c.55 0 1 .45 1 1zm-8 .5L7.5 3H2v9h6V3.5zm7-.5H9.5l-.5.5V12h6V3z';
+            svgNewPath = 'M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.752 3.752 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z';
             [svgHeight, svgWidth] = [16, 16];
+            [svgNewHeight, svgNewWidth] = [16, 16];
             break;
     }
     if (!svgClass) {
         return '';
     }
+    if (global_1.Global.useOldIcon) {
+        return `
+            <svg class="octicon ${svgClass}" version="1.1" aria-hidden="true" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
+                <path class="octicon-path" fill-rule="evenodd" d="${svgPath}"></path>
+            </svg>
+        `;
+    }
     return `
-        <svg class="octicon ${svgClass}" version="1.1" aria-hidden="true" width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}">
-            <path class="octicon-path" fill-rule="evenodd" d="${svgPath}"></path>
+        <svg class="octicon ${svgClass}" version="1.1" aria-hidden="true" width="${svgNewWidth}" height="${svgNewHeight}" viewBox="0 0 ${svgNewWidth} ${svgNewHeight}">
+            <path class="octicon-path" fill-rule="evenodd" d="${svgNewPath}"></path>
         </svg>
     `;
 }
@@ -71987,23 +72099,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 __webpack_require__(/*! jquery-ui-dist/jquery-ui */ "./node_modules/jquery-ui-dist/jquery-ui.js");
-const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
 const li_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/li_tag */ "./src/ts/ui/sidebar/li_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
+const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
 function loadGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         const ulTag = jquery_1.default('#ahid-list');
-        if (storage_1.Global.page == 1) {
+        if (global_1.Global.page == 1) {
             ulTag.html('');
         }
         switchDisplayMode({ isLoading: true, isError: false });
         var infos;
         try {
-            infos = yield utils_1.requestGitHubEvents(storage_1.Global.urlInfo.eventAPI, storage_1.Global.page, storage_1.Global.token);
+            infos = yield utils_1.requestGitHubEvents(global_1.Global.urlInfo.eventAPI, global_1.Global.page, global_1.Global.token);
         }
         catch (ex) {
-            if (storage_1.Global.page === 1) {
+            if (global_1.Global.page === 1) {
                 switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex });
             }
             return;
@@ -72019,7 +72132,7 @@ function loadGitHubEvents() {
             }
             ulTag.append(li);
         });
-        if (!storage_1.Global.useBlankTarget) {
+        if (!global_1.Global.useBlankTarget) {
             jquery_1.default('nav#ahid-nav a[target="_blank"]').removeAttr('target');
         }
     });
@@ -72027,7 +72140,7 @@ function loadGitHubEvents() {
 exports.loadGitHubEvents = loadGitHubEvents;
 function loadNextGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
-        ++storage_1.Global.page;
+        ++global_1.Global.page;
         yield loadGitHubEvents();
     });
 }
@@ -72062,28 +72175,28 @@ function switchDisplayMode(arg) {
 function registerUIEvents(extraRefreshHandler) {
     jquery_1.default('#ahid-toggle').on('mouseenter', () => showSidebar(true));
     jquery_1.default('#ahid-toggle').on('click', () => showSidebar(true));
-    jquery_1.default('#ahid-nav').on('mouseenter', () => storage_1.Global.isHovering = true);
+    jquery_1.default('#ahid-nav').on('mouseenter', () => global_1.Global.isHovering = true);
     jquery_1.default('#ahid-nav').on('mouseleave', () => {
-        storage_1.Global.isHovering = false;
-        if (!storage_1.Global.pinned) {
-            setTimeout(() => (!storage_1.Global.pinned && !storage_1.Global.isHovering) ? showSidebar(false) : null, 1000);
+        global_1.Global.isHovering = false;
+        if (!global_1.Global.pinned) {
+            setTimeout(() => (!global_1.Global.pinned && !global_1.Global.isHovering) ? showSidebar(false) : null, 1000);
         }
     });
-    jquery_1.default('#ahid-pin').on('click', () => pinSidebar(!storage_1.Global.pinned));
+    jquery_1.default('#ahid-pin').on('click', () => pinSidebar(!global_1.Global.pinned));
     jquery_1.default('#ahid-refresh').on('click', () => refreshSidebar(extraRefreshHandler));
     jquery_1.default('#ahid-more').on('click', () => loadNextGitHubEvents());
-    jquery_1.default('#ahid-retry').on('click', () => { storage_1.Global.page = 1; loadGitHubEvents(); });
-    jquery_1.default('#ahid-setup-token').on('click', () => setTimeout(() => storage_1.askToSetupToken(), 30));
+    jquery_1.default('#ahid-retry').on('click', () => { global_1.Global.page = 1; loadGitHubEvents(); });
+    jquery_1.default('#ahid-setup-token').on('click', () => setTimeout(() => global_1.askToSetupToken(), 30));
     processMenuSwitchers();
     registerResizeEvent();
-    showSidebar(storage_1.Global.pinned);
-    pinSidebar(storage_1.Global.pinned);
+    showSidebar(global_1.Global.pinned);
+    pinSidebar(global_1.Global.pinned);
 }
 exports.registerUIEvents = registerUIEvents;
 function showSidebar(needShow) {
     const navTag = jquery_1.default('#ahid-nav');
     const toggleTag = jquery_1.default('#ahid-toggle');
-    navTag.css('width', `${storage_1.Global.width}px`);
+    navTag.css('width', `${global_1.Global.width}px`);
     if (needShow) {
         toggleTag.addClass('ah-toggle-hide');
         navTag.addClass('ah-nav-open');
@@ -72093,7 +72206,7 @@ function showSidebar(needShow) {
     else {
         toggleTag.removeClass('ah-toggle-hide');
         navTag.removeClass('ah-nav-open');
-        navTag.css('right', `-${storage_1.Global.width}px`);
+        navTag.css('right', `-${global_1.Global.width}px`);
         enableResizing(false);
     }
 }
@@ -72108,24 +72221,24 @@ function pinSidebar(needPin) {
         navTag.removeClass('ah-shadow');
         pinTag.removeClass('ah-pined');
     }
-    storage_1.Global.pinned = needPin;
-    storage_1.setStorage(storage_1.StorageFlag.PINNED, storage_1.Global.pinned);
+    global_1.Global.pinned = needPin;
+    storage_1.setStorage(global_1.StorageFlag.PINNED, global_1.Global.pinned);
     adjustBodyLayout();
 }
 function refreshSidebar(extraRefreshHandler) {
     var _a;
     adjustBodyLayout();
     (_a = extraRefreshHandler) === null || _a === void 0 ? void 0 : _a();
-    var oldUrlInfo = storage_1.Global.urlInfo;
+    var oldUrlInfo = global_1.Global.urlInfo;
     const urlInfo = utils_1.checkURL();
     if (urlInfo) {
-        storage_1.Global.urlInfo = urlInfo;
+        global_1.Global.urlInfo = urlInfo;
     }
-    if (!storage_1.Global.urlInfo.equals(oldUrlInfo)) {
+    if (!global_1.Global.urlInfo.equals(oldUrlInfo)) {
         main_1.injectSidebar();
     }
     else {
-        storage_1.Global.page = 1;
+        global_1.Global.page = 1;
         loadGitHubEvents();
     }
 }
@@ -72153,32 +72266,38 @@ function processMenuSwitchers() {
             }), 30));
         });
     }
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), storage_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), storage_1.StorageFlag.CENTER_FOLLOW_TEXT);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), storage_1.StorageFlag.SHOW_JOINED_TIME);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), storage_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), storage_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), storage_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
-    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), storage_1.StorageFlag.USE_BLANK_TARGET);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), global_1.StorageFlag.USE_BLANK_TARGET);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-old-icon'), global_1.StorageFlag.USE_OLD_ICON);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), global_1.StorageFlag.CENTER_FOLLOW_TEXT);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), global_1.StorageFlag.SHOW_JOINED_TIME);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), global_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), global_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), global_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
 }
 function adjustBodyLayout(resizing = false) {
     const navTag = jquery_1.default('#ahid-nav');
     navTag.css('left', '');
-    if (storage_1.Global.pinned) {
-        const to = resizing ? navTag.width() : storage_1.Global.width;
+    if (global_1.Global.pinned) {
+        const to = resizing ? navTag.width() : global_1.Global.width;
         jquery_1.default('body').css('margin-right', `${to}px`);
     }
     else {
         jquery_1.default('body').css('margin-right', '');
     }
 }
+exports.adjustBodyLayout = adjustBodyLayout;
+function resetBodyLayout() {
+    jquery_1.default('body').css('margin-right', '');
+}
+exports.resetBodyLayout = resetBodyLayout;
 function registerResizeEvent() {
     const navTag = jquery_1.default('#ahid-nav');
     const hdlTag = jquery_1.default('.ui-resizable-handle');
     const event = () => {
-        if (storage_1.Global.width !== navTag.width()) {
-            storage_1.Global.width = navTag.width();
-            storage_1.setStorage(storage_1.StorageFlag.WIDTH, storage_1.Global.width);
+        if (global_1.Global.width !== navTag.width()) {
+            global_1.Global.width = navTag.width();
+            storage_1.setStorage(global_1.StorageFlag.WIDTH, global_1.Global.width);
         }
         adjustBodyLayout(false);
     };
