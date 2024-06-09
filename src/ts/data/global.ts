@@ -13,12 +13,13 @@ export class Global {
 
     // Menu switchers from storage
     public static showFollowMenuItem: boolean = true;
+    public static useBlankTarget: boolean = true;
+    public static useOldIcon: boolean = false;
     public static centerFollowText: boolean = true;
     public static showJoinedTime: boolean = true;
     public static showUserPrivateCounter: boolean = true;
     public static showRepoActionCounter: boolean = true;
     public static showRepoAndContentsSize: boolean = true;
-    public static useBlankTarget: boolean = true;
 
     // Some global runtime variables
     public static urlInfo: URLInfo;
@@ -37,6 +38,7 @@ export enum StorageFlag {
 
     SHOW_FOLLOW_MENU_ITEM = 'ah-show-follow-menu-item',
     USE_BLANK_TARGET = 'ah-use-blank-target',
+    USE_OLD_ICON = 'ah-use-old-icon',
     CENTER_FOLLOW_TEXT = 'ah-center-follow-text',
     SHOW_JOINED_TIME = 'ah-show-joined-time',
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
@@ -51,6 +53,7 @@ export async function readStorageToGlobal(): Promise<void> {
 
     Global.showFollowMenuItem = await getStorage<boolean>(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
     Global.useBlankTarget = await getStorage<boolean>(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
+    Global.useOldIcon = await getStorage<boolean>(StorageFlag.USE_OLD_ICON, false, { alsoInit: true });
     Global.centerFollowText = await getStorage<boolean>(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
     Global.showJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
