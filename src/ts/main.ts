@@ -1,4 +1,6 @@
 import $ from 'jquery';
+import GMApi from 'greasemonkey';
+import style from '@src/scss/core.scss';
 import { Global } from '@src/ts/data/global';
 import { URLType } from '@src/ts/data/model';
 import { adjustGitHubUiObservably } from '@src/ts/ui/github';
@@ -67,6 +69,7 @@ export function injectSidebar() {
     if (!Global.useBlankTarget) {
         disableBlankTargetForSidebar();
     }
+    GMApi.GM_addStyle(style);
 
     // 3. register sidebar's UI events
     registerUIEvents(

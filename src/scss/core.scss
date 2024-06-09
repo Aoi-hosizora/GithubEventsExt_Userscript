@@ -16,7 +16,7 @@
     z-index: 91;
 
     &.ah-toggle-hide {
-        left: calc(100%);
+        left: calc(100% + 2px);
     }
 }
 
