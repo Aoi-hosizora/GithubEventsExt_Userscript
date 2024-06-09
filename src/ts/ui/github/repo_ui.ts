@@ -258,12 +258,18 @@ async function showRepoContentsSizeInTree() {
     }
     if (!$('react-app').length) { // repo homepage
         const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-of-type(1) td');
-        firstLineTd[0].setAttribute('colspan', '4');
+        if (firstLineTd.length) {
+            firstLineTd[0].setAttribute('colspan', '4');
+        }
         const lastLineTd = $('table[aria-labelledby="folders-and-files"] tr:nth-last-of-type(1) td');
-        lastLineTd[0].setAttribute('colspan', '4');
+        if (lastLineTd.length) {
+            lastLineTd[0].setAttribute('colspan', '4');
+        }
     } else {  // repo file tree page
         const firstLineTd = $('table[aria-labelledby="folders-and-files"] tr#folder-row-0 td');
-        firstLineTd[0].setAttribute('colspan', '4');
+        if (firstLineTd.length) {
+            firstLineTd[0].setAttribute('colspan', '4');
+        }
     }
 
     // 4. show or update each content size grid

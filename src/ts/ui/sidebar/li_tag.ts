@@ -34,7 +34,9 @@ export function formatInfoToLiTag(item: EventInfo): string {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span class="ah-content-header-event ah-content-header-icon" title="${item.type}" style="${Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
+                    <span 
+                        class="ah-content-header-event ah-content-header-icon ${Global.useOldIcon ? 'ah-content-header-old-icon' : ''}"
+                        title="${item.type}" style="${Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
                         ${getSvgTag(item.type)}
                     </span>
                 </div>
