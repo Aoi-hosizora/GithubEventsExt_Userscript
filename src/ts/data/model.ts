@@ -177,6 +177,7 @@ export interface Payload {
         title: string;
         body: string;
         htmlUrl: string;
+        stateReason: string | null;
     };
     comment: {
         body: string;
@@ -197,6 +198,7 @@ export interface Payload {
         title: string;
         body: string;
         htmlUrl: string;
+        mergedAt: string | null;
     };
     release: {
         tagName: string;

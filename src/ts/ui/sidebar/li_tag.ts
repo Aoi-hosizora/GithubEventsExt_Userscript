@@ -98,18 +98,33 @@ function formatInfoToBody(data: EventInfo): string {
         case 'PublicEvent':
             return title(`Made repository ${repoA} ${data.public ? 'public' : 'private'}`);
         case 'IssuesEvent':
+            if (pl.action == 'closed') {
+                if (pl.issue.stateReason == 'completed') {
+                    data.type = 'CloseCompletedIssueEvent';
+                } else if (pl.issue.stateReason == 'not_planned') {
+                    data.type = 'CloseNotPlannedIssueEvent';
+                }
+            }
             return title(`${pl.action} issue ${a(`#${pl.issue.number}`, pl.issue.htmlUrl, HoverCardType.ISSUE, `/${data.repo.name}/issues/${pl.issue.number}/hovercard`)} at ${repoA}`)
                 + subtitle(pl.issue.title) + subContent(pl.issue.body);
         case 'IssueCommentEvent':
             return title(`${pl.action} ${a('comment', pl.comment.htmlUrl)} on issue ${a(`#${pl.issue.number}`, pl.issue.htmlUrl, HoverCardType.ISSUE, `/${data.repo.name}/issues/${pl.issue.number}/hovercard`)} at ${repoA}`)
                 + subtitle(pl.issue.title) + subContent(pl.comment.body);
         case 'PullRequestEvent':
+            if (pl.action == 'closed') {
+                if (pl.pullRequest.mergedAt !== null) {
+                    data.type = 'MergePullRequestEvent';
+                    pl.action = 'merged';
+                } else {
+                    data.type = 'ClosePullRequestEvent';
+                }
+            }
             return title(`${pl.action} pull request ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`)
                 + subtitle(pl.pullRequest.title) + subContent(pl.pullRequest.body);
         case 'PullRequestReviewEvent':
-            return title(`${pl.action} a pull request review in pull request ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`);
+            return title(`${pl.action} a pull request review in ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`);
         case 'PullRequestReviewCommentEvent':
-            return title(`${pl.action} pull request review ${a('comment', pl.comment.htmlUrl)} in pull request ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`)
+            return title(`${pl.action} pull request review ${a('comment', pl.comment.htmlUrl)} in ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`)
                 + subtitle(pl.pullRequest.title) + subContent(pl.comment.body);
         case 'CommitCommentEvent':
             return title(`Created a ${a('comment', pl.comment.htmlUrl)} in commit ${a(`#${pl.comment.commitId.substring(0, 7)}`, `${repoUrl}/commit/${pl.comment.commitId}`, HoverCardType.COMMIT, `/${data.repo.name}/commit/${pl.comment.commitId}/hovercard`)} at ${repoA}`)
