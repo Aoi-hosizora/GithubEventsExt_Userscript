@@ -6,7 +6,7 @@
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
 // @match        http*://github.com/*
-// @copyright    Copyright © 2020-2023 Aoi-hosizora
+// @copyright    Copyright © 2020-2024 Aoi-hosizora
 //
 // @downloadURL  https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js
 // @updateURL    https://github.com/Aoi-hosizora/GithubEventsExt_Userscript/raw/master/dist/github-events.user.js
