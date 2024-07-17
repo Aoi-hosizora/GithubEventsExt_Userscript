@@ -218,6 +218,7 @@ function processMenuSwitchers() {
     updateUIAndRegisterEvent($('#ahid-setup-follow-menu'), StorageFlag.SHOW_FOLLOW_MENU_ITEM);
     updateUIAndRegisterEvent($('#ahid-setup-blank-target'), StorageFlag.USE_BLANK_TARGET);
     updateUIAndRegisterEvent($('#ahid-setup-old-icon'), StorageFlag.USE_OLD_ICON);
+    updateUIAndRegisterEvent($('#ahid-show-full-event-tooltip'), StorageFlag.SHOW_FULL_EVENT_TOOLTIP);
     //
     updateUIAndRegisterEvent($('#ahid-setup-center-follow'), StorageFlag.CENTER_FOLLOW_TEXT);
     updateUIAndRegisterEvent($('#ahid-setup-joined-time'), StorageFlag.SHOW_JOINED_TIME);

@@ -21,7 +21,7 @@ export function formatInfoToLiTag(item: EventInfo): string {
     const createAt = moment(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
-    const itemTypeTitle = item.type == item.type2 ? item.type : `${item.type} (${item.type2})`;
+    const itemTypeTitle = item.type == item.type2 || !Global.showFullEventTooltip ? item.type2 : `${item.type} (${item.type2})`;
     var html = `
         <li>
             <div class="ah-content-header">
