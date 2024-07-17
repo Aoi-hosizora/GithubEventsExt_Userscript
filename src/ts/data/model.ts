@@ -140,6 +140,7 @@ export interface RepoTreeInfo {
  */
 export interface EventInfo {
     type: string;
+    type2: string;
     actor: {
         id: number;
         login: string;

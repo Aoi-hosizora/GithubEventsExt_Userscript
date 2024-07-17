@@ -21,6 +21,7 @@ export function formatInfoToLiTag(item: EventInfo): string {
     const createAt = moment(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
+    const itemTypeTitle = item.type == item.type2 ? item.type : `${item.type} (${item.type2})`;
     var html = `
         <li>
             <div class="ah-content-header">
@@ -34,10 +35,10 @@ export function formatInfoToLiTag(item: EventInfo): string {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span 
+                    <span
                         class="ah-content-header-event ah-content-header-icon ${Global.useOldIcon ? 'ah-content-header-old-icon' : ''}"
-                        title="${item.type}" style="${Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
-                        ${getSvgTag(item.type)}
+                        title="${itemTypeTitle}" style="${Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
+                        ${getSvgTag(item.type2)}
                     </span>
                 </div>
                 <!-- ////// Date time | Private badge ////// -->
@@ -61,7 +62,8 @@ function formatInfoToBody(data: EventInfo): string {
     const pl = data.payload;
     const repoUrl = `http://github.com/${data.repo.name}`;
     const repoA = a(data.repo.name, repoUrl, HoverCardType.REPO, `/${data.repo.name}/hovercard`);
-    switch (data.type) {
+    data.type2 = data.type; // 以后使用该类型
+    switch (data.type2) {
         case 'PushEvent':
             const branch = pl.ref.split('/').slice(2).join('/');
             const branchA = a(branch, `${repoUrl}/tree/${branch}`);
@@ -82,10 +84,10 @@ function formatInfoToBody(data: EventInfo): string {
             }
             const refA = a(pl.ref, `${repoUrl}/tree/${pl.ref}`);
             if (pl.refType === 'branch') {
-                data.type = 'CreateBranchEvent';
+                data.type2 = 'CreateBranchEvent';
                 return title(`Created branch ${refA} at ${repoA}`);
             } else if (pl.refType === 'tag') {
-                data.type = 'CreateTagEvent';
+                data.type2 = 'CreateTagEvent';
                 return title(`Created tag ${refA} at ${repoA}`);
             }
             return '';
@@ -100,9 +102,9 @@ function formatInfoToBody(data: EventInfo): string {
         case 'IssuesEvent':
             if (pl.action == 'closed') {
                 if (pl.issue.stateReason == 'completed') {
-                    data.type = 'CloseCompletedIssueEvent';
+                    data.type2 = 'CloseCompletedIssueEvent';
                 } else if (pl.issue.stateReason == 'not_planned') {
-                    data.type = 'CloseNotPlannedIssueEvent';
+                    data.type2 = 'CloseNotPlannedIssueEvent';
                 }
             }
             return title(`${pl.action} issue ${a(`#${pl.issue.number}`, pl.issue.htmlUrl, HoverCardType.ISSUE, `/${data.repo.name}/issues/${pl.issue.number}/hovercard`)} at ${repoA}`)
@@ -113,10 +115,10 @@ function formatInfoToBody(data: EventInfo): string {
         case 'PullRequestEvent':
             if (pl.action == 'closed') {
                 if (pl.pullRequest.mergedAt !== null) {
-                    data.type = 'MergePullRequestEvent';
+                    data.type2 = 'MergePullRequestEvent';
                     pl.action = 'merged';
                 } else {
-                    data.type = 'ClosePullRequestEvent';
+                    data.type2 = 'ClosePullRequestEvent';
                 }
             }
             return title(`${pl.action} pull request ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`)
