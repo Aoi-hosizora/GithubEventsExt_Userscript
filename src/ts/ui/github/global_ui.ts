@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { Global } from "@src/ts/data/global";
 import { getPathTag } from "@src/ts/ui/sidebar/svg_tag";
-import { Completer, observeAttributes } from "@src/ts/utils/utils";
+import { Completer, observeAttributes, observeChildChanged } from "@src/ts/utils/utils";
 
 // =================
 // global ui related
@@ -16,11 +16,9 @@ export function adjustGlobalUIObservably() {
 
     // 2. (fixed)
     adjustGlobalModalDialogLayout();
-    var menuLoaded = adjustUserModalDialogLayout();
-
-    // 3. (configurable)
-    menuLoaded.then((ok) => {
-        if (ok && Global.showFollowMenuItem) {
+    adjustUserModalDialogLayout(() => {
+        // 3. (configurable)
+        if (Global.showFollowMenuItem) {
             showFollowAvatarMenuItem();
         }
     });
@@ -36,20 +34,51 @@ function adjustHovercardZindex() {
 }
 
 /**
+ * Adjust global modal dialog for its layout.
+ */
+function adjustGlobalModalDialogLayout() {
+    adjustModalDialogLayout('AppHeader-globalBar-start');
+}
+
+/**
+ * Adjust user modal dialog for its layout.
+ */
+function adjustUserModalDialogLayout(callWhenOpen: () => void): Promise<boolean> {
+    return adjustModalDialogLayout('AppHeader-user', { wantPrimerPortalRoot: true, callWhenOpen: callWhenOpen });
+}
+
+/**
  * Adjust modal dialog for layout.
  */
-function adjustModalDialogLayout(headerClassName: string): Promise<boolean> {
+function adjustModalDialogLayout(headerClassName: string, etc?: { wantPrimerPortalRoot: boolean, callWhenOpen?: () => void }): Promise<boolean> {
     const completer = new Completer<boolean>();
 
-    // 1. find dialog element
+    // 1. find dialog / portalRoot element
     const headerDiv = $(`div.${headerClassName}`); // example: AppHeader-globalBar-start
     if (!headerDiv.length) {
         completer.complete(false);
         return completer.future(); // unreachable
     }
     const fragment = headerDiv.find('include-fragment');
-    const modalDialog = headerDiv.find('dialog')
-    if (!fragment.length || !modalDialog.length) {
+    if (!fragment.length) {
+        completer.complete(false);
+        return completer.future(); // unreachable
+    }
+    const modalDialog = headerDiv.find('dialog');
+    const primerPortalRoot = etc?.wantPrimerPortalRoot ? $('div#__primerPortalRoot__') : undefined;
+    if (!modalDialog.length && !primerPortalRoot?.length) {
+        if (etc?.wantPrimerPortalRoot) { // observe body to get __primerPortalRoot__
+            const observer = observeChildChanged(document.body, (record) => {
+                if (record.addedNodes && record.addedNodes.length && record.addedNodes[0] instanceof HTMLElement) {
+                    const node = record.addedNodes[0] as HTMLElement;
+                    if (node.id === '__primerPortalRoot__') {
+                        // call this function again when node is inserted
+                        adjustModalDialogLayout(headerClassName, etc);
+                        observer.disconnect();
+                    }
+                }
+            });
+        }
         completer.complete(false);
         return completer.future(); // unreachable
     }
@@ -65,20 +94,38 @@ function adjustModalDialogLayout(headerClassName: string): Promise<boolean> {
         }
     }
     addOverflowYToBody(); // add first
-    observeAttributes(modalDialog[0], (record, el) => {
-        if (record.attributeName === 'open') {
-            var opened = el.hasAttribute('open');
-            if (opened) {
-                addOverflowYToBody(); // add when dialog is opened
+    if (modalDialog.length) {
+        observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                if (opened) {
+                    addOverflowYToBody(); // add when dialog is opened
+                }
             }
-        }
-    });
+        });
+    }
+    if (primerPortalRoot?.length) {
+        const dialogSelector = 'div[data-position-regular="right"][role="dialog"]';
+        primerPortalRoot.find(dialogSelector)?.css('margin-right', `${Global.width}px`); // add margin right first
+        etc?.callWhenOpen?.(); // call when dialog is opened
+        observeChildChanged(primerPortalRoot[0], (el) => {
+            if (el.addedNodes.length) {
+                const rightDialog = primerPortalRoot.find(dialogSelector);
+                if (rightDialog.length) {
+                    addOverflowYToBody(); // add when dialog is opened
+                    rightDialog.css('margin-right', `${Global.width}px`); // add margin right to __primerPortalRoot__
+                    etc?.callWhenOpen?.(); // call when dialog is opened
+                }
+            }
+        });
+    }
 
     // 3. observe data loaded, if loaded, complete completer
     if (!fragment[0].hasAttribute('data-loaded')) {
-        observeAttributes(fragment[0], (record, _) => {
+        const observer = observeAttributes(fragment[0], (record, _) => {
             if (record.attributeName === 'data-loaded') {
                 completer.complete(true);
+                observer.disconnect();
             }
         });
     } else {
@@ -88,25 +135,16 @@ function adjustModalDialogLayout(headerClassName: string): Promise<boolean> {
 }
 
 /**
- * Adjust global modal dialog for its layout.
- */
-function adjustGlobalModalDialogLayout() {
-    adjustModalDialogLayout('AppHeader-globalBar-start');
-}
-
-/**
- * Adjust user modal dialog for its layout.
- */
-function adjustUserModalDialogLayout(): Promise<boolean> {
-    return adjustModalDialogLayout('AppHeader-user');
-}
-
-/**
  * Add follow* menu items to avatar dropdown menu.
  */
 function showFollowAvatarMenuItem() {
-    var modalDialog = $('div.AppHeader-user dialog');
-    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
+    console.log('showFollowAvatarMenuItem');
+
+    var modalDialog = $('div#__primerPortalRoot__ div[data-position-regular="right"][role="dialog"]');
+    if (!modalDialog.length) {
+        return;
+    }
+    var avatarMenuUl = modalDialog.find('ul');
     if (!avatarMenuUl.length) {
         return;
     }
@@ -126,8 +164,9 @@ function showFollowAvatarMenuItem() {
         </li>`;
     }
 
-    const username = modalDialog.find('div.Overlay-header span:first-child')[0].textContent?.trim() ?? '';
-    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
+    const username = modalDialog.find('div.lh-condensed div.text-bold div[title]')[0].textContent?.trim() ?? '';
+    console.log(username);
+    const starsMenuItem = avatarMenuUl.find('li a[href*="=stars"]').parent();
     if (!$('li[data-item-id="ah-avatar-followers"]').length) {
         $(generateMenuItem('ah-avatar-followers', 'Your followers', `/${username}?tab=followers`, getPathTag('people'))).insertAfter(starsMenuItem);
     }
