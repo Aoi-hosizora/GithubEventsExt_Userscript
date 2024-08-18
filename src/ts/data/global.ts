@@ -27,6 +27,7 @@ export class Global {
     public static page: number = 1;
     public static isHovering: boolean = false;
     public static repoSize: RepoSizeData = { cache: undefined, ref: '', truncated: false };
+    public static windowScrollY: number = 0.0;
 
     // Constants
     public static readonly FEEDBACK_URL: string = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
