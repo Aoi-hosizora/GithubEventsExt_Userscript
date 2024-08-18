@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.21
+// @version      1.0.22
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -70829,7 +70829,7 @@ function onLoaded() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} Events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z\">\n                            </path>\n                        </svg>\n                        Setup GitHub access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" and \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Open a new browser tab to show links in sidebar\n                    </label>\n                    <label id=\"ahid-setup-old-icon\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Display old GitHub icons in sidebar\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"Followers\" and \"Following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of repository and files in repository page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
+module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} Events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z\">\n                            </path>\n                        </svg>\n                        Setup GitHub access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" and \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Open a new browser tab to show links in sidebar\n                    </label>\n                    <label id=\"ahid-setup-old-icon\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Display old GitHub icons in sidebar\n                    </label>\n                    <label id=\"ahid-show-full-event-tooltip\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show full GitHub event name tooltip when hovering icon\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"Followers\" and \"Following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of repository and files in repository page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
 
 /***/ }),
 
@@ -70893,6 +70893,7 @@ Global.width = 250;
 Global.showFollowMenuItem = true;
 Global.useBlankTarget = true;
 Global.useOldIcon = false;
+Global.showFullEventTooltip = true;
 Global.centerFollowText = true;
 Global.showJoinedTime = true;
 Global.showUserPrivateCounter = true;
@@ -70901,6 +70902,7 @@ Global.showRepoAndContentsSize = true;
 Global.page = 1;
 Global.isHovering = false;
 Global.repoSize = { cache: undefined, ref: '', truncated: false };
+Global.windowScrollY = 0.0;
 Global.FEEDBACK_URL = 'https://github.com/Aoi-hosizora/GithubEventsExt/issues';
 var StorageFlag;
 (function (StorageFlag) {
@@ -70910,6 +70912,7 @@ var StorageFlag;
     StorageFlag["SHOW_FOLLOW_MENU_ITEM"] = "ah-show-follow-menu-item";
     StorageFlag["USE_BLANK_TARGET"] = "ah-use-blank-target";
     StorageFlag["USE_OLD_ICON"] = "ah-use-old-icon";
+    StorageFlag["SHOW_FULL_EVENT_TOOLTIP"] = "ah-show-full-event-tooltip";
     StorageFlag["CENTER_FOLLOW_TEXT"] = "ah-center-follow-text";
     StorageFlag["SHOW_JOINED_TIME"] = "ah-show-joined-time";
     StorageFlag["SHOW_USER_PRIVATE_COUNTER"] = "ah-show-user-private-counter";
@@ -70924,6 +70927,7 @@ function readStorageToGlobal() {
         Global.showFollowMenuItem = yield storage_1.getStorage(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
         Global.useBlankTarget = yield storage_1.getStorage(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
         Global.useOldIcon = yield storage_1.getStorage(StorageFlag.USE_OLD_ICON, false, { alsoInit: true });
+        Global.showFullEventTooltip = yield storage_1.getStorage(StorageFlag.SHOW_FULL_EVENT_TOOLTIP, true, { alsoInit: true });
         Global.centerFollowText = yield storage_1.getStorage(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
         Global.showJoinedTime = yield storage_1.getStorage(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
         Global.showUserPrivateCounter = yield storage_1.getStorage(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
@@ -71204,11 +71208,13 @@ const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/g
 const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 function adjustGlobalUIObservably() {
+    jquery_1.default(window).on('scroll', function () {
+        global_1.Global.windowScrollY = window.scrollY;
+    });
     adjustHovercardZindex();
     adjustGlobalModalDialogLayout();
-    var menuLoaded = adjustUserModalDialogLayout();
-    menuLoaded.then((ok) => {
-        if (ok && global_1.Global.showFollowMenuItem) {
+    adjustUserModalDialogLayout(() => {
+        if (global_1.Global.showFollowMenuItem) {
             showFollowAvatarMenuItem();
         }
     });
@@ -71219,7 +71225,14 @@ function adjustHovercardZindex() {
     const mainDiv = jquery_1.default('div[data-turbo-body]');
     mainDiv.after(hovercard);
 }
-function adjustModalDialogLayout(headerClassName) {
+function adjustGlobalModalDialogLayout() {
+    adjustModalDialogLayout('AppHeader-globalBar-start');
+}
+function adjustUserModalDialogLayout(callWhenOpen) {
+    return adjustModalDialogLayout('AppHeader-user', { wantPrimerPortalRoot: true, callWhenOpen: callWhenOpen });
+}
+function adjustModalDialogLayout(headerClassName, etc) {
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     const completer = new utils_1.Completer();
     const headerDiv = jquery_1.default(`div.${headerClassName}`);
     if (!headerDiv.length) {
@@ -71227,8 +71240,24 @@ function adjustModalDialogLayout(headerClassName) {
         return completer.future();
     }
     const fragment = headerDiv.find('include-fragment');
+    if (!fragment.length) {
+        completer.complete(false);
+        return completer.future();
+    }
     const modalDialog = headerDiv.find('dialog');
-    if (!fragment.length || !modalDialog.length) {
+    const primerPortalRoot = ((_a = etc) === null || _a === void 0 ? void 0 : _a.wantPrimerPortalRoot) ? jquery_1.default('div#__primerPortalRoot__') : undefined;
+    if (!modalDialog.length && !((_b = primerPortalRoot) === null || _b === void 0 ? void 0 : _b.length)) {
+        if ((_c = etc) === null || _c === void 0 ? void 0 : _c.wantPrimerPortalRoot) {
+            const observer = utils_1.observeChildChanged(document.body, (record) => {
+                if (record.addedNodes && record.addedNodes.length && record.addedNodes[0] instanceof HTMLElement) {
+                    const node = record.addedNodes[0];
+                    if (node.id === '__primerPortalRoot__') {
+                        adjustModalDialogLayout(headerClassName, etc);
+                        observer.disconnect();
+                    }
+                }
+            });
+        }
         completer.complete(false);
         return completer.future();
     }
@@ -71243,18 +71272,40 @@ function adjustModalDialogLayout(headerClassName) {
         }
     }
     addOverflowYToBody();
-    utils_1.observeAttributes(modalDialog[0], (record, el) => {
-        if (record.attributeName === 'open') {
-            var opened = el.hasAttribute('open');
-            if (opened) {
-                addOverflowYToBody();
+    if (modalDialog.length) {
+        utils_1.observeAttributes(modalDialog[0], (record, el) => {
+            if (record.attributeName === 'open') {
+                var opened = el.hasAttribute('open');
+                if (opened) {
+                    addOverflowYToBody();
+                }
             }
-        }
-    });
+        });
+    }
+    if ((_d = primerPortalRoot) === null || _d === void 0 ? void 0 : _d.length) {
+        const dialogSelector = 'div[data-position-regular="right"][role="dialog"]';
+        (_e = primerPortalRoot.find(dialogSelector)) === null || _e === void 0 ? void 0 : _e.css('margin-right', `${global_1.Global.width}px`);
+        (_h = (_f = etc) === null || _f === void 0 ? void 0 : (_g = _f).callWhenOpen) === null || _h === void 0 ? void 0 : _h.call(_g);
+        utils_1.observeChildChanged(primerPortalRoot[0], (el) => {
+            var _a, _b, _c;
+            if (el.addedNodes.length) {
+                const rightDialog = primerPortalRoot.find(dialogSelector);
+                if (rightDialog.length) {
+                    addOverflowYToBody();
+                    rightDialog.css('margin-right', `${global_1.Global.width}px`);
+                    (_c = (_a = etc) === null || _a === void 0 ? void 0 : (_b = _a).callWhenOpen) === null || _c === void 0 ? void 0 : _c.call(_b);
+                }
+            }
+            if (el.removedNodes.length && global_1.Global.windowScrollY) {
+                window.scrollTo({ top: global_1.Global.windowScrollY });
+            }
+        });
+    }
     if (!fragment[0].hasAttribute('data-loaded')) {
-        utils_1.observeAttributes(fragment[0], (record, _) => {
+        const observer = utils_1.observeAttributes(fragment[0], (record, _) => {
             if (record.attributeName === 'data-loaded') {
                 completer.complete(true);
+                observer.disconnect();
             }
         });
     }
@@ -71263,16 +71314,13 @@ function adjustModalDialogLayout(headerClassName) {
     }
     return completer.future();
 }
-function adjustGlobalModalDialogLayout() {
-    adjustModalDialogLayout('AppHeader-globalBar-start');
-}
-function adjustUserModalDialogLayout() {
-    return adjustModalDialogLayout('AppHeader-user');
-}
 function showFollowAvatarMenuItem() {
     var _a, _b;
-    var modalDialog = jquery_1.default('div.AppHeader-user dialog');
-    var avatarMenuUl = modalDialog.find('nav[aria-label="User navigation"] ul');
+    var modalDialog = jquery_1.default('div#__primerPortalRoot__ div[data-position-regular="right"][role="dialog"]');
+    if (!modalDialog.length) {
+        return;
+    }
+    var avatarMenuUl = modalDialog.find('ul');
     if (!avatarMenuUl.length) {
         return;
     }
@@ -71290,8 +71338,8 @@ function showFollowAvatarMenuItem() {
             </a>
         </li>`;
     }
-    const username = (_b = (_a = modalDialog.find('div.Overlay-header span:first-child')[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
-    const starsMenuItem = avatarMenuUl.find('li.ActionListItem a[data-analytics-event*="YOUR_STARS"]').parent();
+    const username = (_b = (_a = modalDialog.find('div.lh-condensed div.text-bold div[title]')[0].textContent) === null || _a === void 0 ? void 0 : _a.trim(), (_b !== null && _b !== void 0 ? _b : ''));
+    const starsMenuItem = avatarMenuUl.find('li a[href*="=stars"]').parent();
     if (!jquery_1.default('li[data-item-id="ah-avatar-followers"]').length) {
         jquery_1.default(generateMenuItem('ah-avatar-followers', 'Your followers', `/${username}?tab=followers`, svg_tag_1.getPathTag('people'))).insertAfter(starsMenuItem);
     }
@@ -71775,6 +71823,7 @@ function formatInfoToLiTag(item) {
     const createAt = moment_1.default(new Date(item.createdAt));
     const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
+    const itemTypeTitle = item.type == item.type2 || !global_1.Global.showFullEventTooltip ? item.type2 : `${item.type} (${item.type2})`;
     var html = `
         <li>
             <div class="ah-content-header">
@@ -71788,10 +71837,10 @@ function formatInfoToLiTag(item) {
                             <a href="${userUrl}" target="_blank" ${userHovercard}>${item.actor.login}</a>
                         </span>
                     </div>
-                    <span 
+                    <span
                         class="ah-content-header-event ah-content-header-icon ${global_1.Global.useOldIcon ? 'ah-content-header-old-icon' : ''}"
-                        title="${item.type}" style="${global_1.Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
-                        ${svg_tag_1.getSvgTag(item.type)}
+                        title="${itemTypeTitle}" style="${global_1.Global.useOldIcon ? '' : 'color: var(--fgColor-muted);'}">
+                        ${svg_tag_1.getSvgTag(item.type2)}
                     </span>
                 </div>
                 <!-- ////// Date time | Private badge ////// -->
@@ -71812,7 +71861,8 @@ function formatInfoToBody(data) {
     const pl = data.payload;
     const repoUrl = `http://github.com/${data.repo.name}`;
     const repoA = a(data.repo.name, repoUrl, model_1.HoverCardType.REPO, `/${data.repo.name}/hovercard`);
-    switch (data.type) {
+    data.type2 = data.type;
+    switch (data.type2) {
         case 'PushEvent':
             const branch = pl.ref.split('/').slice(2).join('/');
             const branchA = a(branch, `${repoUrl}/tree/${branch}`);
@@ -71833,11 +71883,11 @@ function formatInfoToBody(data) {
             }
             const refA = a(pl.ref, `${repoUrl}/tree/${pl.ref}`);
             if (pl.refType === 'branch') {
-                data.type = 'CreateBranchEvent';
+                data.type2 = 'CreateBranchEvent';
                 return title(`Created branch ${refA} at ${repoA}`);
             }
             else if (pl.refType === 'tag') {
-                data.type = 'CreateTagEvent';
+                data.type2 = 'CreateTagEvent';
                 return title(`Created tag ${refA} at ${repoA}`);
             }
             return '';
@@ -71852,10 +71902,10 @@ function formatInfoToBody(data) {
         case 'IssuesEvent':
             if (pl.action == 'closed') {
                 if (pl.issue.stateReason == 'completed') {
-                    data.type = 'CloseCompletedIssueEvent';
+                    data.type2 = 'CloseCompletedIssueEvent';
                 }
                 else if (pl.issue.stateReason == 'not_planned') {
-                    data.type = 'CloseNotPlannedIssueEvent';
+                    data.type2 = 'CloseNotPlannedIssueEvent';
                 }
             }
             return title(`${pl.action} issue ${a(`#${pl.issue.number}`, pl.issue.htmlUrl, model_1.HoverCardType.ISSUE, `/${data.repo.name}/issues/${pl.issue.number}/hovercard`)} at ${repoA}`)
@@ -71866,11 +71916,11 @@ function formatInfoToBody(data) {
         case 'PullRequestEvent':
             if (pl.action == 'closed') {
                 if (pl.pullRequest.mergedAt !== null) {
-                    data.type = 'MergePullRequestEvent';
+                    data.type2 = 'MergePullRequestEvent';
                     pl.action = 'merged';
                 }
                 else {
-                    data.type = 'ClosePullRequestEvent';
+                    data.type2 = 'ClosePullRequestEvent';
                 }
             }
             return title(`${pl.action} pull request ${a(`#${pl.pullRequest.number}`, pl.pullRequest.htmlUrl, model_1.HoverCardType.PULL, `/${data.repo.name}/pull/${pl.pullRequest.number}/hovercard`)} at ${repoA}`)
@@ -72332,6 +72382,7 @@ function processMenuSwitchers() {
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), global_1.StorageFlag.USE_BLANK_TARGET);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-old-icon'), global_1.StorageFlag.USE_OLD_ICON);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-show-full-event-tooltip'), global_1.StorageFlag.SHOW_FULL_EVENT_TOOLTIP);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), global_1.StorageFlag.CENTER_FOLLOW_TEXT);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), global_1.StorageFlag.SHOW_JOINED_TIME);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), global_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
