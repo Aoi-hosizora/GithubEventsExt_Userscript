@@ -212,6 +212,7 @@ function processMenuSwitchers() {
                 await setStorage(flag, true); // do not update Global
                 el.addClass('ah-enabled');
             }
+            showHeaderToast("Setting changed, you are required to refresh the page!", 3000);
         }, 30));
     }
 
@@ -226,6 +227,47 @@ function processMenuSwitchers() {
     //
     updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER);
     updateUIAndRegisterEvent($('#ahid-setup-repo-size'), StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
+}
+
+/**
+ * Show header toast with given content and show duration.
+ */
+function showHeaderToast(content: string, duration: number) {
+    hideHeaderToast();
+    const toast = $(`
+        <div id="ahid-header-toast" class="ah-animated">
+            ${content}
+            <div id="ahid-header-toast-x" class="ah-unselectable">
+                x
+            </div>
+        </div>
+    `);
+    toast.css('opacity', 0.0);
+
+    const header = $('header#ahid-header');
+    if (header.length) {
+        toast.insertBefore(header);
+
+        setTimeout(() => {
+            toast.css('opacity', 0.85);
+            const x = $('div#ahid-header-toast-x');
+            if (x.length) {
+                x.on('click', () => hideHeaderToast());
+            }
+            setTimeout(() => hideHeaderToast(), duration);
+        }, 30);
+    }
+}
+
+/**
+ * Hide header toast if shown.
+ */
+function hideHeaderToast() {
+    const toast = $('div#ahid-header-toast');
+    if (toast.length) {
+        toast.css('opacity', 0.0);
+        setTimeout(() => toast[0].remove(), 300);
+    }
 }
 
 // =========================

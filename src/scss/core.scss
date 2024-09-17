@@ -116,6 +116,12 @@ $foot-height: null;
     transition: all 0.3s ease;
 }
 
+.ah-unselectable {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 // ======================================
 // position and display for resize handle
 // ======================================
