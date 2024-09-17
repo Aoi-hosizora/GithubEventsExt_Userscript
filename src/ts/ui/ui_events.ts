@@ -212,7 +212,9 @@ function processMenuSwitchers() {
                 await setStorage(flag, true); // do not update Global
                 el.addClass('ah-enabled');
             }
-            showHeaderToast("Setting changed, you are required to refresh the page!", 3000);
+            if (!Global.hideAttentionToast) {
+                showHeaderToast("Setting changed, you are required to refresh the page!", 3000);
+            }
         }, 30));
     }
 
@@ -227,6 +229,8 @@ function processMenuSwitchers() {
     //
     updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER);
     updateUIAndRegisterEvent($('#ahid-setup-repo-size'), StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
+    //
+    updateUIAndRegisterEvent($('#ahid-setup-hide-toast'), StorageFlag.HIDE_ATTENTION_TOAST);
 }
 
 /**
