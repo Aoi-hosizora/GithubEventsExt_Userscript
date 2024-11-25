@@ -19,7 +19,7 @@ export function formatInfoToLiTag(item: EventInfo): string {
     const userUrl = !isBot ? `https://github.com/${item.actor.login}` : `https://github.com/apps/${item.actor.login.replaceAll('[bot]', '')}`;
     const userHovercard = !isBot ? hovercard(HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`) : '';
     const createAt = moment(new Date(item.createdAt));
-    const displayCreateAt = !Global.showFullEventDateTime ? createAt.format('YY/MM/DD HH:mm:ss') : createAt.format('MM/DD HH:mm');
+    const displayCreateAt = Global.showFullEventDateTime ? createAt.format('YY/MM/DD HH:mm:ss') : createAt.format('MM/DD HH:mm');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
     const itemTypeTitle = item.type == item.type2 || !Global.showFullEventTooltip ? item.type2 : `${item.type} (${item.type2})`;
     var html = `
