@@ -213,7 +213,7 @@ function processMenuSwitchers() {
                 el.addClass('ah-enabled');
             }
             if (!Global.hideAttentionToast) {
-                showHeaderToast("Setting changed, you are required to refresh the page!", 3000);
+                showHeaderToast("Setting changed, refresh the page to apply the change!", 3000);
             }
         }, 30));
     }
