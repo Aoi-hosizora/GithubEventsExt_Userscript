@@ -31,6 +31,10 @@ export async function loadGitHubEvents() {
         }
         return;
     }
+    if (Global.page === 1 && infos.length == 0) {
+        switchDisplayMode({ isLoading: false, isError: true, errorMessage: "Nothing found." });
+        return;
+    }
 
     // data got
     switchDisplayMode({ isLoading: false, isError: false });
