@@ -16,7 +16,8 @@ import { getStorage, setStorage } from '@src/ts/data/storage';
  */
 export async function loadGitHubEvents() {
     const ulTag = $('#ahid-list');
-    if (Global.page == 1) {
+    if (Global.page === 1) {
+        Global.total = 0;
         ulTag.html('');
     }
 
@@ -24,12 +25,17 @@ export async function loadGitHubEvents() {
     switchDisplayMode({ isLoading: true, isError: false });
     var infos: EventInfo[];
     try {
+        Global.lastTotal = 0;
         infos = await requestGitHubEvents(Global.urlInfo.eventAPI, Global.page, Global.token);
+        Global.lastTotal = infos.length;
+        Global.total += infos.length;
     } catch (ex) {
         if (Global.page === 1) {
             switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex as string });
         }
         return;
+    } finally {
+        updatePageHint();
     }
     if (Global.page === 1 && infos.length == 0) {
         switchDisplayMode({ isLoading: false, isError: true, errorMessage: "Nothing found." });
@@ -57,7 +63,10 @@ export async function loadGitHubEvents() {
  * Start loading next page of GitHub events.
  */
 async function loadNextGitHubEvents() {
-    ++Global.page;
+    if (Global.lastTotal > 0) {
+        // only when last query result is not empty, go to the next page.
+        ++Global.page;
+    }
     await loadGitHubEvents();
 }
 
@@ -90,6 +99,16 @@ function switchDisplayMode(arg: { isLoading: boolean, isError: boolean, errorMes
         show(ulTag);
         show(moreTag);
     }
+}
+
+/**
+ * Update pagination button tooltip.
+ */
+function updatePageHint() {
+    const moreTag = $('#ahid-more'), retryTag = $('#ahid-retry');
+    const hint = `Page: ${Global.page}, total: ${Global.total}`;
+    moreTag.attr('title', hint);
+    retryTag.attr('title', hint);
 }
 
 // =================

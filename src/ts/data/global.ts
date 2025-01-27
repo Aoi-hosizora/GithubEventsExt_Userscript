@@ -27,6 +27,8 @@ export class Global {
     // Some global runtime variables
     public static urlInfo: URLInfo;
     public static page: number = 1;
+    public static lastTotal: number = 0;
+    public static total: number = 0;
     public static isHovering: boolean = false;
     public static repoSize: RepoSizeData = { cache: undefined, ref: '', truncated: false };
     public static windowScrollY: number = 0.0;
