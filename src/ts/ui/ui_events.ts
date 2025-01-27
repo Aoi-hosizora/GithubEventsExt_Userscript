@@ -177,9 +177,11 @@ function pinSidebar(needPin: boolean) {
     if (needPin) {
         navTag.addClass('ah-shadow');
         pinTag.addClass('ah-pined');
+        pinTag.attr('title', 'To unpin');
     } else {
         navTag.removeClass('ah-shadow');
         pinTag.removeClass('ah-pined');
+        pinTag.attr('title', 'To pin');
     }
     Global.pinned = needPin;
     setStorage(StorageFlag.PINNED, Global.pinned); // also update Global
