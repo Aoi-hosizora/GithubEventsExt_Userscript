@@ -4,6 +4,18 @@ import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
 import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo } from '@src/ts/data/model';
 
 /**
+ * GitHub preserved endpoint list, sidebar will be hided when these endpoints in active.
+ */
+export const PRESERVED_ENDPOINTS = [
+    'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
+    'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
+    'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
+    'assets', 'topics', 'readme', 'sponsors', 'trending', 'collections',
+    'home', 'enterprise', 'why-github', 'team', 'solutions', 'resources',
+    'security', 'pricing', 'about', 'github-copilot', 'onboardings', // ...
+];
+
+/**
  * Check the document.URL, return null if current page is not a GitHub page.
  */
 export function checkURL(): URLInfo | null {
@@ -15,15 +27,9 @@ export function checkURL(): URLInfo | null {
     if (result.length <= 1) {
         return new URLInfo(URLType.OTHER);
     }
-    const preservedEndpoints = [
-        'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
-        'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
-        'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
-        'assets', 'topics', 'readme', 'sponsors', // ...
-    ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e); // => xxx or xxx/yyy or xxx/yyy/zzz/...
-    if (endpoints.length === 0 || preservedEndpoints.indexOf(endpoints[0]) !== -1) {
+    if (endpoints.length === 0 || PRESERVED_ENDPOINTS.indexOf(endpoints[0]) !== -1) {
         return new URLInfo(URLType.OTHER);
     }
 
