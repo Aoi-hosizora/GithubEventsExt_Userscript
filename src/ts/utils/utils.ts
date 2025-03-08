@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import $ from 'jquery';
 import { camelCase, isArray, isObject, mapKeys, mapValues } from 'lodash';
-import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo } from '@src/ts/data/model';
+import { EventInfo, RepoContentInfo, RepoInfo, RepoTreeInfo, URLInfo, URLType, UserInfo, OrgInfo } from '@src/ts/data/model';
 
 /**
  * GitHub preserved endpoint list, sidebar will be hided when these endpoints in active.
@@ -248,6 +248,14 @@ export async function requestGitHubEvents(eventAPI: string, page: number, token:
 export async function requestUserInfo(user: string, token: string = ''): Promise<UserInfo> {
     const url = `https://api.github.com/users/${user}`;
     return (await httpRequest<UserInfo>('get', url, token)).data;
+}
+
+/**
+ * HTTP Get org information.
+ */
+export async function requestOrgInfo(org: string, token: string = ''): Promise<OrgInfo> {
+    const url = `https://api.github.com/orgs/${org}`;
+    return (await httpRequest<OrgInfo>('get', url, token)).data;
 }
 
 /**

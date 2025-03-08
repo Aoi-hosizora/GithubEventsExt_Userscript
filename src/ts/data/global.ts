@@ -20,6 +20,8 @@ export class Global {
     public static centerFollowText: boolean = true;
     public static showJoinedTime: boolean = true;
     public static showUserPrivateCounter: boolean = true;
+    public static showOrgJoinedTime: boolean = true;
+    public static showOrgPrivateCounter: boolean = true;
     public static showRepoActionCounter: boolean = true;
     public static showRepoAndContentsSize: boolean = true;
     public static hideAttentionToast: boolean = true;
@@ -50,6 +52,8 @@ export enum StorageFlag {
     CENTER_FOLLOW_TEXT = 'ah-center-follow-text',
     SHOW_JOINED_TIME = 'ah-show-joined-time',
     SHOW_USER_PRIVATE_COUNTER = 'ah-show-user-private-counter',
+    SHOW_ORG_JOINED_TIME = 'ah-show-org-joined-time',
+    SHOW_ORG_PRIVATE_COUNTER = 'ah-show-org-private-counter',
     SHOW_REPO_ACTION_COUNTER = 'ah-show-repo-action-counter',
     SHOW_REPO_AND_CONTENTS_SIZE = 'ah-show-repo-contents-size',
     HIDE_ATTENTION_TOAST = 'ah-hide-attention-toast',
@@ -68,6 +72,8 @@ export async function readStorageToGlobal(): Promise<void> {
     Global.centerFollowText = await getStorage<boolean>(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
     Global.showJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
     Global.showUserPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
+    Global.showOrgJoinedTime = await getStorage<boolean>(StorageFlag.SHOW_ORG_JOINED_TIME, true, { alsoInit: true });
+    Global.showOrgPrivateCounter = await getStorage<boolean>(StorageFlag.SHOW_ORG_PRIVATE_COUNTER, true, { alsoInit: true });
     Global.showRepoActionCounter = await getStorage<boolean>(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
     Global.showRepoAndContentsSize = await getStorage<boolean>(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
     Global.hideAttentionToast = await getStorage<boolean>(StorageFlag.HIDE_ATTENTION_TOAST, false, { alsoInit: true });

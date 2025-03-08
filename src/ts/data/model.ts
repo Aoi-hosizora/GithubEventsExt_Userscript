@@ -94,6 +94,17 @@ export interface UserInfo {
 }
 
 /**
+ * Dto returned from https://api.github.com/orgs/xxx.
+ */
+export interface OrgInfo {
+    login: string;
+    name: string;
+    publicRepos: number;
+    totalPrivateRepos: number;
+    createdAt: string;
+}
+
+/**
  * Dto returned from https://api.github.com/repos/xxx/xxx.
  */
 export interface RepoInfo {

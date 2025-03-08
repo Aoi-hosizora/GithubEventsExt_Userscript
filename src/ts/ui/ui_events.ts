@@ -252,6 +252,8 @@ function processMenuSwitchers() {
     updateUIAndRegisterEvent($('#ahid-setup-center-follow'), StorageFlag.CENTER_FOLLOW_TEXT);
     updateUIAndRegisterEvent($('#ahid-setup-joined-time'), StorageFlag.SHOW_JOINED_TIME);
     updateUIAndRegisterEvent($('#ahid-setup-user-counter'), StorageFlag.SHOW_USER_PRIVATE_COUNTER);
+    updateUIAndRegisterEvent($('#ahid-setup-org-joined-time'), StorageFlag.SHOW_ORG_JOINED_TIME);
+    updateUIAndRegisterEvent($('#ahid-setup-org-counter'), StorageFlag.SHOW_ORG_PRIVATE_COUNTER);
     //
     updateUIAndRegisterEvent($('#ahid-setup-repo-counter'), StorageFlag.SHOW_REPO_ACTION_COUNTER);
     updateUIAndRegisterEvent($('#ahid-setup-repo-size'), StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);

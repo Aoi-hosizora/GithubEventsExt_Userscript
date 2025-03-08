@@ -3,6 +3,7 @@ import { URLType } from "@src/ts/data/model";
 import { adjustGlobalUIObservably } from "@src/ts/ui/github/global_ui";
 import { adjustUserUIObservably } from "@src/ts/ui/github/user_ui";
 import { adjustRepoUIObservably } from "@src/ts/ui/github/repo_ui";
+import { adjustOrgUIObservably } from "@src/ts/ui/github/org_ui";
 
 // ========================
 // adjust github ui related
@@ -27,6 +28,6 @@ export function adjustGitHubUiObservably() {
 
     // 4. org UI (in observation)
     if (Global.urlInfo.type == URLType.ORG) {
-        // None currently
+        adjustOrgUIObservably();
     }
 }
