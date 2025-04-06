@@ -6,6 +6,7 @@ import { formatInfoToLiTag } from '@src/ts/ui/sidebar/li_tag';
 import { requestGitHubEvents, checkURL } from '@src/ts/utils/utils';
 import { injectSidebar } from '@src/ts/main';
 import { getStorage, setStorage } from '@src/ts/data/storage';
+import { adjustMenuLayout } from '@src/ts/ui/github/global_ui';
 
 // ===============
 // request related
@@ -318,6 +319,7 @@ export function adjustBodyLayout(resizing: boolean = false) {
     } else {
         $('body').css('margin-right', '');
     }
+    adjustMenuLayout(); // for menu margin-right
 }
 
 /**

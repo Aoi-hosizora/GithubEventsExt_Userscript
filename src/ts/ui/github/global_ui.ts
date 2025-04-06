@@ -20,8 +20,7 @@ export function adjustGlobalUIObservably() {
     adjustHovercardZindex();
 
     // 2. (fixed)
-    adjustGlobalModalDialogLayout();
-    adjustUserModalDialogLayout(() => {
+    adjustMenuLayout(() => {
         // 3. (configurable)
         if (Global.showFollowMenuItem) {
             showFollowAvatarMenuItem();
@@ -36,6 +35,16 @@ function adjustHovercardZindex() {
     const hovercard = $('div.Popover.js-hovercard-content');
     const mainDiv = $('div[data-turbo-body]');
     mainDiv.after(hovercard);
+}
+
+/**
+ * Adjust global and user modal dialog layout with init action.
+ */
+export function adjustMenuLayout(callWhenOpenUserModalDialog?: () => void) {
+    adjustGlobalModalDialogLayout();
+    adjustUserModalDialogLayout(() => {
+        callWhenOpenUserModalDialog?.();
+    });
 }
 
 /**
@@ -111,14 +120,17 @@ function adjustModalDialogLayout(headerClassName: string, etc?: { wantPrimerPort
     }
     if (primerPortalRoot?.length) {
         const dialogSelector = 'div[data-position-regular="right"][role="dialog"]';
-        primerPortalRoot.find(dialogSelector)?.css('margin-right', `${Global.width}px`); // add margin right first
+        const marginRight = Global.pinned ? `${Global.width}px` : `0px`;
+        primerPortalRoot.find(dialogSelector)?.css('margin-right', marginRight); // add margin right first
         etc?.callWhenOpen?.(); // call action first (checking is necessary)
         observeChildChanged(primerPortalRoot[0], (el) => {
             if (el.addedNodes.length) {
                 const rightDialog = primerPortalRoot.find(dialogSelector);
                 if (rightDialog.length) {
                     addOverflowYToBody(); // add when dialog is opened
-                    rightDialog.css('margin-right', `${Global.width}px`); // add margin right to __primerPortalRoot__
+                    if (Global.pinned) {
+                        rightDialog.css('margin-right', marginRight); // add margin right to __primerPortalRoot__
+                    }
                     etc?.callWhenOpen?.(); // call action when dialog is opened
                 }
             }
