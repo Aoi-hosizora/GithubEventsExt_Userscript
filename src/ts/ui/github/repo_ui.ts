@@ -275,7 +275,7 @@ async function showRepoContentsSizeInTree() {
     // 4. show or update each content size grid
     for (const row of $('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
         let [sizeFormatted, gridTitle] = ['', ''];
-        const filename = row.querySelector('div.react-directory-filename-column h3')?.textContent?.trim() ?? '';
+        const filename = row.querySelector('div.react-directory-filename-cell')?.textContent?.trim() ?? '';
         if (filename) {
             [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
         }
