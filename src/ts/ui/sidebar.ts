@@ -16,7 +16,9 @@ export function getSidebarHtml(): string {
     let renderedTemplate = template
         .replaceAll(/<!--[\s\S]+?-->/, '')
         .replaceAll('${urlType}', info.type.toString().capital())
-        .replaceAll('${apiUrl}', info.eventAPI)
+        .replaceAll('${urlTypeUncapital}', info.type.toString().toLowerCase())
+        .replaceAll('${dataApiUrl}', info.dataAPI)
+        .replaceAll('${eventApiUrl}', info.eventAPI)
         .replaceAll('${checkedPath}', getPathTag('checked'))
         .replaceAll('${feedbackUrl}', Global.FEEDBACK_URL);
 

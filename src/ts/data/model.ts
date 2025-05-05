@@ -18,6 +18,7 @@ export enum URLType {
 export class URLInfo {
     public readonly authorURL: string = '';
     public readonly repoURL: string = '';
+    public readonly dataAPI: string = '';
     public readonly eventAPI: string = '';
     public readonly extra: {
         user?: { isMe: boolean; };
@@ -34,15 +35,18 @@ export class URLInfo {
                 return;
             case URLType.USER:
                 this.authorURL = `https://github.com/${author}`;
+                this.dataAPI = `https://api.github.com/users/${author}`;
                 this.eventAPI = `https://api.github.com/users/${author}/events`;
                 return;
             case URLType.ORG:
                 this.authorURL = `https://github.com/${author}`;
+                this.dataAPI = `https://api.github.com/orgs/${author}`;
                 this.eventAPI = `https://api.github.com/orgs/${author}/events`;
                 return;
             case URLType.REPO:
                 this.authorURL = `https://github.com/${author}`;
                 this.repoURL = `https://github.com/${author}/${repo}`;
+                this.dataAPI = `https://api.github.com/repos/${author}/${repo}`;
                 this.eventAPI = `https://api.github.com/repos/${author}/${repo}/events`;
                 return;
         }
