@@ -107,7 +107,7 @@ function switchDisplayMode(arg: { isLoading: boolean, isError: boolean, errorMes
  */
 function updatePageHint() {
     const moreTag = $('#ahid-more'), retryTag = $('#ahid-retry');
-    const hint = `Page: ${Global.page}, total: ${Global.total}`;
+    const hint = `Current page: ${Global.page}, event count: ${Global.total}`;
     moreTag.attr('title', hint);
     retryTag.attr('title', hint);
 }
