@@ -1,7 +1,7 @@
 // ==UserScript==
 //
 // @name         Github events
-// @version      1.0.23
+// @version      1.0.26
 // @author       Aoi-hosizora
 // @description  A Userscript extension that shows GitHub activity events in sidebar and improves several UI details.
 // @namespace    https://github.com/
@@ -1934,7 +1934,7 @@ module.exports = {
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "#ahid-header {\n  padding: 10px 12px;\n  background: #373e43;\n  color: white;\n}\n\n#ahid-header-toast {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  z-index: 1;\n  height: 64px;\n  width: 100%;\n  padding: 2px 4px;\n  color: black;\n  background: yellow;\n  border: #373e43 solid 1px;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 13px;\n  text-overflow: ellipsis;\n  opacity: 1;\n}\n#ahid-header-toast #ahid-header-toast-x {\n  position: absolute;\n  top: calc(100% - 20px);\n  left: calc(100% - 12px);\n  z-index: 2;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 13px;\n  cursor: pointer;\n}\n\n#ahid-title,\n#ahid-subtitle {\n  display: block;\n  text-align: right;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n#ahid-title svg,\n#ahid-subtitle svg {\n  display: inline-block;\n  vertical-align: middle;\n}\n\n#ahid-title {\n  margin-top: 4px;\n  font-size: 12.5px;\n}\n#ahid-title a:-webkit-any-link {\n  color: white;\n}\n#ahid-title svg {\n  margin-top: -5px;\n  margin-right: -3px;\n  color: white;\n}\n\n#ahid-subtitle {\n  margin-top: 6px;\n  font-size: 9.5px;\n}\n#ahid-subtitle a:-webkit-any-link {\n  color: #acacac;\n}\n#ahid-subtitle svg {\n  margin-top: -2px;\n  margin-right: 1px;\n  fill: #acacac;\n}\n\n#ahid-commands {\n  position: absolute;\n  top: 39px;\n  left: 12px;\n}\n#ahid-commands a,\n#ahid-commands details {\n  display: inline;\n  position: relative;\n  text-decoration: none;\n}\n#ahid-commands svg {\n  fill: #999999;\n}\n#ahid-commands svg:hover {\n  fill: white;\n}\n\n#ahid-commands details summary {\n  list-style: none;\n}\n#ahid-commands details details-menu {\n  top: 24px;\n  right: -11.8px;\n  z-index: 99;\n  width: 460px;\n}\n#ahid-commands details details-menu label,\n#ahid-commands details details-menu a,\n#ahid-commands details details-menu button {\n  display: block;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-weight: 400 !important;\n}\n#ahid-commands details details-menu label svg,\n#ahid-commands details details-menu a svg,\n#ahid-commands details details-menu button svg {\n  margin-right: 5px;\n  fill: currentColor;\n}\n#ahid-commands details details-menu .ah-checkable svg {\n  display: none;\n}\n#ahid-commands details details-menu .ah-checkable.ah-enabled svg {\n  display: inline-block;\n}\n#ahid-commands details details-menu .dropdown-divider {\n  margin: 4px 0;\n}\n\n#ahid-pin {\n  left: 0;\n}\n#ahid-pin.ah-pined svg {\n  fill: white;\n  transform: rotate(0);\n}\n#ahid-pin svg {\n  transform-origin: center;\n  transform: rotate(45deg);\n}\n\n#ahid-refresh {\n  left: 1px;\n}\n\n#ahid-setting {\n  left: 1px;\n  top: -2px;\n}\n\n.ah-hover-underline {\n  text-decoration: none;\n}\n.ah-hover-underline:hover {\n  text-decoration: underline !important;\n  color: #79b7ff;\n}\n\n#ahid-body {\n  padding: 0;\n  background: #fafbfc;\n  color: black;\n  border-left: 1px solid #dfe2e0;\n  overflow: auto;\n}\n#ahid-body::-webkit-scrollbar {\n  width: 8px;\n}\n#ahid-body::-webkit-scrollbar-track {\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb {\n  background-color: #a8a8a8;\n  border-radius: 4px;\n}\n#ahid-body::-webkit-scrollbar-thumb:hover {\n  background-color: gray;\n}\n\n#ahid-message,\n#ahid-list {\n  padding: 10px 10px 7px 10px;\n}\n\n#ahid-message {\n  word-break: break-word;\n}\n\n#ahid-list {\n  list-style-type: none;\n}\n#ahid-list li {\n  word-break: break-all;\n}\n\nhr.ah-hr {\n  margin: 7px 0;\n}\n\n.ah-body-hide {\n  display: none !important;\n}\n\n.ah-content-header-user {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 13px;\n  color: black;\n}\n.ah-content-header-user .ah-content-header-left {\n  flex: 1 1 auto;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.ah-content-header-user .ah-content-header-icon {\n  vertical-align: middle;\n  border-radius: 50%;\n}\n.ah-content-header-user .ah-content-header-avatar {\n  display: inline-block;\n  height: 24px;\n}\n.ah-content-header-user .ah-content-header-link {\n  margin-left: 3px;\n}\n.ah-content-header-user .ah-content-header-event {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #eaeef2;\n  height: 26px;\n  width: 26px;\n  margin: -2px -2px 0 3px;\n}\n.ah-content-header-user .ah-content-header-old-icon {\n  background: #e1e4e8 !important;\n}\n.ah-content-header-info {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 10.5px;\n  margin: 5px 0px 5px 0px;\n  color: gray;\n}\n.ah-content-header-info .ah-content-header-time {\n  flex: 1;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: inline;\n  padding-top: 1px;\n  line-height: 1;\n}\n.ah-content-header-info .ah-content-header-private {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: transparent;\n  padding: 3px 4px 1px 4px;\n  margin-left: 4px;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 2px;\n  line-height: 1;\n}\n\n.ah-content-body-title {\n  font-size: 13px;\n}\n.ah-content-body-sub {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  -webkit-line-clamp: 1;\n  font-size: 11px;\n  color: gray;\n}\n.ah-content-body-subtitle {\n  margin: 2px 0 4px 0;\n  padding-left: 5px;\n  padding-top: 1px;\n  border-left: 3px solid rgb(197, 197, 197);\n}\n.ah-content-body-subcontent {\n  -webkit-line-clamp: 2 !important;\n}\n.ah-content-body-commit-wiki {\n  margin-left: 1px;\n}\n\n#ahid-footer {\n  margin-bottom: -1px;\n  padding: 6px 0 4px 0;\n  background: #f1f8ff;\n  border: 1px solid #c8e1ff;\n}\n#ahid-footer a {\n  display: block;\n  text-align: center;\n}\n\n#ahid-loading {\n  color: currentColor;\n  cursor: not-allowed;\n  opacity: 0.5;\n  text-decoration: none;\n}\n#ahid-loading:hover {\n  text-decoration: none;\n}\n\n#ahid-toggle {\n  width: 30px;\n  height: 80px;\n  position: fixed;\n  top: calc(50% - 45px);\n  left: calc(100% - 27px);\n  z-index: 91;\n}\n#ahid-toggle.ah-toggle-hide {\n  left: calc(100% + 2px);\n}\n\n#ahid-nav {\n  width: 180px;\n  min-width: 180px;\n  max-width: 750px;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  right: -180px;\n  z-index: 90;\n}\n#ahid-nav.ah-nav-open {\n  right: 0px;\n}\n\n#ahid-header {\n  height: 64px;\n}\n\n#ahid-footer {\n  height: 30px;\n}\n\n#ahid-body {\n  height: calc(100% - 65px);\n}\n#ahid-body div,\n#ahid-body ul {\n  min-height: calc(100% - 30px);\n}\n\n#ahid-nav {\n  background: #fafbfc;\n  font-family: sans-serif;\n  font-size: 13px;\n  font-style: normal;\n}\n#ahid-nav.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 5px 3px;\n}\n\n#ahid-toggle {\n  padding: 6px;\n  background: #f2f5f7;\n  border: 1px solid #e0e4e7;\n  border-right: none;\n  border-radius: 5px;\n  cursor: pointer;\n  text-align: center;\n  line-height: 1;\n}\n#ahid-toggle.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;\n}\n#ahid-toggle svg,\n#ahid-toggle span {\n  display: inline-block;\n  position: relative;\n}\n#ahid-toggle svg {\n  top: 3px;\n  left: -1px;\n}\n#ahid-toggle span {\n  top: 19px;\n  left: -14px;\n  font-family: sans-serif;\n  font-size: 13px;\n  transform: rotate(90deg);\n}\n\n.ah-animated {\n  -webkit-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n}\n\n.ah-unselectable {\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.ui-resizable-handle {\n  width: 8px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  cursor: col-resize;\n}", ""]);
+exports.push([module.i, "#ahid-header {\n  padding: 10px 12px;\n  background: #373e43;\n  color: white;\n}\n\n#ahid-header-toast {\n  position: absolute;\n  top: 0px;\n  left: 0px;\n  z-index: 1;\n  height: 64px;\n  width: 100%;\n  padding: 2px 4px;\n  color: black;\n  background: yellow;\n  border: #373e43 solid 1px;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 13px;\n  text-overflow: ellipsis;\n  opacity: 1;\n}\n#ahid-header-toast #ahid-header-toast-x {\n  position: absolute;\n  top: calc(100% - 20px);\n  left: calc(100% - 12px);\n  z-index: 2;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-size: 13px;\n  cursor: pointer;\n}\n\n#ahid-title,\n#ahid-subtitle {\n  display: block;\n  text-align: right;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n#ahid-title svg,\n#ahid-subtitle svg {\n  display: inline-block;\n  vertical-align: middle;\n}\n\n#ahid-title {\n  margin-top: 4px;\n  font-size: 12.5px;\n}\n#ahid-title a:-webkit-any-link {\n  color: white;\n}\n#ahid-title svg {\n  margin-top: -5px;\n  margin-right: -3px;\n  color: white;\n}\n\n#ahid-subtitle {\n  margin-top: 8px;\n  font-size: 9.5px;\n}\n#ahid-subtitle a:-webkit-any-link {\n  color: #acacac;\n}\n#ahid-subtitle a#ahid-data-icon {\n  text-decoration: none !important;\n}\n#ahid-subtitle svg {\n  margin-top: -2px;\n  margin-right: 1px;\n  fill: #acacac;\n}\n\n#ahid-commands {\n  position: absolute;\n  top: 39px;\n  left: 12px;\n}\n#ahid-commands a,\n#ahid-commands details {\n  display: inline;\n  position: relative;\n  text-decoration: none;\n}\n#ahid-commands svg {\n  fill: #999999;\n}\n#ahid-commands svg:hover {\n  fill: white;\n}\n\n#ahid-commands details summary {\n  list-style: none;\n}\n#ahid-commands details details-menu {\n  top: 24px;\n  right: -11.8px;\n  z-index: 99;\n  width: 460px;\n}\n#ahid-commands details details-menu label,\n#ahid-commands details details-menu a,\n#ahid-commands details details-menu button {\n  display: block;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\";\n  font-weight: 400 !important;\n}\n#ahid-commands details details-menu label svg,\n#ahid-commands details details-menu a svg,\n#ahid-commands details details-menu button svg {\n  margin-right: 5px;\n  fill: currentColor;\n}\n#ahid-commands details details-menu .ah-checkable svg {\n  display: none;\n}\n#ahid-commands details details-menu .ah-checkable.ah-enabled svg {\n  display: inline-block;\n}\n#ahid-commands details details-menu .dropdown-divider {\n  margin: 4px 0;\n}\n\n#ahid-pin {\n  left: 0;\n}\n#ahid-pin.ah-pined svg {\n  fill: white;\n  transform: rotate(0);\n}\n#ahid-pin svg {\n  transform-origin: center;\n  transform: rotate(45deg);\n}\n\n#ahid-refresh {\n  left: 1px;\n}\n\n#ahid-setting {\n  position: absolute !important;\n  top: 1px;\n  left: 35px;\n}\n\n.ah-hover-underline {\n  text-decoration: none;\n}\n.ah-hover-underline:hover {\n  text-decoration: underline !important;\n  color: #79b7ff;\n}\n\n#ahid-body {\n  padding: 0;\n  background: #fafbfc;\n  color: black;\n  border-left: 1px solid #dfe2e0;\n  overflow: auto;\n}\n#ahid-body::-webkit-scrollbar {\n  width: 6.5px;\n}\n#ahid-body::-webkit-scrollbar-track {\n  border-radius: 5px;\n}\n#ahid-body::-webkit-scrollbar-thumb {\n  background-color: #a8a8a8;\n  border-radius: 5px;\n}\n#ahid-body::-webkit-scrollbar-thumb:hover {\n  background-color: gray;\n}\n\n#ahid-message,\n#ahid-list {\n  padding: 10px 10px 7px 10px;\n}\n\n#ahid-message {\n  word-break: break-word;\n}\n\n#ahid-list {\n  list-style-type: none;\n}\n#ahid-list li {\n  word-break: break-all;\n}\n\nhr.ah-hr {\n  margin: 7px 0;\n}\n\n.ah-body-hide {\n  display: none !important;\n}\n\n.ah-content-header-user {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 13px;\n  color: black;\n}\n.ah-content-header-user .ah-content-header-left {\n  flex: 1 1 auto;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.ah-content-header-user .ah-content-header-icon {\n  vertical-align: middle;\n  border-radius: 50%;\n}\n.ah-content-header-user .ah-content-header-avatar {\n  display: inline-block;\n  height: 24px;\n}\n.ah-content-header-user .ah-content-header-link {\n  margin-left: 3px;\n}\n.ah-content-header-user .ah-content-header-event {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: #eaeef2;\n  height: 26px;\n  width: 26px;\n  margin: -2px -2px 0 3px;\n}\n.ah-content-header-user .ah-content-header-old-icon {\n  background: #e1e4e8 !important;\n}\n.ah-content-header-info {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 10.5px;\n  margin: 5px 0px 5px 0px;\n  color: gray;\n}\n.ah-content-header-info .ah-content-header-time {\n  flex: 1;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n  display: inline;\n  padding-top: 1px;\n  line-height: 1;\n}\n.ah-content-header-info .ah-content-header-private {\n  flex: 0 0 auto;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: transparent;\n  padding: 3px 4px 1px 4px;\n  margin-left: 4px;\n  border: 1px solid rgba(27, 31, 35, 0.15);\n  border-radius: 2px;\n  line-height: 1;\n}\n\n.ah-content-body-title {\n  font-size: 13px;\n}\n.ah-content-body-sub {\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  line-clamp: 1;\n  -webkit-line-clamp: 1;\n  font-size: 11px;\n  color: gray;\n}\n.ah-content-body-subtitle {\n  margin: 2px 0 4px 0;\n  padding-left: 5px;\n  padding-top: 1px;\n  border-left: 3px solid rgb(197, 197, 197);\n}\n.ah-content-body-subcontent {\n  line-clamp: 2 !important;\n  -webkit-line-clamp: 2 !important;\n}\n.ah-content-body-commit-wiki {\n  margin-left: 1px;\n}\n\n#ahid-footer {\n  margin-bottom: -1px;\n  padding: 6px 0 4px 0;\n  background: #f1f8ff;\n  border: 1px solid #c8e1ff;\n}\n#ahid-footer a {\n  display: block;\n  text-align: center;\n}\n\n#ahid-loading {\n  color: currentColor;\n  cursor: not-allowed;\n  opacity: 0.5;\n  text-decoration: none;\n}\n#ahid-loading:hover {\n  text-decoration: none;\n}\n\n#ahid-toggle {\n  width: 30px;\n  height: 80px;\n  position: fixed;\n  top: calc(50% - 45px);\n  left: calc(100% - 27px);\n  z-index: 91;\n}\n#ahid-toggle.ah-toggle-hide {\n  left: calc(100% + 2px);\n}\n\n#ahid-nav {\n  width: 180px;\n  min-width: 180px;\n  max-width: 750px;\n  height: 100%;\n  position: fixed;\n  top: 0;\n  right: -180px;\n  z-index: 90;\n}\n#ahid-nav.ah-nav-open {\n  right: 0px;\n}\n\n#ahid-header {\n  height: 64px;\n}\n\n#ahid-footer {\n  height: 30px;\n}\n\n#ahid-body {\n  height: calc(100% - 65px);\n}\n#ahid-body div,\n#ahid-body ul {\n  min-height: calc(100% - 30px);\n}\n\n#ahid-nav {\n  background: #fafbfc;\n  font-family: sans-serif;\n  font-size: 13px;\n  font-style: normal;\n}\n#ahid-nav.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 5px 3px;\n}\n\n#ahid-toggle {\n  padding: 6px;\n  background: #f2f5f7;\n  border: 1px solid #e0e4e7;\n  border-right: none;\n  border-radius: 5px;\n  cursor: pointer;\n  text-align: center;\n  line-height: 1;\n}\n#ahid-toggle.ah-shadow {\n  box-shadow: rgba(118, 118, 118, 0.11) 0px 0px 3px 2px;\n}\n#ahid-toggle svg,\n#ahid-toggle span {\n  display: inline-block;\n  position: relative;\n}\n#ahid-toggle svg {\n  top: 3px;\n  left: -1px;\n}\n#ahid-toggle span {\n  top: 19px;\n  left: -14px;\n  font-family: sans-serif;\n  font-size: 13px;\n  transform: rotate(90deg);\n}\n\n.ah-animated {\n  -webkit-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  transition: all 0.3s ease;\n}\n\n.ah-unselectable {\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.ui-resizable-handle {\n  width: 8px;\n  height: 100%;\n  position: absolute;\n  top: 0;\n  cursor: col-resize;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -70829,7 +70829,7 @@ function onLoaded() {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <span>\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </span>\n            <a href=\"${apiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\"><span>${urlType} Events</span></a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z\">\n                            </path>\n                        </svg>\n                        Setup GitHub access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" and \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Open a new browser tab to show links in sidebar\n                    </label>\n                    <label id=\"ahid-setup-old-icon\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Display old GitHub icons in sidebar\n                    </label>\n                    <label id=\"ahid-show-full-event-tooltip\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show full GitHub event name tooltip when hovering icon\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"Followers\" and \"Following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of repository and files in repository page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <label id=\"ahid-setup-hide-toast\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Always hide this attention toast\n                    </label>\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
+module.exports = "<div class=\"ah-shadow ah-animated ah-toggle-hide\" id=\"ahid-toggle\">\n    <svg width=10 height=14 viewBox=\"0 0 320 512\">\n        <path fill=\"#999999\"\n            d=\"M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z\">\n        </path>\n    </svg>\n    <span>Events</span>\n</div>\n\n<nav class=\"ah-shadow ah-animated ah-nav-open\" id=\"ahid-nav\">\n\n    <!-- ////// Header Panel start ////// -->\n    <header id=\"ahid-header\">\n\n        <!-- Header Title -->\n        <div id=\"ahid-title\">\n            <!-- ////// author start ////// -->\n            ${if isAuthor}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\"\n                        d=\"M12 14.002a.998.998 0 0 1-.998.998H1.001A1 1 0 0 1 0 13.999V13c0-2.633 4-4 4-4s.229-.409 0-1c-.841-.62-.944-1.59-1-4 .173-2.413 1.867-3 3-3s2.827.586 3 3c-.056 2.41-.159 3.38-1 4-.229.59 0 1 0 1s4 1.367 4 4v1.002z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a>\n            ${endif}\n            <!-- ////// author end ////// -->\n            <!-- ////// repo start ////// -->\n            ${if isRepo}\n            <span>\n                <svg width=16 height=16 viewBox=\"0 0 16 12\">\n                    <path fill=\"#fff\" d=\"M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z\">\n                    </path>\n                </svg>\n            </span>\n            <a target=\"_blank\" href=\"${info.authorUrl}\" title=\"${info.author}\">${info.author}</a> /\n            <a target=\"_blank\" href=\"${info.repoUrl}\" title=\"${info.repo}\">${info.repo}</a>\n            ${endif}\n            <!-- ////// repo end ////// -->\n        </div>\n\n        <!-- Header Subtitle -->\n        <div id=\"ahid-subtitle\">\n            <a id=\"ahid-data-icon\" href=\"${dataApiUrl}\" target=\"_blank\" title=\"Click here to view the raw detail of ${urlTypeUncapital}\">\n                <svg width=12 height=12 viewBox=\"0 0 16 16\">\n                    <path d=\"M16 14v1H0V0h1v14h15zM5 13H3V8h2v5zm4 0H7V3h2v10zm4 0h-2V6h2v7z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-event-link\" href=\"${eventApiUrl}\" target=\"_blank\" title=\"Click here to open the event API page\">\n                <span>${urlType} Events</span>\n            </a>\n        </div>\n\n        <!-- Header Commands -->\n        <div id=\"ahid-commands\">\n            <a id=\"ahid-pin\" href=\"javascript:void(0)\" title=\"Pin\">\n                <svg width=9 height=14 viewBox=\"0 0 384 512\">\n                    <path\n                        d=\"M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z\">\n                    </path>\n                </svg>\n            </a>\n            <a id=\"ahid-refresh\" href=\"javascript:void(0)\" title=\"Refresh\">\n                <svg width=16 height=16 viewBox=\"0 0 24 24\">\n                    <path d=\"M17.65,6.35C16.2,4.9 14.21,4 12,4c-4.42,0 -7.99,3.58 -7.99,8s3.57,8 7.99,8c3.73,0 6.84,-2.55 7.73,-6h-2.08c-0.82,2.33 -3.04,4 -5.65,4 -3.31,0 -6,-2.69 -6,-6s2.69,-6 6,-6c1.66,0 3.14,0.69 4.22,1.78L13,11h7V4l-2.35,2.35z\">\n                    </path>\n                </svg>\n            </a>\n            <details id=\"ahid-setting\" class=\"details-overlay\">\n                <summary role=\"button\">\n                    <span title=\"Setting\">\n                        <svg width=12 height=12 viewBox=\"0 0 512 512\">\n                            <path\n                                d=\"M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z\">\n                            </path>\n                        </svg>\n                    </span>\n                </summary>\n                <!-- Setting Dropdown Menu -->\n                <details-menu class=\"dropdown-menu dropdown-menu-sw\" role=\"menu\">\n                    <label id=\"ahid-setup-token\" class=\"dropdown-item pl-5\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M8 0a8.2 8.2 0 0 1 .701.031C9.444.095 9.99.645 10.16 1.29l.288 1.107c.018.066.079.158.212.224.231.114.454.243.668.386.123.082.233.09.299.071l1.103-.303c.644-.176 1.392.021 1.82.63.27.385.506.792.704 1.218.315.675.111 1.422-.364 1.891l-.814.806c-.049.048-.098.147-.088.294.016.257.016.515 0 .772-.01.147.038.246.088.294l.814.806c.475.469.679 1.216.364 1.891a7.977 7.977 0 0 1-.704 1.217c-.428.61-1.176.807-1.82.63l-1.102-.302c-.067-.019-.177-.011-.3.071a5.909 5.909 0 0 1-.668.386c-.133.066-.194.158-.211.224l-.29 1.106c-.168.646-.715 1.196-1.458 1.26a8.006 8.006 0 0 1-1.402 0c-.743-.064-1.289-.614-1.458-1.26l-.289-1.106c-.018-.066-.079-.158-.212-.224a5.738 5.738 0 0 1-.668-.386c-.123-.082-.233-.09-.299-.071l-1.103.303c-.644.176-1.392-.021-1.82-.63a8.12 8.12 0 0 1-.704-1.218c-.315-.675-.111-1.422.363-1.891l.815-.806c.05-.048.098-.147.088-.294a6.214 6.214 0 0 1 0-.772c.01-.147-.038-.246-.088-.294l-.815-.806C.635 6.045.431 5.298.746 4.623a7.92 7.92 0 0 1 .704-1.217c.428-.61 1.176-.807 1.82-.63l1.102.302c.067.019.177.011.3-.071.214-.143.437-.272.668-.386.133-.066.194-.158.211-.224l.29-1.106C6.009.645 6.556.095 7.299.03 7.53.01 7.764 0 8 0Zm-.571 1.525c-.036.003-.108.036-.137.146l-.289 1.105c-.147.561-.549.967-.998 1.189-.173.086-.34.183-.5.29-.417.278-.97.423-1.529.27l-1.103-.303c-.109-.03-.175.016-.195.045-.22.312-.412.644-.573.99-.014.031-.021.11.059.19l.815.806c.411.406.562.957.53 1.456a4.709 4.709 0 0 0 0 .582c.032.499-.119 1.05-.53 1.456l-.815.806c-.081.08-.073.159-.059.19.162.346.353.677.573.989.02.03.085.076.195.046l1.102-.303c.56-.153 1.113-.008 1.53.27.161.107.328.204.501.29.447.222.85.629.997 1.189l.289 1.105c.029.109.101.143.137.146a6.6 6.6 0 0 0 1.142 0c.036-.003.108-.036.137-.146l.289-1.105c.147-.561.549-.967.998-1.189.173-.086.34-.183.5-.29.417-.278.97-.423 1.529-.27l1.103.303c.109.029.175-.016.195-.045.22-.313.411-.644.573-.99.014-.031.021-.11-.059-.19l-.815-.806c-.411-.406-.562-.957-.53-1.456a4.709 4.709 0 0 0 0-.582c-.032-.499.119-1.05.53-1.456l.815-.806c.081-.08.073-.159.059-.19a6.464 6.464 0 0 0-.573-.989c-.02-.03-.085-.076-.195-.046l-1.102.303c-.56.153-1.113.008-1.53-.27a4.44 4.44 0 0 0-.501-.29c-.447-.222-.85-.629-.997-1.189l-.289-1.105c-.029-.11-.101-.143-.137-.146a6.6 6.6 0 0 0-1.142 0ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM9.5 8a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 8Z\">\n                            </path>\n                        </svg>\n                        Setup GitHub access token\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-follow-menu\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Add \"Your followers\" and \"Your following\" to avatar dropdown menu\n                    </label>\n                    <label id=\"ahid-setup-blank-target\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Open a new browser tab to show links in sidebar\n                    </label>\n                    <label id=\"ahid-setup-old-icon\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Display old GitHub icons in sidebar\n                    </label>\n                    <label id=\"ahid-show-full-event-datetime\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show full event datetime in sidebar\n                    </label>\n                    <label id=\"ahid-show-full-event-tooltip\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show full GitHub event name tooltip when hovering icon\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-center-follow\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Center \"Followers\" and \"Following\" text in user profile page\n                    </label>\n                    <label id=\"ahid-setup-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show user joined time in user profile page\n                    </label>\n                    <label id=\"ahid-setup-user-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories and gists counts in user profile page\n                    </label>\n                    <label id=\"ahid-setup-org-joined-time\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show organization created time in organization profile page\n                    </label>\n                    <label id=\"ahid-setup-org-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show private repositories in organization profile page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <label id=\"ahid-setup-repo-counter\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show repository action counters in repository page\n                    </label>\n                    <label id=\"ahid-setup-repo-size\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Show the size of repository and files in repository page\n                    </label>\n                    <div class=\"dropdown-divider\" />\n                    <button class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" disabled>\n                        Attention: You are required to refresh the page if any setting changed.\n                    </button>\n                    <label id=\"ahid-setup-hide-toast\" class=\"dropdown-item pl-5 ah-checkable ah-enabled\" role=\"menuitem\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">${checkedPath}</svg>\n                        Default to hide the setting attention tooltip\n                    </label>\n                    <a class=\"dropdown-item btn-link pl-5\" role=\"menuitem\" href=\"${feedbackUrl}\" target=\"_blank\">\n                        <svg width=16 height=16 viewBox=\"0 0 16 16\" class=\"octicon ml-n4\">\n                            <path d=\"M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z\">\n                            </path>\n                        </svg>\n                        Bugs or features feedback\n                    </a>\n                </details-menu>\n            </details>\n        </div>\n    </header>\n    <!-- ////// Header Panel end ////// -->\n\n    <!-- ////// Main Body start ////// -->\n    <main id=\"ahid-body\">\n        <div id=\"ahid-message\" class=\"ah-body-hide\"></div>\n\n        <!-- ////// main list start ////// -->\n        <ul id=\"ahid-list\" data-repository-hovercards-enabled data-issue-and-pr-hovercards-enabled data-commit-hovercards-enabled>\n        </ul>\n        <!-- ////// main list end ////// -->\n\n        <!-- Footer -->\n        <footer id=\"ahid-footer\">\n            <a id=\"ahid-more\" href=\"javascript:void(0)\">More...</a>\n            <a id=\"ahid-loading\" class=\"ah-body-hide\">Loading...</a>\n            <a id=\"ahid-retry\" class=\"ah-body-hide\" href=\"javascript:void(0)\">Retry...</a>\n        </footer>\n    </main>\n    <!-- ////// Main Body end ////// -->\n\n</nav>"
 
 /***/ }),
 
@@ -70893,14 +70893,19 @@ Global.width = 250;
 Global.showFollowMenuItem = true;
 Global.useBlankTarget = true;
 Global.useOldIcon = false;
+Global.showFullEventDateTime = true;
 Global.showFullEventTooltip = true;
 Global.centerFollowText = true;
 Global.showJoinedTime = true;
 Global.showUserPrivateCounter = true;
+Global.showOrgJoinedTime = true;
+Global.showOrgPrivateCounter = true;
 Global.showRepoActionCounter = true;
 Global.showRepoAndContentsSize = true;
 Global.hideAttentionToast = true;
 Global.page = 1;
+Global.lastTotal = 0;
+Global.total = 0;
 Global.isHovering = false;
 Global.repoSize = { cache: undefined, ref: '', truncated: false };
 Global.windowScrollY = 0.0;
@@ -70913,10 +70918,13 @@ var StorageFlag;
     StorageFlag["SHOW_FOLLOW_MENU_ITEM"] = "ah-show-follow-menu-item";
     StorageFlag["USE_BLANK_TARGET"] = "ah-use-blank-target";
     StorageFlag["USE_OLD_ICON"] = "ah-use-old-icon";
+    StorageFlag["SHOW_FULL_EVENT_DATETIME"] = "ah-show-full-event-datetime";
     StorageFlag["SHOW_FULL_EVENT_TOOLTIP"] = "ah-show-full-event-tooltip";
     StorageFlag["CENTER_FOLLOW_TEXT"] = "ah-center-follow-text";
     StorageFlag["SHOW_JOINED_TIME"] = "ah-show-joined-time";
     StorageFlag["SHOW_USER_PRIVATE_COUNTER"] = "ah-show-user-private-counter";
+    StorageFlag["SHOW_ORG_JOINED_TIME"] = "ah-show-org-joined-time";
+    StorageFlag["SHOW_ORG_PRIVATE_COUNTER"] = "ah-show-org-private-counter";
     StorageFlag["SHOW_REPO_ACTION_COUNTER"] = "ah-show-repo-action-counter";
     StorageFlag["SHOW_REPO_AND_CONTENTS_SIZE"] = "ah-show-repo-contents-size";
     StorageFlag["HIDE_ATTENTION_TOAST"] = "ah-hide-attention-toast";
@@ -70929,10 +70937,13 @@ function readStorageToGlobal() {
         Global.showFollowMenuItem = yield storage_1.getStorage(StorageFlag.SHOW_FOLLOW_MENU_ITEM, true, { alsoInit: true });
         Global.useBlankTarget = yield storage_1.getStorage(StorageFlag.USE_BLANK_TARGET, true, { alsoInit: true });
         Global.useOldIcon = yield storage_1.getStorage(StorageFlag.USE_OLD_ICON, false, { alsoInit: true });
+        Global.showFullEventDateTime = yield storage_1.getStorage(StorageFlag.SHOW_FULL_EVENT_DATETIME, true, { alsoInit: true });
         Global.showFullEventTooltip = yield storage_1.getStorage(StorageFlag.SHOW_FULL_EVENT_TOOLTIP, true, { alsoInit: true });
         Global.centerFollowText = yield storage_1.getStorage(StorageFlag.CENTER_FOLLOW_TEXT, true, { alsoInit: true });
         Global.showJoinedTime = yield storage_1.getStorage(StorageFlag.SHOW_JOINED_TIME, true, { alsoInit: true });
         Global.showUserPrivateCounter = yield storage_1.getStorage(StorageFlag.SHOW_USER_PRIVATE_COUNTER, true, { alsoInit: true });
+        Global.showOrgJoinedTime = yield storage_1.getStorage(StorageFlag.SHOW_ORG_JOINED_TIME, true, { alsoInit: true });
+        Global.showOrgPrivateCounter = yield storage_1.getStorage(StorageFlag.SHOW_ORG_PRIVATE_COUNTER, true, { alsoInit: true });
         Global.showRepoActionCounter = yield storage_1.getStorage(StorageFlag.SHOW_REPO_ACTION_COUNTER, true, { alsoInit: true });
         Global.showRepoAndContentsSize = yield storage_1.getStorage(StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE, true, { alsoInit: true });
         Global.hideAttentionToast = yield storage_1.getStorage(StorageFlag.HIDE_ATTENTION_TOAST, false, { alsoInit: true });
@@ -71008,6 +71019,7 @@ class URLInfo {
         this.repo = repo;
         this.authorURL = '';
         this.repoURL = '';
+        this.dataAPI = '';
         this.eventAPI = '';
         this.extra = {};
         switch (type) {
@@ -71015,15 +71027,18 @@ class URLInfo {
                 return;
             case URLType.USER:
                 this.authorURL = `https://github.com/${author}`;
+                this.dataAPI = `https://api.github.com/users/${author}`;
                 this.eventAPI = `https://api.github.com/users/${author}/events`;
                 return;
             case URLType.ORG:
                 this.authorURL = `https://github.com/${author}`;
+                this.dataAPI = `https://api.github.com/orgs/${author}`;
                 this.eventAPI = `https://api.github.com/orgs/${author}/events`;
                 return;
             case URLType.REPO:
                 this.authorURL = `https://github.com/${author}`;
                 this.repoURL = `https://github.com/${author}/${repo}`;
+                this.dataAPI = `https://api.github.com/repos/${author}/${repo}`;
                 this.eventAPI = `https://api.github.com/repos/${author}/${repo}/events`;
                 return;
         }
@@ -71177,6 +71192,7 @@ const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/mod
 const global_ui_1 = __webpack_require__(/*! @src/ts/ui/github/global_ui */ "./src/ts/ui/github/global_ui.ts");
 const user_ui_1 = __webpack_require__(/*! @src/ts/ui/github/user_ui */ "./src/ts/ui/github/user_ui.ts");
 const repo_ui_1 = __webpack_require__(/*! @src/ts/ui/github/repo_ui */ "./src/ts/ui/github/repo_ui.ts");
+const org_ui_1 = __webpack_require__(/*! @src/ts/ui/github/org_ui */ "./src/ts/ui/github/org_ui.ts");
 function adjustGitHubUiObservably() {
     global_ui_1.adjustGlobalUIObservably();
     if (global_1.Global.urlInfo.type == model_1.URLType.USER) {
@@ -71186,6 +71202,7 @@ function adjustGitHubUiObservably() {
         repo_ui_1.adjustRepoUIObservably();
     }
     if (global_1.Global.urlInfo.type == model_1.URLType.ORG) {
+        org_ui_1.adjustOrgUIObservably();
     }
 }
 exports.adjustGitHubUiObservably = adjustGitHubUiObservably;
@@ -71215,8 +71232,7 @@ function adjustGlobalUIObservably() {
         global_1.Global.windowScrollY = window.scrollY;
     });
     adjustHovercardZindex();
-    adjustGlobalModalDialogLayout();
-    adjustUserModalDialogLayout(() => {
+    adjustMenuLayout(() => {
         if (global_1.Global.showFollowMenuItem) {
             showFollowAvatarMenuItem();
         }
@@ -71228,6 +71244,14 @@ function adjustHovercardZindex() {
     const mainDiv = jquery_1.default('div[data-turbo-body]');
     mainDiv.after(hovercard);
 }
+function adjustMenuLayout(callWhenOpenUserModalDialog) {
+    adjustGlobalModalDialogLayout();
+    adjustUserModalDialogLayout(() => {
+        var _a;
+        (_a = callWhenOpenUserModalDialog) === null || _a === void 0 ? void 0 : _a();
+    });
+}
+exports.adjustMenuLayout = adjustMenuLayout;
 function adjustGlobalModalDialogLayout() {
     adjustModalDialogLayout('AppHeader-globalBar-start');
 }
@@ -71287,7 +71311,8 @@ function adjustModalDialogLayout(headerClassName, etc) {
     }
     if ((_d = primerPortalRoot) === null || _d === void 0 ? void 0 : _d.length) {
         const dialogSelector = 'div[data-position-regular="right"][role="dialog"]';
-        (_e = primerPortalRoot.find(dialogSelector)) === null || _e === void 0 ? void 0 : _e.css('margin-right', `${global_1.Global.width}px`);
+        const marginRight = global_1.Global.pinned ? `${global_1.Global.width}px` : `0px`;
+        (_e = primerPortalRoot.find(dialogSelector)) === null || _e === void 0 ? void 0 : _e.css('margin-right', marginRight);
         (_h = (_f = etc) === null || _f === void 0 ? void 0 : (_g = _f).callWhenOpen) === null || _h === void 0 ? void 0 : _h.call(_g);
         utils_1.observeChildChanged(primerPortalRoot[0], (el) => {
             var _a, _b, _c;
@@ -71295,7 +71320,9 @@ function adjustModalDialogLayout(headerClassName, etc) {
                 const rightDialog = primerPortalRoot.find(dialogSelector);
                 if (rightDialog.length) {
                     addOverflowYToBody();
-                    rightDialog.css('margin-right', `${global_1.Global.width}px`);
+                    if (global_1.Global.pinned) {
+                        rightDialog.css('margin-right', marginRight);
+                    }
                     (_c = (_a = etc) === null || _a === void 0 ? void 0 : (_b = _a).callWhenOpen) === null || _c === void 0 ? void 0 : _c.call(_b);
                 }
             }
@@ -71348,6 +71375,89 @@ function showFollowAvatarMenuItem() {
     }
     if (!jquery_1.default('li[data-item-id="ah-avatar-following"]').length) {
         jquery_1.default(generateMenuItem('ah-avatar-following', 'Your following', `/${username}?tab=following`, svg_tag_1.getPathTag('people'))).insertAfter(starsMenuItem);
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/ts/ui/github/org_ui.ts":
+/*!************************************!*\
+  !*** ./src/ts/ui/github/org_ui.ts ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
+const moment_1 = __importDefault(__webpack_require__(/*! moment */ "./node_modules/moment/moment.js"));
+const global_1 = __webpack_require__(/*! @src/ts/data/global */ "./src/ts/data/global.ts");
+const svg_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/svg_tag */ "./src/ts/ui/sidebar/svg_tag.ts");
+const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
+function adjustOrgUIObservably() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let info;
+        if (global_1.Global.showOrgJoinedTime || global_1.Global.showOrgPrivateCounter) {
+            try {
+                info = yield utils_1.requestOrgInfo(global_1.Global.urlInfo.author, global_1.Global.token);
+            }
+            catch (_) { }
+        }
+        if (global_1.Global.showOrgJoinedTime && info) {
+            showOrgJoinedTime(info);
+        }
+        if (global_1.Global.showOrgPrivateCounter && info) {
+            addOrgPrivateCounters(info);
+        }
+        ;
+    });
+}
+exports.adjustOrgUIObservably = adjustOrgUIObservably;
+function showOrgJoinedTime(info) {
+    if (!info.createdAt || jquery_1.default('ul.vcard-details li[itemprop="create time"]').length) {
+        return;
+    }
+    const time = moment_1.default(new Date(info.createdAt)).format('YYYY/MM/DD HH:mm');
+    jquery_1.default('div.container-xl div.px-3.px-md-0').append(`
+        <div class="mb-3 my-3 py-3 border-top">
+            <ul class="vcard-details">
+                <li class="vcard-detail pt-1" itemprop="create time">
+                    <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-rocket">
+                        ${svg_tag_1.getPathTag('rocket')}
+                    </svg>
+                    <span>Created at ${time}</span>
+                </li>
+            </ul>
+        </div>
+    `);
+}
+function addOrgPrivateCounters(info) {
+    if (!global_1.Global.token) {
+        return;
+    }
+    const repoCounterA = jquery_1.default('header.AppHeader nav a#repositories-tab');
+    if (repoCounterA.length) {
+        const title = `Public: ${info.publicRepos}, private: ${info.totalPrivateRepos}, total: ${info.publicRepos + info.totalPrivateRepos}`;
+        repoCounterA[0].setAttribute('title', title);
+        const repoCounterSpan = jquery_1.default('nav a#repositories-tab span:last-child');
+        if (repoCounterSpan.length) {
+            repoCounterSpan[0].textContent = `${info.publicRepos} / ${info.publicRepos + info.totalPrivateRepos}`;
+            repoCounterSpan[0].setAttribute('title', title);
+        }
     }
 }
 
@@ -71614,7 +71724,7 @@ function showRepoContentsSizeInTree() {
         }
         for (const row of jquery_1.default('table[aria-labelledby="folders-and-files"] tr.react-directory-row')) {
             let [sizeFormatted, gridTitle] = ['', ''];
-            const filename = (_c = (_b = (_a = row.querySelector('div.react-directory-filename-column h3')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
+            const filename = (_c = (_b = (_a = row.querySelector('div.react-directory-filename-cell')) === null || _a === void 0 ? void 0 : _a.textContent) === null || _b === void 0 ? void 0 : _b.trim(), (_c !== null && _c !== void 0 ? _c : ''));
             if (filename) {
                 [sizeFormatted, gridTitle] = renderSizeAndTitle(filename);
             }
@@ -71758,7 +71868,9 @@ function getSidebarHtml() {
     let renderedTemplate = template_html_1.default
         .replaceAll(/<!--[\s\S]+?-->/, '')
         .replaceAll('${urlType}', info.type.toString().capital())
-        .replaceAll('${apiUrl}', info.eventAPI)
+        .replaceAll('${urlTypeUncapital}', info.type.toString().toLowerCase())
+        .replaceAll('${dataApiUrl}', info.dataAPI)
+        .replaceAll('${eventApiUrl}', info.eventAPI)
         .replaceAll('${checkedPath}', svg_tag_1.getPathTag('checked'))
         .replaceAll('${feedbackUrl}', global_1.Global.FEEDBACK_URL);
     const reAuthor = /\$\{if isAuthor\}([\s\S]+?)\$\{endif\}/m;
@@ -71824,7 +71936,7 @@ function formatInfoToLiTag(item) {
     const userUrl = !isBot ? `https://github.com/${item.actor.login}` : `https://github.com/apps/${item.actor.login.replaceAll('[bot]', '')}`;
     const userHovercard = !isBot ? hovercard(model_1.HoverCardType.USER, `/hovercards?user_id=${item.actor.id}`) : '';
     const createAt = moment_1.default(new Date(item.createdAt));
-    const displayCreateAt = createAt.format('YY/MM/DD HH:mm:ss');
+    const displayCreateAt = global_1.Global.showFullEventDateTime ? createAt.format('YY/MM/DD HH:mm:ss') : createAt.format('MM/DD HH:mm');
     const fullCreateAt = `${createAt.format('YYYY/MM/DD dddd, HH:mm:ss')} (${createAt.fromNow()})`;
     const itemTypeTitle = item.type == item.type2 || !global_1.Global.showFullEventTooltip ? item.type2 : `${item.type} (${item.type2})`;
     var html = `
@@ -72220,21 +72332,33 @@ const li_tag_1 = __webpack_require__(/*! @src/ts/ui/sidebar/li_tag */ "./src/ts/
 const utils_1 = __webpack_require__(/*! @src/ts/utils/utils */ "./src/ts/utils/utils.ts");
 const main_1 = __webpack_require__(/*! @src/ts/main */ "./src/ts/main.ts");
 const storage_1 = __webpack_require__(/*! @src/ts/data/storage */ "./src/ts/data/storage.ts");
+const global_ui_1 = __webpack_require__(/*! @src/ts/ui/github/global_ui */ "./src/ts/ui/github/global_ui.ts");
 function loadGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         const ulTag = jquery_1.default('#ahid-list');
-        if (global_1.Global.page == 1) {
+        if (global_1.Global.page === 1) {
+            global_1.Global.total = 0;
             ulTag.html('');
         }
         switchDisplayMode({ isLoading: true, isError: false });
         var infos;
         try {
+            global_1.Global.lastTotal = 0;
             infos = yield utils_1.requestGitHubEvents(global_1.Global.urlInfo.eventAPI, global_1.Global.page, global_1.Global.token);
+            global_1.Global.lastTotal = infos.length;
+            global_1.Global.total += infos.length;
         }
         catch (ex) {
             if (global_1.Global.page === 1) {
                 switchDisplayMode({ isLoading: false, isError: true, errorMessage: ex });
             }
+            return;
+        }
+        finally {
+            updatePageHint();
+        }
+        if (global_1.Global.page === 1 && infos.length == 0) {
+            switchDisplayMode({ isLoading: false, isError: true, errorMessage: "Nothing found." });
             return;
         }
         switchDisplayMode({ isLoading: false, isError: false });
@@ -72256,7 +72380,9 @@ function loadGitHubEvents() {
 exports.loadGitHubEvents = loadGitHubEvents;
 function loadNextGitHubEvents() {
     return __awaiter(this, void 0, void 0, function* () {
-        ++global_1.Global.page;
+        if (global_1.Global.lastTotal > 0) {
+            ++global_1.Global.page;
+        }
         yield loadGitHubEvents();
     });
 }
@@ -72287,6 +72413,12 @@ function switchDisplayMode(arg) {
         show(ulTag);
         show(moreTag);
     }
+}
+function updatePageHint() {
+    const moreTag = jquery_1.default('#ahid-more'), retryTag = jquery_1.default('#ahid-retry');
+    const hint = `Current page: ${global_1.Global.page}, event count: ${global_1.Global.total}`;
+    moreTag.attr('title', hint);
+    retryTag.attr('title', hint);
 }
 function registerUIEvents(extraRefreshHandler) {
     jquery_1.default('#ahid-toggle').on('mouseenter', () => showSidebar(true));
@@ -72332,10 +72464,12 @@ function pinSidebar(needPin) {
     if (needPin) {
         navTag.addClass('ah-shadow');
         pinTag.addClass('ah-pined');
+        pinTag.attr('title', 'To unpin');
     }
     else {
         navTag.removeClass('ah-shadow');
         pinTag.removeClass('ah-pined');
+        pinTag.attr('title', 'To pin');
     }
     global_1.Global.pinned = needPin;
     storage_1.setStorage(global_1.StorageFlag.PINNED, global_1.Global.pinned);
@@ -72380,7 +72514,7 @@ function processMenuSwitchers() {
                     el.addClass('ah-enabled');
                 }
                 if (!global_1.Global.hideAttentionToast) {
-                    showHeaderToast("Setting changed, you are required to refresh the page!", 3000);
+                    showHeaderToast("Setting changed, refresh the page to apply the change!", 3000);
                 }
             }), 30));
         });
@@ -72388,10 +72522,13 @@ function processMenuSwitchers() {
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-follow-menu'), global_1.StorageFlag.SHOW_FOLLOW_MENU_ITEM);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-blank-target'), global_1.StorageFlag.USE_BLANK_TARGET);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-old-icon'), global_1.StorageFlag.USE_OLD_ICON);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-show-full-event-datetime'), global_1.StorageFlag.SHOW_FULL_EVENT_DATETIME);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-show-full-event-tooltip'), global_1.StorageFlag.SHOW_FULL_EVENT_TOOLTIP);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-center-follow'), global_1.StorageFlag.CENTER_FOLLOW_TEXT);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-joined-time'), global_1.StorageFlag.SHOW_JOINED_TIME);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-user-counter'), global_1.StorageFlag.SHOW_USER_PRIVATE_COUNTER);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-org-joined-time'), global_1.StorageFlag.SHOW_ORG_JOINED_TIME);
+    updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-org-counter'), global_1.StorageFlag.SHOW_ORG_PRIVATE_COUNTER);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-counter'), global_1.StorageFlag.SHOW_REPO_ACTION_COUNTER);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-repo-size'), global_1.StorageFlag.SHOW_REPO_AND_CONTENTS_SIZE);
     updateUIAndRegisterEvent(jquery_1.default('#ahid-setup-hide-toast'), global_1.StorageFlag.HIDE_ATTENTION_TOAST);
@@ -72412,7 +72549,11 @@ function showHeaderToast(content, duration) {
         toast.insertBefore(header);
         setTimeout(() => {
             toast.css('opacity', 0.85);
+            const div = jquery_1.default('div#ahid-header-toast');
             const x = jquery_1.default('div#ahid-header-toast-x');
+            if (div.length) {
+                div.on('click', () => hideHeaderToast());
+            }
             if (x.length) {
                 x.on('click', () => hideHeaderToast());
             }
@@ -72437,6 +72578,7 @@ function adjustBodyLayout(resizing = false) {
     else {
         jquery_1.default('body').css('margin-right', '');
     }
+    global_ui_1.adjustMenuLayout();
 }
 exports.adjustBodyLayout = adjustBodyLayout;
 function resetBodyLayout() {
@@ -72534,6 +72676,14 @@ const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules
 const jquery_1 = __importDefault(__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"));
 const lodash_1 = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 const model_1 = __webpack_require__(/*! @src/ts/data/model */ "./src/ts/data/model.ts");
+exports.PRESERVED_ENDPOINTS = [
+    'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
+    'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
+    'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
+    'assets', 'topics', 'readme', 'sponsors', 'trending', 'collections',
+    'home', 'enterprise', 'why-github', 'team', 'solutions', 'resources',
+    'security', 'pricing', 'about', 'github-copilot', 'onboardings',
+];
 function checkURL() {
     var _a, _b;
     const result = /https?:\/\/github\.com(.*)?/.exec(document.URL);
@@ -72543,15 +72693,9 @@ function checkURL() {
     if (result.length <= 1) {
         return new model_1.URLInfo(model_1.URLType.OTHER);
     }
-    const preservedEndpoints = [
-        'pulls', 'issues', 'marketplace', 'explore', 'notifications', 'new',
-        'login', 'settings', 'dashboard', 'features', 'codespaces', 'search',
-        'organizations', 'orgs', 'apps', 'users', 'repos', 'stars', 'account',
-        'assets', 'topics', 'readme', 'sponsors',
-    ];
     const finalPart = result[result.length - 1].trim().replaceAll(/\/?(\?.*|#.*)?$/, '');
     const endpoints = finalPart.split('/').filter(e => !!e);
-    if (endpoints.length === 0 || preservedEndpoints.indexOf(endpoints[0]) !== -1) {
+    if (endpoints.length === 0 || exports.PRESERVED_ENDPOINTS.indexOf(endpoints[0]) !== -1) {
         return new model_1.URLInfo(model_1.URLType.OTHER);
     }
     if (endpoints.length === 1) {
@@ -72739,6 +72883,13 @@ function requestUserInfo(user, token = '') {
     });
 }
 exports.requestUserInfo = requestUserInfo;
+function requestOrgInfo(org, token = '') {
+    return __awaiter(this, void 0, void 0, function* () {
+        const url = `https://api.github.com/orgs/${org}`;
+        return (yield httpRequest('get', url, token)).data;
+    });
+}
+exports.requestOrgInfo = requestOrgInfo;
 function requestRepoInfo(user, repo, token = '') {
     return __awaiter(this, void 0, void 0, function* () {
         const url = `https://api.github.com/repos/${user}/${repo}`;
