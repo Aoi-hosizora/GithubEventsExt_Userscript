@@ -283,7 +283,11 @@ function showHeaderToast(content: string, duration: number) {
 
         setTimeout(() => {
             toast.css('opacity', 0.85);
+            const div = $('div#ahid-header-toast');
             const x = $('div#ahid-header-toast-x');
+            if (div.length) {
+                div.on('click', () => hideHeaderToast());
+            }
             if (x.length) {
                 x.on('click', () => hideHeaderToast());
             }
